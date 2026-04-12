@@ -1,0 +1,128 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: {userId}
+    // Fields:
+    //   - uid: string (required, immutable)
+    //   - email: string (required)
+    //   - displayName: string (optional)
+    //   - photoURL: string (optional)
+    //   - createdAt: timestamp (required, immutable)
+    //
+    // Collection: users/{userId}/favorites
+    // Document ID: {favoriteId}
+    // Fields:
+    //   - userId: string (required, immutable)
+    //   - calculatorId: string (required)
+    //   - addedAt: timestamp (required, immutable)
+    //
+    // Collection: users/{userId}/history
+    // Document ID: {historyId}
+    // Fields:
+    //   - userId: string (required, immutable)
+    //   - calculatorId: string (required)
+    //   - inputs: string (optional)
+    //   - results: string (optional)
+    //   - calculatedAt: timestamp (required, immutable)
+    //
+    // Collection: users/{userId}/saved_passwords
+    // Document ID: {passwordId}
+    // Fields:
+    //   - password: string (required)
+    //   - createdAt: timestamp (required, immutable)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'email', 'displayName', 'photoURL', 'createdAt']) &&
+             data.uid is string &&
+             data.email is string && isValidEmail(data.email) &&
+             data.createdAt is timestamp &&
+             (!('displayName' in data) || data.displayName is string) &&
+             (!('photoURL' in data) || data.photoURL is string);
+    }
+
+    function isValidFavorite(data, userId) {
+      return hasOnlyAllowedFields(['userId', 'calculatorId', 'addedAt']) &&
+             data.userId == userId &&
+             data.calculatorId is string && data.calculatorId.size() > 0 && data.calculatorId.size() < 100 &&
+             data.addedAt is timestamp;
+    }
+
+    function isValidHistory(data, userId) {
+      return hasOnlyAllowedFields(['userId', 'calculatorId', 'inputs', 'results', 'calculatedAt']) &&
+             data.userId == userId &&
+             data.calculatorId is string && data.calculatorId.size() > 0 && data.calculatorId.size() < 100 &&
+             (!('inputs' in data) || (data.inputs is string && data.inputs.size() < 5000)) &&
+             (!('results' in data) || (data.results is string && data.results.size() < 5000)) &&
+             data.calculatedAt is timestamp;
+    }
+
+    function isValidSavedPassword(data) {
+      return hasOnlyAllowedFields(['password', 'createdAt']) &&
+             data.password is string && data.password.size() > 0 && data.password.size() < 1000 &&
+             data.createdAt is timestamp;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.uid == userId;
+      allow update: if isOwner(userId) && isValidUser(request.resource.data) && areImmutableFieldsUnchanged(['uid', 'createdAt']);
+      allow delete: if isOwner(userId);
+
+      match /favorites/{favoriteId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidFavorite(request.resource.data, userId);
+        allow update: if isOwner(userId) && isValidFavorite(request.resource.data, userId) && areImmutableFieldsUnchanged(['userId', 'addedAt']);
+        allow delete: if isOwner(userId);
+      }
+
+      match /history/{historyId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidHistory(request.resource.data, userId);
+        allow update: if isOwner(userId) && isValidHistory(request.resource.data, userId) && areImmutableFieldsUnchanged(['userId', 'calculatedAt']);
+        allow delete: if isOwner(userId);
+      }
+
+      match /saved_passwords/{passwordId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidSavedPassword(request.resource.data);
+        allow update: if isOwner(userId) && isValidSavedPassword(request.resource.data) && areImmutableFieldsUnchanged(['createdAt']);
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}

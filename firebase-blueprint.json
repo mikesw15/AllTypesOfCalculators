@@ -1,0 +1,55 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the application",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The user's ID" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["uid", "email", "createdAt"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "A favorited calculator",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "calculatorId": { "type": "string" },
+        "addedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "calculatorId", "addedAt"]
+    },
+    "History": {
+      "title": "History",
+      "description": "A history entry of a calculation",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "calculatorId": { "type": "string" },
+        "inputs": { "type": "string", "description": "JSON stringified inputs" },
+        "results": { "type": "string", "description": "JSON stringified results" },
+        "calculatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "calculatorId", "calculatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "/users/{userId}/favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/Favorite" },
+      "description": "User's favorite calculators"
+    },
+    "/users/{userId}/history/{historyId}": {
+      "schema": { "$ref": "#/entities/History" },
+      "description": "User's calculation history"
+    }
+  }
+}
