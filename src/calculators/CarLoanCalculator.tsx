@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function CarLoanCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [price, setPrice] = useState<number>(25000);
   const [downPayment, setDownPayment] = useState<number>(5000);
   const [tradeIn, setTradeIn] = useState<number>(0);
@@ -32,16 +34,16 @@ export default function CarLoanCalculator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Car Price ($)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Car Price ({currency.symbol})</label>
           <input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment ($)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment ({currency.symbol})</label>
             <input type="number" value={downPayment} onChange={(e) => setDownPayment(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Trade-in Value ($)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Trade-in Value ({currency.symbol})</label>
             <input type="number" value={tradeIn} onChange={(e) => setTradeIn(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           </div>
         </div>
@@ -65,7 +67,7 @@ export default function CarLoanCalculator() {
       <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col justify-center">
         <div className="text-center mb-6">
           <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Estimated Monthly Payment</p>
-          <div className="text-5xl font-extrabold text-gray-900">${results.payment.toFixed(2)}</div>
+          <div className="text-5xl font-extrabold text-gray-900">{formatCurrency(results.payment)}</div>
         </div>
 
         {results.chartData && results.chartData.length > 0 && (
@@ -85,7 +87,7 @@ export default function CarLoanCalculator() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                <Tooltip formatter={(value: number) => formatCurrency(value)} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
@@ -95,15 +97,15 @@ export default function CarLoanCalculator() {
         <div className="space-y-3">
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Loan Amount (Principal)</span>
-            <span className="font-semibold">${results.principal.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(results.principal)}</span>
           </div>
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Total Interest Paid</span>
-            <span className="font-semibold text-red-600">${results.totalInterest.toFixed(2)}</span>
+            <span className="font-semibold text-red-600">{formatCurrency(results.totalInterest)}</span>
           </div>
           <div className="flex justify-between py-2">
             <span className="text-gray-600">Total Cost of Car</span>
-            <span className="font-semibold text-blue-600">${results.totalCost.toFixed(2)}</span>
+            <span className="font-semibold text-blue-600">{formatCurrency(results.totalCost)}</span>
           </div>
         </div>
       </div>

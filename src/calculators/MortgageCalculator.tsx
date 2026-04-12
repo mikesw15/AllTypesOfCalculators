@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function MortgageCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [homePrice, setHomePrice] = useState<number>(300000);
   const [downPayment, setDownPayment] = useState<number>(60000);
   const [loanTerm, setLoanTerm] = useState<number>(30);
@@ -98,7 +100,7 @@ export default function MortgageCalculator() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Home Price ($)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Home Price ({currency.symbol})</label>
           <input 
             type="number" 
             value={homePrice} 
@@ -109,7 +111,7 @@ export default function MortgageCalculator() {
         
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment ($)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment ({currency.symbol})</label>
             <input 
               type="number" 
               value={downPayment} 
@@ -209,7 +211,7 @@ export default function MortgageCalculator() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Home Insurance ($/yr)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Home Insurance ({currency.symbol}/yr)</label>
                   <input 
                     type="number" 
                     value={homeInsurance} 
@@ -221,7 +223,7 @@ export default function MortgageCalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">HOA Fees ($/mo)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">HOA Fees ({currency.symbol}/mo)</label>
                   <input 
                     type="number" 
                     value={hoaFees} 
@@ -257,13 +259,13 @@ export default function MortgageCalculator() {
             {isARM ? 'Initial Monthly Payment' : 'Estimated Monthly Payment'}
           </p>
           <div className="text-5xl font-extrabold text-gray-900">
-            ${results.totalMonthlyPayment.toFixed(0)}
+            {formatCurrency(results.totalMonthlyPayment)}
           </div>
           
           {isARM && (
             <div className="mt-4 p-3 bg-blue-50 rounded-lg inline-block border border-blue-100">
               <p className="text-xs text-blue-700 font-medium uppercase tracking-wide">After {armInitialPeriod} Years (Est.)</p>
-              <p className="text-2xl font-bold text-blue-900">${results.armMonthlyAfterAdjustment.toFixed(0)}</p>
+              <p className="text-2xl font-bold text-blue-900">{formatCurrency(results.armMonthlyAfterAdjustment)}</p>
             </div>
           )}
         </div>
@@ -284,7 +286,7 @@ export default function MortgageCalculator() {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => `$${value.toFixed(0)}`} />
+              <Tooltip formatter={(value: number) => formatCurrency(value)} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
@@ -297,7 +299,7 @@ export default function MortgageCalculator() {
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
                 <span className="text-gray-700">{item.name}</span>
               </div>
-              <span className="font-semibold text-gray-900">${item.value.toFixed(0)}</span>
+              <span className="font-semibold text-gray-900">{formatCurrency(item.value)}</span>
             </div>
           ))}
         </div>
@@ -310,7 +312,7 @@ export default function MortgageCalculator() {
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="text-gray-600">Total Monthly Escrow:</div>
             <div className="text-right font-semibold text-gray-900">
-              ${(results.monthlyPropertyTax + results.monthlyHomeInsurance + results.monthlyPMI).toFixed(0)}
+              {formatCurrency(results.monthlyPropertyTax + results.monthlyHomeInsurance + results.monthlyPMI)}
             </div>
             <div className="text-gray-500 text-xs italic col-span-2">
               Includes Property Tax, Home Insurance, and PMI (if applicable).

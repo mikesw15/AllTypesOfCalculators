@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function SalaryCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [amount, setAmount] = useState<number>(75000);
   const [frequency, setFrequency] = useState<'hourly' | 'weekly' | 'monthly' | 'yearly'>('yearly');
   const [hoursPerWeek, setHoursPerWeek] = useState<number>(40);
@@ -51,7 +53,7 @@ export default function SalaryCalculator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Salary Amount ($)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Salary Amount ({currency.symbol})</label>
           <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -89,7 +91,7 @@ export default function SalaryCalculator() {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => `$${value.toFixed(0)}`} />
+              <Tooltip formatter={(value: number) => formatCurrency(value)} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
@@ -98,23 +100,23 @@ export default function SalaryCalculator() {
         <div className="space-y-3">
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Hourly</span>
-            <span className="font-semibold">${results.hourly.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(results.hourly)}</span>
           </div>
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Daily (8h)</span>
-            <span className="font-semibold">${results.daily.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(results.daily)}</span>
           </div>
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Weekly</span>
-            <span className="font-semibold">${results.weekly.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(results.weekly)}</span>
           </div>
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Monthly</span>
-            <span className="font-semibold">${results.monthly.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(results.monthly)}</span>
           </div>
           <div className="flex justify-between py-2">
             <span className="text-gray-900 font-bold">Yearly</span>
-            <span className="font-bold text-blue-600">${results.yearly.toFixed(2)}</span>
+            <span className="font-bold text-blue-600">{formatCurrency(results.yearly)}</span>
           </div>
         </div>
       </div>

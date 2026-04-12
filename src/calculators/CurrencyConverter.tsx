@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRightLeft, RefreshCw, DollarSign } from 'lucide-react';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 interface ExchangeRates {
   [key: string]: number;
 }
 
 export default function CurrencyConverter() {
+  const { currency: globalCurrency } = useCurrency();
   const [amount, setAmount] = useState<number>(100);
-  const [fromCurrency, setFromCurrency] = useState<string>('USD');
-  const [toCurrency, setToCurrency] = useState<string>('EUR');
+  const [fromCurrency, setFromCurrency] = useState<string>(globalCurrency.code);
+  const [toCurrency, setToCurrency] = useState<string>(globalCurrency.code === 'USD' ? 'EUR' : 'USD');
   const [rates, setRates] = useState<ExchangeRates>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string>('');
+
+  // Update fromCurrency when global currency changes
+  useEffect(() => {
+    setFromCurrency(globalCurrency.code);
+  }, [globalCurrency.code]);
 
   // Fetch exchange rates
   const fetchRates = async () => {
@@ -76,7 +83,7 @@ export default function CurrencyConverter() {
             <label className="block text-sm font-medium text-gray-700 mb-2">Amount</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <DollarSign className="h-5 w-5 text-gray-400" />
+                <span className="text-gray-400 font-bold">{globalCurrency.symbol}</span>
               </div>
               <input
                 type="number"

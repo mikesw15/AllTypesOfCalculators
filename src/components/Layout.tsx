@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Search, Menu, X, Calculator, User, LogOut } from 'lucide-react';
 import { auth } from '../firebase';
 import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import CurrencySelector from './CurrencySelector';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,6 +45,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to="/categories" className="text-gray-600 hover:text-gray-900 font-medium">Categories</Link>
               <Link to="/favorites" className="text-gray-600 hover:text-gray-900 font-medium">Favorites</Link>
               
+              <CurrencySelector />
+
               {user ? (
                 <div className="flex items-center gap-4">
                   <Link to="/account" className="flex items-center gap-2 hover:opacity-80 transition-opacity">

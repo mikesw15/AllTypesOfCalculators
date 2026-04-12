@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function CryptoROICalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [investment, setInvestment] = useState<number>(1000);
   const [buyPrice, setBuyPrice] = useState<number>(50000);
   const [sellPrice, setSellPrice] = useState<number>(65000);
@@ -33,16 +35,16 @@ export default function CryptoROICalculator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Investment Amount ($)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Investment Amount ({currency.symbol})</label>
           <input type="number" value={investment} onChange={(e) => setInvestment(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Buy Price ($)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Buy Price ({currency.symbol})</label>
             <input type="number" value={buyPrice} onChange={(e) => setBuyPrice(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Sell Price ($)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Sell Price ({currency.symbol})</label>
             <input type="number" value={sellPrice} onChange={(e) => setSellPrice(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
           </div>
         </div>
@@ -65,8 +67,8 @@ export default function CryptoROICalculator() {
               <BarChart data={results.chartData} margin={{ top: 20, right: 0, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
                 <XAxis dataKey="name" tick={{fontSize: 12}} tickLine={false} axisLine={false} />
-                <YAxis tickFormatter={(val) => `$${(val/1000).toFixed(0)}k`} tick={{fontSize: 12}} tickLine={false} axisLine={false} />
-                <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} cursor={{fill: 'transparent'}} />
+                <YAxis tickFormatter={(val) => `${currency.symbol}${(val/1000).toFixed(0)}k`} tick={{fontSize: 12}} tickLine={false} axisLine={false} />
+                <Tooltip formatter={(value: number) => formatCurrency(value)} cursor={{fill: 'transparent'}} />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={60}>
                   {results.chartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -84,12 +86,12 @@ export default function CryptoROICalculator() {
           </div>
           <div className="flex justify-between py-2 border-b border-gray-200">
             <span className="text-gray-600">Net Revenue</span>
-            <span className="font-semibold">${results.revenue.toFixed(2)}</span>
+            <span className="font-semibold">{formatCurrency(results.revenue)}</span>
           </div>
           <div className="flex justify-between py-2">
             <span className="text-gray-600">Total Profit/Loss</span>
             <span className={`font-semibold ${results.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              ${results.profit.toFixed(2)}
+              {formatCurrency(results.profit)}
             </span>
           </div>
         </div>

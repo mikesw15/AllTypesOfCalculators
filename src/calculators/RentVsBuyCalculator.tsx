@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function RentVsBuyCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [rent, setRent] = useState<number>(2000);
   const [homePrice, setHomePrice] = useState<number>(400000);
   const [years, setYears] = useState<number>(10);
@@ -49,11 +51,11 @@ export default function RentVsBuyCalculator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Rent ($)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Rent ({currency.symbol})</label>
           <input type="number" value={rent} onChange={(e) => setRent(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Home Price to Buy ($)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Home Price to Buy ({currency.symbol})</label>
           <input type="number" value={homePrice} onChange={(e) => setHomePrice(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
@@ -76,8 +78,8 @@ export default function RentVsBuyCalculator() {
             <LineChart data={results.chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
               <XAxis dataKey="year" tick={{fontSize: 12}} tickLine={false} axisLine={false} />
-              <YAxis tickFormatter={(val) => `$${(val/1000).toFixed(0)}k`} tick={{fontSize: 12}} tickLine={false} axisLine={false} />
-              <Tooltip formatter={(value: number) => `$${value.toFixed(0)}`} labelFormatter={(label) => `Year ${label}`} />
+              <YAxis tickFormatter={(val) => `${currency.symbol}${(val/1000).toFixed(0)}k`} tick={{fontSize: 12}} tickLine={false} axisLine={false} />
+              <Tooltip formatter={(value: number) => formatCurrency(value)} labelFormatter={(label) => `Year ${label}`} />
               <Legend />
               <Line type="monotone" dataKey="rentCost" name="Net Cost of Renting" stroke="#ef4444" strokeWidth={3} dot={false} />
               <Line type="monotone" dataKey="buyCost" name="Net Cost of Buying" stroke="#3b82f6" strokeWidth={3} dot={false} />
@@ -88,11 +90,11 @@ export default function RentVsBuyCalculator() {
         <div className="space-y-4">
           <div className="p-4 bg-white rounded-lg border border-gray-200">
             <div className="text-sm text-gray-500">Total Cost of Renting</div>
-            <div className="text-xl font-bold text-gray-900">${results.totalRent.toFixed(0)}</div>
+            <div className="text-xl font-bold text-gray-900">{formatCurrency(results.totalRent)}</div>
           </div>
           <div className="p-4 bg-white rounded-lg border border-gray-200">
             <div className="text-sm text-gray-500">Net Cost of Buying (Cost - Equity)</div>
-            <div className="text-xl font-bold text-gray-900">${results.netBuyCost.toFixed(0)}</div>
+            <div className="text-xl font-bold text-gray-900">{formatCurrency(results.netBuyCost)}</div>
             <div className="text-xs text-gray-400 mt-1">Assumes 3% appreciation, 20% down, 6% rate</div>
           </div>
         </div>

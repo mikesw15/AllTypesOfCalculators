@@ -10,21 +10,26 @@ import CalculatorPage from './pages/CalculatorPage';
 import Categories from './pages/Categories';
 import Favorites from './pages/Favorites';
 import Account from './pages/Account';
+import ScrollToTop from './components/ScrollToTop';
+import { CurrencyProvider } from './contexts/CurrencyContext';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/calculators/:id" element={<CalculatorPage />} />
-          {/* Fallback route */}
-          <Route path="*" element={<Home />} />
-        </Routes>
-      </Layout>
+      <CurrencyProvider>
+        <ScrollToTop />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/calculators/:id" element={<CalculatorPage />} />
+            {/* Fallback route */}
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </Layout>
+      </CurrencyProvider>
     </BrowserRouter>
   );
 }
