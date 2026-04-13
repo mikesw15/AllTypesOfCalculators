@@ -5,6 +5,7 @@ import { collection, query, getDocs } from 'firebase/firestore';
 import { getCalculatorById } from '../calculators';
 import { CalculatorMeta } from '../types';
 import { Home as HomeIcon, Activity, Image as ImageIcon, Star, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<CalculatorMeta[]>([]);
@@ -45,6 +46,7 @@ export default function Favorites() {
   if (!user) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <SEO title="Your Favorites | AllTypesOfCalculators" description="View and manage your favorite calculators for quick access." />
         <Star className="w-16 h-16 text-gray-300 mx-auto mb-4" />
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Your Favorites</h1>
         <p className="text-lg text-gray-600 mb-8">Please sign in to view and save your favorite calculators.</p>
@@ -54,6 +56,7 @@ export default function Favorites() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO title="Your Favorites | AllTypesOfCalculators" description="Quick access to your most used tools and calculators." />
       <h1 className="text-4xl font-bold text-gray-900 mb-4">Your Favorites</h1>
       <p className="text-xl text-gray-600 mb-12">Quick access to your most used tools.</p>
 

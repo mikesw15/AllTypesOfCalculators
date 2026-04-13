@@ -1,6 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { useCurrency } from '../contexts/CurrencyContext';
+import { Car, Wallet, ArrowDownCircle, Calendar, Percent } from 'lucide-react';
+import CalculatorInput from '../components/calculator/CalculatorInput';
+import CalculatorResult from '../components/calculator/CalculatorResult';
 
 export default function CarLoanCalculator() {
   const { currency, formatCurrency } = useCurrency();
@@ -31,26 +34,47 @@ export default function CarLoanCalculator() {
   }, [price, downPayment, tradeIn, term, rate]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Car Price ({currency.symbol})</label>
-          <input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="space-y-8">
+        <CalculatorInput
+          label="Car Price"
+          value={price}
+          onChange={setPrice}
+          icon={Car}
+          prefix={currency.symbol}
+          min={0}
+        />
+        
+        <div className="grid grid-cols-2 gap-6">
+          <CalculatorInput
+            label="Down Payment"
+            value={downPayment}
+            onChange={setDownPayment}
+            icon={Wallet}
+            prefix={currency.symbol}
+            min={0}
+          />
+          <CalculatorInput
+            label="Trade-in Value"
+            value={tradeIn}
+            onChange={setTradeIn}
+            icon={ArrowDownCircle}
+            prefix={currency.symbol}
+            min={0}
+          />
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment ({currency.symbol})</label>
-            <input type="number" value={downPayment} onChange={(e) => setDownPayment(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Trade-in Value ({currency.symbol})</label>
-            <input type="number" value={tradeIn} onChange={(e) => setTradeIn(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Loan Term (Months)</label>
-            <select value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+
+        <div className="grid grid-cols-2 gap-6">
+          <div className="w-full">
+            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-blue-500" />
+              Loan Term
+            </label>
+            <select 
+              value={term} 
+              onChange={(e) => setTerm(Number(e.target.value))}
+              className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
+            >
               <option value={36}>36 Months (3 Years)</option>
               <option value={48}>48 Months (4 Years)</option>
               <option value={60}>60 Months (5 Years)</option>
@@ -58,54 +82,67 @@ export default function CarLoanCalculator() {
               <option value={84}>84 Months (7 Years)</option>
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Interest Rate (%)</label>
-            <input type="number" step="0.1" value={rate} onChange={(e) => setRate(Number(e.target.value))} className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-          </div>
+          <CalculatorInput
+            label="Interest Rate"
+            value={rate}
+            onChange={setRate}
+            icon={Percent}
+            suffix="%"
+            step={0.1}
+            min={0}
+          />
         </div>
       </div>
-      <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col justify-center">
-        <div className="text-center mb-6">
-          <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">Estimated Monthly Payment</p>
-          <div className="text-5xl font-extrabold text-gray-900">{formatCurrency(results.payment)}</div>
-        </div>
 
-        {results.chartData && results.chartData.length > 0 && (
-          <div className="h-64 mb-6">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={results.chartData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {results.chartData.map((entry: any, index: number) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(value: number) => formatCurrency(value)} />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        )}
+      <div className="flex flex-col gap-8">
+        <CalculatorResult
+          label="Estimated Monthly Payment"
+          value={formatCurrency(results.payment)}
+          color="blue"
+        />
 
-        <div className="space-y-3">
-          <div className="flex justify-between py-2 border-b border-gray-200">
-            <span className="text-gray-600">Loan Amount (Principal)</span>
-            <span className="font-semibold">{formatCurrency(results.principal)}</span>
-          </div>
-          <div className="flex justify-between py-2 border-b border-gray-200">
-            <span className="text-gray-600">Total Interest Paid</span>
-            <span className="font-semibold text-red-600">{formatCurrency(results.totalInterest)}</span>
-          </div>
-          <div className="flex justify-between py-2">
-            <span className="text-gray-600">Total Cost of Car</span>
-            <span className="font-semibold text-blue-600">{formatCurrency(results.totalCost)}</span>
+        <div className="bg-white rounded-2xl border-2 border-gray-100 p-8 shadow-sm">
+          <h3 className="text-lg font-bold text-gray-900 mb-8 text-center">Loan Breakdown</h3>
+          
+          {results.chartData && results.chartData.length > 0 && (
+            <div className="h-64 mb-8">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={results.chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={8}
+                    dataKey="value"
+                  >
+                    {results.chartData.map((entry: any, index: number) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                    formatter={(value: number) => formatCurrency(value)} 
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 rounded-xl hover:bg-gray-50 transition-colors">
+              <span className="text-sm font-bold text-gray-600">Loan Amount (Principal)</span>
+              <span className="font-bold text-gray-900">{formatCurrency(results.principal)}</span>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-xl hover:bg-gray-50 transition-colors">
+              <span className="text-sm font-bold text-gray-600">Total Interest Paid</span>
+              <span className="font-bold text-red-600">{formatCurrency(results.totalInterest)}</span>
+            </div>
+            <div className="flex justify-between items-center p-3 rounded-xl bg-blue-50 transition-colors">
+              <span className="text-sm font-bold text-blue-700">Total Cost of Car</span>
+              <span className="font-bold text-blue-900">{formatCurrency(results.totalCost)}</span>
+            </div>
           </div>
         </div>
       </div>

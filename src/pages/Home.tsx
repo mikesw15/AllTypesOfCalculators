@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer } from 'lucide-react';
 import { calculators } from '../calculators';
+import SEO from '../components/SEO';
 
 const categories = [
   { name: 'Finance & Money', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
@@ -21,6 +22,10 @@ export default function Home() {
 
   return (
     <div>
+      <SEO 
+        title="All Types of Calculators | Fast, Accurate & Free Online Tools"
+        description="Free online calculators for finance, health, math, and everyday life. Get instant results with our easy-to-use tools including Mortgage, BMI, and Currency Converter."
+      />
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 text-center">

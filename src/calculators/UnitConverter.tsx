@@ -1,4 +1,8 @@
 import React, { useState, useMemo } from 'react';
+import { Ruler, Scale, ArrowRightLeft } from 'lucide-react';
+import CalculatorInput from '../components/calculator/CalculatorInput';
+import CalculatorResult from '../components/calculator/CalculatorResult';
+import CalculatorToggle from '../components/calculator/CalculatorToggle';
 
 const conversions = {
   Length: {
@@ -43,30 +47,57 @@ export default function UnitConverter() {
   }, [category, fromUnit, toUnit, value]);
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <div className="flex justify-center gap-4 mb-8">
-        <button onClick={() => handleCategoryChange('Length')} className={`px-6 py-2 rounded-full font-medium ${category === 'Length' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'}`}>Length</button>
-        <button onClick={() => handleCategoryChange('Weight')} className={`px-6 py-2 rounded-full font-medium ${category === 'Weight' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'}`}>Weight</button>
+    <div className="max-w-4xl mx-auto space-y-12">
+      <div className="flex justify-center">
+        <CalculatorToggle
+          label="Conversion Category"
+          value={category}
+          onChange={(val) => handleCategoryChange(val as 'Length' | 'Weight')}
+          options={[
+            { label: 'Length', value: 'Length' },
+            { label: 'Weight', value: 'Weight' }
+          ]}
+        />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">From</label>
-          <div className="flex gap-2">
-            <input type="number" value={value} onChange={(e) => setValue(Number(e.target.value))} className="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-            <select value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} className="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="lg:col-span-5 space-y-6">
+          <div className="flex flex-col gap-4">
+            <CalculatorInput
+              label="From"
+              value={value}
+              onChange={setValue}
+              icon={category === 'Length' ? Ruler : Scale}
+              min={0}
+            />
+            <select 
+              value={fromUnit} 
+              onChange={(e) => setFromUnit(e.target.value)}
+              className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
+            >
               {units.map(u => <option key={u} value={u}>{u}</option>)}
             </select>
           </div>
         </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">To</label>
-          <div className="flex gap-2">
-            <div className="w-1/2 px-4 py-2 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 font-semibold flex items-center overflow-hidden">
-              {result.toPrecision(6)}
-            </div>
-            <select value={toUnit} onChange={(e) => setToUnit(e.target.value)} className="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+
+        <div className="lg:col-span-2 flex justify-center">
+          <div className="p-4 bg-blue-50 text-blue-600 rounded-full border-2 border-blue-100">
+            <ArrowRightLeft className="w-6 h-6" />
+          </div>
+        </div>
+
+        <div className="lg:col-span-5 space-y-6">
+          <div className="flex flex-col gap-4">
+            <CalculatorResult
+              label="Result"
+              value={result.toPrecision(6)}
+              color="blue"
+            />
+            <select 
+              value={toUnit} 
+              onChange={(e) => setToUnit(e.target.value)}
+              className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
+            >
               {units.map(u => <option key={u} value={u}>{u}</option>)}
             </select>
           </div>

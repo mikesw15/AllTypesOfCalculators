@@ -44,6 +44,12 @@ import PaintCalculator from './PaintCalculator';
 import FlooringCalculator from './FlooringCalculator';
 import ConcreteCalculator from './ConcreteCalculator';
 import HVACCalculator from './HVACCalculator';
+import TileCalculator from './TileCalculator';
+import RetirementCalculator from './RetirementCalculator';
+import BodyFatCalculator from './BodyFatCalculator';
+import TipCalculator from './TipCalculator';
+import WallpaperCalculator from './WallpaperCalculator';
+import FractionCalculator from './FractionCalculator';
 
 export const calculators: CalculatorMeta[] = [
   {
@@ -65,6 +71,16 @@ export const calculators: CalculatorMeta[] = [
     component: CompoundInterestCalculator,
     seoTitle: 'Compound Interest Calculator | AllTypesOfCalculators',
     seoDescription: 'Calculate future value of investments with compound interest.'
+  },
+  {
+    id: 'retirement-savings',
+    title: 'Retirement Savings',
+    description: 'Plan your future by estimating your retirement nest egg based on savings and returns.',
+    category: 'Finance & Money',
+    icon: 'PiggyBank',
+    component: RetirementCalculator,
+    seoTitle: 'Retirement Savings Calculator | AllTypesOfCalculators',
+    seoDescription: 'Estimate your future retirement savings and see if you are on track for your goals.'
   },
   {
     id: 'salary-calculator',
@@ -162,6 +178,16 @@ export const calculators: CalculatorMeta[] = [
     component: HeartRateCalculator,
     seoTitle: 'Heart Rate Zone Calculator | AllTypesOfCalculators',
     seoDescription: 'Optimize your workouts by training in the right heart rate zones.'
+  },
+  {
+    id: 'body-fat-calculator',
+    title: 'Body Fat Calculator',
+    description: 'Estimate your body fat percentage using the US Navy method.',
+    category: 'Health & Fitness',
+    icon: 'Percent',
+    component: BodyFatCalculator,
+    seoTitle: 'Body Fat Calculator - US Navy Method | AllTypesOfCalculators',
+    seoDescription: 'Calculate your estimated body fat percentage based on body measurements.'
   },
   {
     id: 'peptide-calculator',
@@ -293,6 +319,16 @@ export const calculators: CalculatorMeta[] = [
     seoDescription: 'Calculate the odds and probability of events.'
   },
   {
+    id: 'fraction-calculator',
+    title: 'Fraction Calculator',
+    description: 'Add, subtract, multiply, and divide fractions easily.',
+    category: 'Math & Science',
+    icon: 'Divide',
+    component: FractionCalculator,
+    seoTitle: 'Fraction Calculator - Simplify & Calculate Fractions | AllTypesOfCalculators',
+    seoDescription: 'Free online fraction calculator to add, subtract, multiply, and divide fractions.'
+  },
+  {
     id: 'fuel-cost',
     title: 'Fuel Cost Calculator',
     description: 'Estimate the total cost of gas for your next road trip.',
@@ -341,6 +377,16 @@ export const calculators: CalculatorMeta[] = [
     component: RecipeScaler,
     seoTitle: 'Recipe Ingredient Scaler | AllTypesOfCalculators',
     seoDescription: 'Scale your recipes for any number of servings.'
+  },
+  {
+    id: 'tip-calculator',
+    title: 'Tip & Bill Splitter',
+    description: 'Quickly calculate tips and split the bill among friends.',
+    category: 'Everyday Life',
+    icon: 'Users',
+    component: TipCalculator,
+    seoTitle: 'Tip Calculator & Bill Splitter | AllTypesOfCalculators',
+    seoDescription: 'Easily calculate tips and split restaurant bills among multiple people.'
   },
   {
     id: 'love-calculator',
@@ -431,6 +477,49 @@ export const calculators: CalculatorMeta[] = [
     component: HVACCalculator,
     seoTitle: 'HVAC BTU Calculator - AC & Heater Sizing | AllTypesOfCalculators',
     seoDescription: 'Calculate the required BTUs and AC tonnage needed to cool or heat your room.'
+  },
+  {
+    id: 'tile-calculator',
+    title: 'Tile Calculator',
+    description: 'Calculate how many tiles and boxes you need for your floor or wall project.',
+    category: 'Home Improvement & DIY',
+    icon: 'Grid',
+    component: TileCalculator,
+    seoTitle: 'Tile Calculator - Estimate Tiles & Grout | AllTypesOfCalculators',
+    seoDescription: 'Calculate exactly how many tiles, boxes, and grout you need for your tiling project.',
+    explanation: (
+      <>
+        <p>Planning a tiling project requires accurate measurements to ensure you have enough material without excessive waste.</p>
+        <p>This calculator helps you determine:</p>
+        <ul>
+          <li><strong>Total Tiles:</strong> The number of individual tiles needed based on your room and tile size.</li>
+          <li><strong>Grout Consideration:</strong> Factor in the grout line width for a more precise count.</li>
+          <li><strong>Boxes Needed:</strong> How many full boxes to purchase based on tiles per box.</li>
+          <li><strong>Waste Factor:</strong> Automatically adds extra tiles for cuts and breakage.</li>
+        </ul>
+      </>
+    ),
+    faq: [
+      {
+        question: "How much waste should I account for?",
+        answer: "A 10% waste factor is standard for most rectangular rooms. If you have many corners or are laying tiles diagonally, increase this to 15-20%."
+      },
+      {
+        question: "Does grout width really matter?",
+        answer: "Yes, especially for smaller tiles. A 1/8\" or 1/4\" grout line can significantly reduce the number of tiles needed over a large area."
+      }
+    ],
+    relatedIds: ['flooring-calculator', 'paint-calculator', 'concrete-calculator']
+  },
+  {
+    id: 'wallpaper-calculator',
+    title: 'Wallpaper Calculator',
+    description: 'Estimate how many rolls of wallpaper you need for your room.',
+    category: 'Home Improvement & DIY',
+    icon: 'Layers',
+    component: WallpaperCalculator,
+    seoTitle: 'Wallpaper Calculator - Estimate Rolls Needed | AllTypesOfCalculators',
+    seoDescription: 'Calculate exactly how many rolls of wallpaper you need for your home improvement project.'
   }
 ];
 

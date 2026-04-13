@@ -1,4 +1,8 @@
 import React, { useState, useMemo } from 'react';
+import CalculatorInput from '../components/calculator/CalculatorInput';
+import CalculatorResult from '../components/calculator/CalculatorResult';
+import CalculatorToggle from '../components/calculator/CalculatorToggle';
+import { Scale, Ruler } from 'lucide-react';
 
 export default function BMICalculator() {
   const [system, setSystem] = useState<'metric' | 'imperial'>('imperial');
@@ -30,94 +34,113 @@ export default function BMICalculator() {
   const category = getCategory(bmi);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
       {/* Inputs */}
-      <div className="space-y-6">
-        <div className="flex p-1 bg-gray-100 rounded-lg">
-          <button
-            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${system === 'imperial' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-            onClick={() => setSystem('imperial')}
-          >
-            Imperial (lbs, ft/in)
-          </button>
-          <button
-            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${system === 'metric' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-            onClick={() => setSystem('metric')}
-          >
-            Metric (kg, cm)
-          </button>
-        </div>
+      <div className="space-y-8">
+        <CalculatorToggle
+          label="Measurement System"
+          value={system}
+          onChange={setSystem}
+          options={[
+            { label: 'Imperial (lbs, ft/in)', value: 'imperial' },
+            { label: 'Metric (kg, cm)', value: 'metric' }
+          ]}
+        />
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Weight ({system === 'imperial' ? 'lbs' : 'kg'})
-          </label>
-          <input 
-            type="number" 
-            value={weight} 
-            onChange={(e) => setWeight(Number(e.target.value))}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
+        <CalculatorInput
+          label={`Weight (${system === 'imperial' ? 'lbs' : 'kg'})`}
+          value={weight}
+          onChange={setWeight}
+          icon={Scale}
+          suffix={system === 'imperial' ? 'lbs' : 'kg'}
+          min={0}
+        />
 
         {system === 'imperial' ? (
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Height (ft)</label>
-              <input 
-                type="number" 
-                value={heightFt} 
-                onChange={(e) => setHeightFt(Number(e.target.value))}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Height (in)</label>
-              <input 
-                type="number" 
-                value={heightIn} 
-                onChange={(e) => setHeightIn(Number(e.target.value))}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-        ) : (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
-            <input 
-              type="number" 
-              value={heightCm} 
-              onChange={(e) => setHeightCm(Number(e.target.value))}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          <div className="grid grid-cols-2 gap-6">
+            <CalculatorInput
+              label="Height (ft)"
+              value={heightFt}
+              onChange={setHeightFt}
+              icon={Ruler}
+              suffix="ft"
+              min={0}
+            />
+            <CalculatorInput
+              label="Height (in)"
+              value={heightIn}
+              onChange={setHeightIn}
+              suffix="in"
+              min={0}
+              max={11}
             />
           </div>
+        ) : (
+          <CalculatorInput
+            label="Height (cm)"
+            value={heightCm}
+            onChange={setHeightCm}
+            icon={Ruler}
+            suffix="cm"
+            min={0}
+          />
         )}
       </div>
 
       {/* Results */}
-      <div className="bg-gray-50 rounded-xl p-8 border border-gray-100 flex flex-col items-center justify-center text-center">
-        <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Your BMI</p>
-        <div className="text-6xl font-extrabold text-gray-900 mb-4">
-          {bmi > 0 ? bmi.toFixed(1) : '0.0'}
-        </div>
-        
-        {bmi > 0 && (
-          <div className={`px-4 py-2 rounded-full font-semibold ${category.bg} ${category.color}`}>
-            {category.label}
-          </div>
-        )}
+      <div className="flex flex-col gap-8">
+        <CalculatorResult
+          label="Your Body Mass Index"
+          value={bmi > 0 ? bmi.toFixed(1) : '0.0'}
+          description={`You are in the ${category.label.toLowerCase()} category.`}
+          color={
+            category.label === 'Normal weight' ? 'green' :
+            category.label === 'Underweight' ? 'blue' :
+            category.label === 'Overweight' ? 'yellow' : 'red'
+          }
+        />
 
-        <div className="mt-8 w-full max-w-xs">
-          <div className="flex h-4 rounded-full overflow-hidden">
-            <div className="bg-blue-400 w-[24%]" title="Underweight (<18.5)"></div>
-            <div className="bg-green-400 w-[34%]" title="Normal (18.5-24.9)"></div>
-            <div className="bg-yellow-400 w-[21%]" title="Overweight (25-29.9)"></div>
-            <div className="bg-red-400 w-[21%]" title="Obese (30+)"></div>
+        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">BMI Scale</p>
+          <div className="space-y-4">
+            <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden flex">
+              <div className="bg-blue-400 h-full" style={{ width: '24%' }} title="Underweight (<18.5)"></div>
+              <div className="bg-green-400 h-full" style={{ width: '34%' }} title="Normal (18.5-24.9)"></div>
+              <div className="bg-yellow-400 h-full" style={{ width: '21%' }} title="Overweight (25-29.9)"></div>
+              <div className="bg-red-400 h-full" style={{ width: '21%' }} title="Obese (30+)"></div>
+              
+              {/* Indicator */}
+              {bmi > 0 && (
+                <div 
+                  className="absolute top-0 bottom-0 w-1 bg-gray-900 shadow-lg transition-all duration-500"
+                  style={{ 
+                    left: `${Math.min(Math.max((bmi / 40) * 100, 0), 100)}%`,
+                    transform: 'translateX(-50%)'
+                  }}
+                />
+              )}
+            </div>
+            <div className="flex justify-between text-[10px] font-bold text-gray-400 px-1">
+              <span>18.5</span>
+              <span>25</span>
+              <span>30</span>
+              <span>40</span>
+            </div>
           </div>
-          <div className="flex justify-between text-xs text-gray-500 mt-2 px-1">
-            <span>18.5</span>
-            <span>25</span>
-            <span>30</span>
+          
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            {[
+              { label: 'Underweight', range: '< 18.5', color: 'bg-blue-400' },
+              { label: 'Normal', range: '18.5 - 24.9', color: 'bg-green-400' },
+              { label: 'Overweight', range: '25 - 29.9', color: 'bg-yellow-400' },
+              { label: 'Obese', range: '30+', color: 'bg-red-400' },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${item.color}`} />
+                <span className="text-[10px] font-bold text-gray-500 uppercase">{item.label}</span>
+                <span className="text-[10px] text-gray-400 ml-auto">{item.range}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

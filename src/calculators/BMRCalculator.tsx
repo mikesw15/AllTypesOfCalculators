@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { User, Scale, Ruler, Activity, Flame, Zap } from 'lucide-react';
+import CalculatorInput from '../components/calculator/CalculatorInput';
+import CalculatorResult from '../components/calculator/CalculatorResult';
+import CalculatorToggle from '../components/calculator/CalculatorToggle';
 
 export default function BMRCalculator() {
   const [gender, setGender] = useState<'male' | 'female'>('male');
@@ -40,60 +43,56 @@ export default function BMRCalculator() {
   ];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      <div className="lg:col-span-5 space-y-6">
-        <div className="flex p-1 bg-gray-100 rounded-lg">
-          <button
-            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${gender === 'male' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-            onClick={() => setGender('male')}
-          >
-            Male
-          </button>
-          <button
-            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${gender === 'female' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-            onClick={() => setGender('female')}
-          >
-            Female
-          </button>
-        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="lg:col-span-5 space-y-8">
+        <CalculatorToggle
+          label="Gender"
+          value={gender}
+          onChange={setGender}
+          options={[
+            { label: 'Male', value: 'male' },
+            { label: 'Female', value: 'female' }
+          ]}
+        />
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
-            <input 
-              type="number" 
-              value={age} 
-              onChange={(e) => setAge(Number(e.target.value))}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
-            <input 
-              type="number" 
-              value={weight} 
-              onChange={(e) => setWeight(Number(e.target.value))}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
-          <input 
-            type="number" 
-            value={height} 
-            onChange={(e) => setHeight(Number(e.target.value))}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        <div className="grid grid-cols-2 gap-6">
+          <CalculatorInput
+            label="Age"
+            value={age}
+            onChange={setAge}
+            icon={User}
+            suffix="yrs"
+            min={0}
+            max={120}
+          />
+          <CalculatorInput
+            label="Weight"
+            value={weight}
+            onChange={setWeight}
+            icon={Scale}
+            suffix="kg"
+            min={0}
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Activity Level</label>
+        <CalculatorInput
+          label="Height"
+          value={height}
+          onChange={setHeight}
+          icon={Ruler}
+          suffix="cm"
+          min={0}
+        />
+
+        <div className="w-full">
+          <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <Activity className="w-4 h-4 text-blue-500" />
+            Activity Level
+          </label>
           <select 
             value={activity} 
             onChange={(e) => setActivity(Number(e.target.value))}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
           >
             {activityLevels.map(level => (
               <option key={level.value} value={level.value}>{level.label}</option>
@@ -102,37 +101,40 @@ export default function BMRCalculator() {
         </div>
       </div>
 
-      <div className="lg:col-span-7 bg-gray-50 rounded-xl p-6 border border-gray-100">
-        <div className="grid grid-cols-2 gap-4 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 text-center">
-            <p className="text-xs font-medium text-gray-500 uppercase mb-1">BMR</p>
-            <p className="text-2xl font-bold text-gray-900">{results.bmr.toFixed(0)}</p>
-            <p className="text-[10px] text-gray-400">Calories/day</p>
-          </div>
-          <div className="bg-blue-600 p-4 rounded-lg shadow-sm text-center text-white">
-            <p className="text-xs font-medium text-white/80 uppercase mb-1">TDEE</p>
-            <p className="text-2xl font-bold">{results.tdee.toFixed(0)}</p>
-            <p className="text-[10px] text-white/60">Calories/day</p>
-          </div>
+      <div className="lg:col-span-7 space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CalculatorResult
+            label="Basal Metabolic Rate"
+            value={results.bmr.toFixed(0)}
+            subValue="kcal"
+            color="blue"
+            icon={<Flame className="w-6 h-6 text-blue-600" />}
+            description="Calories burned at complete rest."
+          />
+          <CalculatorResult
+            label="Daily Energy Expenditure"
+            value={results.tdee.toFixed(0)}
+            subValue="kcal"
+            color="purple"
+            icon={<Zap className="w-6 h-6 text-purple-600" />}
+            description="Total calories burned with activity."
+          />
         </div>
 
-        <h3 className="font-bold text-gray-900 mb-4">Daily Calories for Weight Goals</h3>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-100">
-            <span className="text-sm text-gray-600">Maintain weight</span>
-            <span className="font-bold text-gray-900">{results.maintain.toFixed(0)} kcal</span>
-          </div>
-          <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-100">
-            <span className="text-sm text-green-700">Mild weight loss (0.25kg/week)</span>
-            <span className="font-bold text-green-900">{results.mildLoss.toFixed(0)} kcal</span>
-          </div>
-          <div className="flex justify-between items-center p-3 bg-green-100 rounded-lg border border-green-200">
-            <span className="text-sm text-green-800">Weight loss (0.5kg/week)</span>
-            <span className="font-bold text-green-900">{results.weightLoss.toFixed(0)} kcal</span>
-          </div>
-          <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg border border-orange-100">
-            <span className="text-sm text-orange-700">Weight gain (0.5kg/week)</span>
-            <span className="font-bold text-orange-900">{results.weightGain.toFixed(0)} kcal</span>
+        <div className="bg-white rounded-2xl border-2 border-gray-100 p-8 shadow-sm">
+          <h3 className="text-lg font-bold text-gray-900 mb-8">Daily Calories for Weight Goals</h3>
+          <div className="space-y-4">
+            {[
+              { label: 'Maintain weight', value: results.maintain, color: 'bg-blue-50 text-blue-700 border-blue-100' },
+              { label: 'Mild weight loss (0.25kg/week)', value: results.mildLoss, color: 'bg-green-50 text-green-700 border-green-100' },
+              { label: 'Weight loss (0.5kg/week)', value: results.weightLoss, color: 'bg-green-100 text-green-800 border-green-200' },
+              { label: 'Weight gain (0.5kg/week)', value: results.weightGain, color: 'bg-orange-50 text-orange-700 border-orange-100' },
+            ].map((item) => (
+              <div key={item.label} className={`flex justify-between items-center p-4 rounded-xl border-2 transition-colors ${item.color}`}>
+                <span className="text-sm font-bold">{item.label}</span>
+                <span className="text-xl font-black">{item.value.toFixed(0)} <span className="text-xs font-bold opacity-60 uppercase">kcal</span></span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

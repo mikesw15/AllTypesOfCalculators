@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { ChevronDown, ChevronUp, Info, Home, Wallet, Percent, Calendar, Shield, Landmark } from 'lucide-react';
 import { useCurrency } from '../contexts/CurrencyContext';
+import CalculatorInput from '../components/calculator/CalculatorInput';
+import CalculatorResult from '../components/calculator/CalculatorResult';
+import CalculatorToggle from '../components/calculator/CalculatorToggle';
 
 export default function MortgageCalculator() {
   const { currency, formatCurrency } = useCurrency();
@@ -72,180 +75,159 @@ export default function MortgageCalculator() {
     };
   }, [homePrice, downPayment, loanTerm, interestRate, propertyTax, homeInsurance, hoaFees, pmiRate, isARM, armInitialPeriod, armExpectedRate]);
 
-  const chartData = [
+  const chartData = useMemo(() => [
     { name: 'Principal & Interest', value: results.monthlyPrincipalAndInterest, color: '#2563eb' },
     { name: 'Property Tax', value: results.monthlyPropertyTax, color: '#16a34a' },
     { name: 'Home Insurance', value: results.monthlyHomeInsurance, color: '#eab308' },
     { name: 'PMI', value: results.monthlyPMI, color: '#ef4444' },
     { name: 'HOA Fees', value: results.hoaFees, color: '#8b5cf6' },
-  ].filter(item => item.value > 0);
+  ], [results]);
+
+  const visibleChartData = chartData.filter(item => item.value > 0);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
       {/* Inputs */}
-      <div className="lg:col-span-5 space-y-6">
-        <div className="flex p-1 bg-gray-100 rounded-lg mb-4">
-          <button
-            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${!isARM ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-            onClick={() => setIsARM(false)}
-          >
-            Fixed Rate
-          </button>
-          <button
-            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${isARM ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
-            onClick={() => setIsARM(true)}
-          >
-            ARM (Adjustable)
-          </button>
-        </div>
+      <div className="lg:col-span-5 space-y-8">
+        <CalculatorToggle
+          label="Loan Type"
+          value={isARM ? 'arm' : 'fixed'}
+          onChange={(val) => setIsARM(val === 'arm')}
+          options={[
+            { label: 'Fixed Rate', value: 'fixed' },
+            { label: 'ARM (Adjustable)', value: 'arm' }
+          ]}
+        />
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Home Price ({currency.symbol})</label>
-          <input 
-            type="number" 
-            value={homePrice} 
-            onChange={(e) => setHomePrice(Number(e.target.value))}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        <CalculatorInput
+          label="Home Price"
+          value={homePrice}
+          onChange={setHomePrice}
+          icon={Home}
+          prefix={currency.symbol}
+          min={0}
+        />
+        
+        <div className="grid grid-cols-2 gap-6">
+          <CalculatorInput
+            label="Down Payment"
+            value={downPayment}
+            onChange={setDownPayment}
+            icon={Wallet}
+            prefix={currency.symbol}
+            min={0}
+            max={homePrice}
+          />
+          <CalculatorInput
+            label="Down Payment (%)"
+            value={results.downPaymentPercent.toFixed(1)}
+            onChange={() => {}}
+            suffix="%"
+            type="text"
           />
         </div>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment ({currency.symbol})</label>
-            <input 
-              type="number" 
-              value={downPayment} 
-              onChange={(e) => setDownPayment(Number(e.target.value))}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Down Payment (%)</label>
-            <div className="relative">
-              <input 
-                type="number" 
-                value={results.downPaymentPercent.toFixed(1)} 
-                readOnly
-                className="w-full px-4 py-2 rounded-lg border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">%</span>
-            </div>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Loan Term (Years)</label>
+        <div className="grid grid-cols-2 gap-6">
+          <div className="w-full">
+            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-blue-500" />
+              Loan Term
+            </label>
             <select 
               value={loanTerm} 
               onChange={(e) => setLoanTerm(Number(e.target.value))}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
             >
               <option value={15}>15 Years</option>
               <option value={20}>20 Years</option>
               <option value={30}>30 Years</option>
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isARM ? 'Initial Rate (%)' : 'Interest Rate (%)'}
-            </label>
-            <input 
-              type="number" 
-              step="0.1"
-              value={interestRate} 
-              onChange={(e) => setInterestRate(Number(e.target.value))}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <CalculatorInput
+            label={isARM ? 'Initial Rate' : 'Interest Rate'}
+            value={interestRate}
+            onChange={setInterestRate}
+            icon={Percent}
+            suffix="%"
+            step={0.1}
+            min={0}
+          />
         </div>
 
         {isARM && (
-          <div className="grid grid-cols-2 gap-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
-            <div>
-              <label className="block text-sm font-medium text-blue-900 mb-1">Initial Period</label>
+          <div className="grid grid-cols-2 gap-6 p-6 bg-blue-50 rounded-2xl border-2 border-blue-100">
+            <div className="w-full">
+              <label className="block text-sm font-semibold text-blue-900 mb-2">Initial Period</label>
               <select 
                 value={armInitialPeriod} 
                 onChange={(e) => setArmInitialPeriod(Number(e.target.value))}
-                className="w-full px-4 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full bg-white border-2 border-blue-200 rounded-xl py-3 px-4 transition-all outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
               >
                 <option value={5}>5 Years</option>
                 <option value={7}>7 Years</option>
                 <option value={10}>10 Years</option>
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-blue-900 mb-1">Expected Rate (%)</label>
-              <input 
-                type="number" 
-                step="0.1"
-                value={armExpectedRate} 
-                onChange={(e) => setArmExpectedRate(Number(e.target.value))}
-                className="w-full px-4 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
+            <CalculatorInput
+              label="Expected Rate"
+              value={armExpectedRate}
+              onChange={setArmExpectedRate}
+              suffix="%"
+              step={0.1}
+              min={0}
+            />
           </div>
         )}
 
         {/* Advanced Options Accordion */}
-        <div className="border border-gray-200 rounded-xl overflow-hidden">
+        <div className="border-2 border-gray-100 rounded-2xl overflow-hidden">
           <button 
             onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
-            className="w-full px-4 py-3 bg-gray-50 flex justify-between items-center hover:bg-gray-100 transition-colors"
+            className="w-full px-6 py-4 bg-gray-50 flex justify-between items-center hover:bg-gray-100 transition-colors"
           >
-            <span className="font-semibold text-gray-900">Advanced Options (Escrow, PMI, HOA)</span>
-            {isAdvancedOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            <span className="font-bold text-gray-900">Advanced Options (Escrow, PMI, HOA)</span>
+            {isAdvancedOpen ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
           </button>
           
           {isAdvancedOpen && (
-            <div className="p-4 space-y-4 bg-white border-t border-gray-200">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Property Tax (%)</label>
-                  <input 
-                    type="number" 
-                    step="0.1"
-                    value={propertyTax} 
-                    onChange={(e) => setPropertyTax(Number(e.target.value))}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Home Insurance ({currency.symbol}/yr)</label>
-                  <input 
-                    type="number" 
-                    value={homeInsurance} 
-                    onChange={(e) => setHomeInsurance(Number(e.target.value))}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
+            <div className="p-6 space-y-6 bg-white border-t-2 border-gray-100">
+              <div className="grid grid-cols-2 gap-6">
+                <CalculatorInput
+                  label="Property Tax"
+                  value={propertyTax}
+                  onChange={setPropertyTax}
+                  suffix="%"
+                  step={0.1}
+                  min={0}
+                />
+                <CalculatorInput
+                  label="Home Insurance"
+                  value={homeInsurance}
+                  onChange={setHomeInsurance}
+                  prefix={currency.symbol}
+                  suffix="/yr"
+                  min={0}
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">HOA Fees ({currency.symbol}/mo)</label>
-                  <input 
-                    type="number" 
-                    value={hoaFees} 
-                    onChange={(e) => setHoaFees(Number(e.target.value))}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">PMI Rate (%)</label>
-                  <input 
-                    type="number" 
-                    step="0.01"
-                    value={pmiRate} 
-                    onChange={(e) => setPmiRate(Number(e.target.value))}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                  {results.downPaymentPercent >= 20 && (
-                    <p className="text-[10px] text-green-600 mt-1 flex items-center gap-1">
-                      <Info className="w-3 h-3" /> PMI not required (20%+ down)
-                    </p>
-                  )}
-                </div>
+              <div className="grid grid-cols-2 gap-6">
+                <CalculatorInput
+                  label="HOA Fees"
+                  value={hoaFees}
+                  onChange={setHoaFees}
+                  prefix={currency.symbol}
+                  suffix="/mo"
+                  min={0}
+                />
+                <CalculatorInput
+                  label="PMI Rate"
+                  value={pmiRate}
+                  onChange={setPmiRate}
+                  suffix="%"
+                  step={0.01}
+                  min={0}
+                  helpText={results.downPaymentPercent >= 20 ? "PMI not required (20%+ down)" : ""}
+                />
               </div>
             </div>
           )}
@@ -253,69 +235,92 @@ export default function MortgageCalculator() {
       </div>
 
       {/* Results */}
-      <div className="lg:col-span-7 bg-gray-50 rounded-xl p-6 border border-gray-100">
-        <div className="text-center mb-8">
-          <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
-            {isARM ? 'Initial Monthly Payment' : 'Estimated Monthly Payment'}
-          </p>
-          <div className="text-5xl font-extrabold text-gray-900">
-            {formatCurrency(results.totalMonthlyPayment)}
-          </div>
-          
+      <div className="lg:col-span-7 space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CalculatorResult
+            label={isARM ? 'Initial Monthly' : 'Monthly Payment'}
+            value={formatCurrency(results.totalMonthlyPayment)}
+            color="blue"
+          />
           {isARM && (
-            <div className="mt-4 p-3 bg-blue-50 rounded-lg inline-block border border-blue-100">
-              <p className="text-xs text-blue-700 font-medium uppercase tracking-wide">After {armInitialPeriod} Years (Est.)</p>
-              <p className="text-2xl font-bold text-blue-900">{formatCurrency(results.armMonthlyAfterAdjustment)}</p>
-            </div>
+            <CalculatorResult
+              label={`After ${armInitialPeriod} Years`}
+              value={formatCurrency(results.armMonthlyAfterAdjustment)}
+              color="purple"
+              description="Estimated payment after initial rate period ends."
+            />
           )}
         </div>
 
-        <div className="h-64 mb-8">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value: number) => formatCurrency(value)} />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="bg-white rounded-2xl border-2 border-gray-100 p-8 shadow-sm">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-lg font-bold text-gray-900">Payment Breakdown</h3>
+            <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
+              <Shield className="w-4 h-4 text-green-500" />
+              Escrow: {formatCurrency(results.monthlyPropertyTax + results.monthlyHomeInsurance + results.monthlyPMI)}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={chartData.filter(d => d.value > 0).length > 1 ? 8 : 0}
+                    dataKey="value"
+                    isAnimationActive={true}
+                    animationBegin={0}
+                    animationDuration={600}
+                    animationEasing="ease-out"
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                    formatter={(value: number) => formatCurrency(value)} 
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="space-y-4">
+              {visibleChartData.map((item) => (
+                <div key={item.name} className="flex justify-between items-center p-3 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
+                    <span className="text-sm font-bold text-gray-600">{item.name}</span>
+                  </div>
+                  <span className="font-bold text-gray-900">{formatCurrency(item.value)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="space-y-3">
-          {chartData.map((item) => (
-            <div key={item.name} className="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }}></div>
-                <span className="text-gray-700">{item.name}</span>
+        <div className="bg-blue-50 rounded-2xl p-8 border-2 border-blue-100">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-blue-100 rounded-xl">
+              <Landmark className="w-6 h-6 text-blue-600" />
+            </div>
+            <div>
+              <h4 className="font-bold text-blue-900 mb-2">Loan Summary</h4>
+              <div className="grid grid-cols-2 gap-x-12 gap-y-4 text-sm">
+                <div>
+                  <p className="text-blue-600 font-medium mb-1">Total Loan Amount</p>
+                  <p className="text-xl font-bold text-blue-900">{formatCurrency(results.principal)}</p>
+                </div>
+                <div>
+                  <p className="text-blue-600 font-medium mb-1">Down Payment</p>
+                  <p className="text-xl font-bold text-blue-900">{formatCurrency(downPayment)} ({results.downPaymentPercent.toFixed(1)}%)</p>
+                </div>
               </div>
-              <span className="font-semibold text-gray-900">{formatCurrency(item.value)}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 p-4 bg-white rounded-lg border border-gray-200">
-          <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-            <Info className="w-4 h-4 text-blue-600" />
-            Escrow Breakdown
-          </h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="text-gray-600">Total Monthly Escrow:</div>
-            <div className="text-right font-semibold text-gray-900">
-              {formatCurrency(results.monthlyPropertyTax + results.monthlyHomeInsurance + results.monthlyPMI)}
-            </div>
-            <div className="text-gray-500 text-xs italic col-span-2">
-              Includes Property Tax, Home Insurance, and PMI (if applicable).
             </div>
           </div>
         </div>

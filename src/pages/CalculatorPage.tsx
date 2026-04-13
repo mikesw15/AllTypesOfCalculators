@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCalculatorById, calculators } from '../calculators';
 import CalculatorLayout from '../components/CalculatorLayout';
+import SEO from '../components/SEO';
 
 export default function CalculatorPage() {
   const { id } = useParams<{ id: string }>();
@@ -9,40 +10,9 @@ export default function CalculatorPage() {
   
   const calculator = id ? getCalculatorById(id) : undefined;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!calculator) {
       navigate('/');
-    } else {
-      document.title = calculator.seoTitle || `${calculator.title} | AllTypesOfCalculators`;
-      
-      // Update meta description
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.setAttribute('name', 'description');
-        document.head.appendChild(metaDescription);
-      }
-      metaDescription.setAttribute('content', calculator.seoDescription || calculator.description);
-
-      // Add Schema Markup
-      let scriptSchema = document.querySelector('#schema-markup');
-      if (!scriptSchema) {
-        scriptSchema = document.createElement('script');
-        scriptSchema.setAttribute('id', 'schema-markup');
-        scriptSchema.setAttribute('type', 'application/ld+json');
-        document.head.appendChild(scriptSchema);
-      }
-      
-      const schemaData = {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": calculator.title,
-        "description": calculator.description,
-        "applicationCategory": "CalculatorApplication",
-        "operatingSystem": "Any"
-      };
-      
-      scriptSchema.textContent = JSON.stringify(schemaData);
     }
   }, [calculator, navigate]);
 
@@ -61,14 +31,35 @@ export default function CalculatorPage() {
     ? calculators.filter(c => calculator.relatedIds?.includes(c.id))
     : [];
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": calculator.title,
+    "description": calculator.description,
+    "applicationCategory": "CalculatorApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
-    <CalculatorLayout 
-      meta={calculator} 
-      explanation={calculator.explanation || defaultExplanation}
-      faq={calculator.faq}
-      relatedCalculators={relatedCalculators}
-    >
-      <Component />
-    </CalculatorLayout>
+    <>
+      <SEO 
+        title={calculator.seoTitle || calculator.title}
+        description={calculator.seoDescription || calculator.description}
+        structuredData={schemaData}
+      />
+      <CalculatorLayout 
+        meta={calculator} 
+        explanation={calculator.explanation || defaultExplanation}
+        faq={calculator.faq}
+        relatedCalculators={relatedCalculators}
+      >
+        <Component />
+      </CalculatorLayout>
+    </>
   );
 }
