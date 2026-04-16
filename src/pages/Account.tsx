@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { collection, query, getDocs, limit } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
-import { User, Mail, Calendar as CalendarIcon, LogOut, Star, Settings, Shield, ChevronRight, Calculator, Key, Copy } from 'lucide-react';
+import { User, Mail, Calendar as CalendarIcon, LogOut, Star, Settings, Shield, ChevronRight, Calculator, Key, Copy, History, Clock } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useAuth } from '../contexts/AuthContext';
 
 interface SavedPassword {
   id: string;
@@ -12,26 +13,32 @@ interface SavedPassword {
   createdAt: any;
 }
 
+interface HistoryItem {
+  id: string;
+  calculatorId: string;
+  calculatorTitle: string;
+  results: any;
+  timestamp: any;
+}
+
 export default function Account() {
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [savedPasswords, setSavedPasswords] = useState<SavedPassword[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const user = auth.currentUser;
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/');
-      return;
-    }
+    if (!user) return;
 
-    const fetchStats = async () => {
+    const fetchData = async () => {
       try {
         // Fetch favorites count
-        const q = query(collection(db, `users/${user.uid}/favorites`));
-        const querySnapshot = await getDocs(q);
-        setFavoritesCount(querySnapshot.size);
+        const favQ = query(collection(db, `users/${user.uid}/favorites`));
+        const favSnapshot = await getDocs(favQ);
+        setFavoritesCount(favSnapshot.size);
 
         // Fetch saved passwords
         const pwdQ = query(collection(db, `users/${user.uid}/saved_passwords`));
@@ -41,23 +48,28 @@ export default function Account() {
           pwds.push({ id: doc.id, ...doc.data() } as SavedPassword);
         });
         
-        // Sort by createdAt desc client-side
-        pwds.sort((a, b) => {
-          const timeA = a.createdAt?.toMillis?.() || 0;
-          const timeB = b.createdAt?.toMillis?.() || 0;
-          return timeB - timeA;
+        pwds.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+        setSavedPasswords(pwds.slice(0, 5));
+
+        // Fetch history
+        const historyQ = query(collection(db, `users/${user.uid}/history`));
+        const historySnapshot = await getDocs(historyQ);
+        const historyItems: HistoryItem[] = [];
+        historySnapshot.forEach(doc => {
+          historyItems.push({ id: doc.id, ...doc.data() } as HistoryItem);
         });
-        
-        setSavedPasswords(pwds.slice(0, 5)); // Show top 5
+
+        historyItems.sort((a, b) => (b.timestamp?.toMillis?.() || 0) - (a.timestamp?.toMillis?.() || 0));
+        setHistory(historyItems.slice(0, 5));
       } catch (error) {
-        console.error("Error fetching stats:", error);
+        console.error("Error fetching account data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchStats();
-  }, [user, navigate]);
+    fetchData();
+  }, [user]);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -163,6 +175,47 @@ export default function Account() {
               <div className="text-sm text-gray-500 mt-2">
                 Manage your settings
               </div>
+            </div>
+          </div>
+
+          {/* Calculation History */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-lg">
+                  <History className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 text-lg">Recent Calculations</h3>
+              </div>
+            </div>
+            <div className="p-6">
+              {loading ? (
+                <div className="text-center text-gray-500 py-4">Loading history...</div>
+              ) : history.length > 0 ? (
+                <div className="space-y-4">
+                  {history.map((item) => (
+                    <div key={item.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
+                      <div>
+                        <h4 className="font-bold text-gray-900">{item.calculatorTitle}</h4>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+                          <Clock className="w-3 h-3" />
+                          {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleString() : 'Just now'}
+                        </div>
+                      </div>
+                      <Link 
+                        to={`/calculators/${item.calculatorId}`}
+                        className="text-sm font-bold text-blue-600 hover:text-blue-700"
+                      >
+                        Reuse
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <p className="text-gray-500">No calculation history yet.</p>
+                </div>
+              )}
             </div>
           </div>
 

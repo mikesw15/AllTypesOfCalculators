@@ -24,11 +24,11 @@ service cloud.firestore {
     // Collection: users/{userId}/history
     // Document ID: {historyId}
     // Fields:
-    //   - userId: string (required, immutable)
     //   - calculatorId: string (required)
-    //   - inputs: string (optional)
-    //   - results: string (optional)
-    //   - calculatedAt: timestamp (required, immutable)
+    //   - calculatorTitle: string (required)
+    //   - inputs: map (optional)
+    //   - results: map (optional)
+    //   - timestamp: timestamp (required, immutable)
     //
     // Collection: users/{userId}/saved_passwords
     // Document ID: {passwordId}
@@ -79,13 +79,13 @@ service cloud.firestore {
              data.addedAt is timestamp;
     }
 
-    function isValidHistory(data, userId) {
-      return hasOnlyAllowedFields(['userId', 'calculatorId', 'inputs', 'results', 'calculatedAt']) &&
-             data.userId == userId &&
+    function isValidHistory(data) {
+      return hasOnlyAllowedFields(['calculatorId', 'calculatorTitle', 'inputs', 'results', 'timestamp']) &&
              data.calculatorId is string && data.calculatorId.size() > 0 && data.calculatorId.size() < 100 &&
-             (!('inputs' in data) || (data.inputs is string && data.inputs.size() < 5000)) &&
-             (!('results' in data) || (data.results is string && data.results.size() < 5000)) &&
-             data.calculatedAt is timestamp;
+             data.calculatorTitle is string && data.calculatorTitle.size() > 0 && data.calculatorTitle.size() < 200 &&
+             (!('inputs' in data) || data.inputs is map) &&
+             (!('results' in data) || data.results is map) &&
+             data.timestamp is timestamp;
     }
 
     function isValidSavedPassword(data) {
@@ -112,8 +112,8 @@ service cloud.firestore {
 
       match /history/{historyId} {
         allow read: if isOwner(userId);
-        allow create: if isOwner(userId) && isValidHistory(request.resource.data, userId);
-        allow update: if isOwner(userId) && isValidHistory(request.resource.data, userId) && areImmutableFieldsUnchanged(['userId', 'calculatedAt']);
+        allow create: if isOwner(userId) && isValidHistory(request.resource.data);
+        allow update: if isOwner(userId) && isValidHistory(request.resource.data) && areImmutableFieldsUnchanged(['timestamp']);
         allow delete: if isOwner(userId);
       }
 

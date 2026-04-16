@@ -3,8 +3,9 @@ import { CalculatorMeta } from '../types';
 import { Share2, Star, Info, HelpCircle, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AIHelper from './AIHelper';
-import { auth, db } from '../firebase';
+import { db } from '../firebase';
 import { collection, addDoc, deleteDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
+import { useAuth } from '../contexts/AuthContext';
 
 interface CalculatorLayoutProps {
   meta: CalculatorMeta;
@@ -17,7 +18,7 @@ interface CalculatorLayoutProps {
 export default function CalculatorLayout({ meta, children, explanation, faq, relatedCalculators }: CalculatorLayoutProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteId, setFavoriteId] = useState<string | null>(null);
-  const user = auth.currentUser;
+  const { user } = useAuth();
 
   useEffect(() => {
     const checkFavorite = async () => {

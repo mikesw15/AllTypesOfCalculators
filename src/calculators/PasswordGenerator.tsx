@@ -3,8 +3,10 @@ import { Copy, RefreshCw, ShieldCheck, ShieldAlert, Shield, Save, Check } from '
 import { auth, db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { useHistory } from '../contexts/HistoryContext';
 
 export default function PasswordGenerator() {
+  const { saveToHistory } = useHistory();
   const [length, setLength] = useState(16);
   const [uppercase, setUppercase] = useState(true);
   const [lowercase, setLowercase] = useState(true);
@@ -94,6 +96,8 @@ export default function PasswordGenerator() {
     
     setPassword(result);
     calculateStrength(result, pool.length);
+
+    saveToHistory('password-generator', 'Password Generator', { length, uppercase, lowercase, numbers, symbols }, { strength: strength.label });
 
     setHistory(prev => {
       const newHistory = [result, ...prev.filter(p => p !== result)].slice(0, 5);

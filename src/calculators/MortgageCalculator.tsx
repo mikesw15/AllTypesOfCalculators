@@ -2,11 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { ChevronDown, ChevronUp, Info, Home, Wallet, Percent, Calendar, Shield, Landmark } from 'lucide-react';
 import { useCurrency } from '../contexts/CurrencyContext';
+import { useHistory } from '../contexts/HistoryContext';
+import { useEffect } from 'react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
 
 export default function MortgageCalculator() {
+  const { saveToHistory } = useHistory();
   const { currency, formatCurrency } = useCurrency();
   const [homePrice, setHomePrice] = useState<number>(300000);
   const [downPayment, setDownPayment] = useState<number>(60000);
@@ -74,6 +77,13 @@ export default function MortgageCalculator() {
       downPaymentPercent
     };
   }, [homePrice, downPayment, loanTerm, interestRate, propertyTax, homeInsurance, hoaFees, pmiRate, isARM, armInitialPeriod, armExpectedRate]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveToHistory('mortgage', 'Mortgage Calculator', { homePrice, downPayment, loanTerm, interestRate }, { monthlyPayment: results.totalMonthlyPayment });
+    }, 3000); // 3 second debounce
+    return () => clearTimeout(timer);
+  }, [results.totalMonthlyPayment, saveToHistory]);
 
   const chartData = useMemo(() => [
     { name: 'Principal & Interest', value: results.monthlyPrincipalAndInterest, color: '#2563eb' },

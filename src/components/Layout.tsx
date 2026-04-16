@@ -2,30 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Menu, X, Calculator, User, LogOut } from 'lucide-react';
 import { auth } from '../firebase';
-import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import CurrencySelector from './CurrencySelector';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState(auth.currentUser);
+  const { user } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((u) => setUser(u));
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Login failed", error);
-    }
-  };
 
   const handleLogout = async () => {
     await signOut(auth);
+    navigate('/');
   };
 
   return (
@@ -62,12 +50,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </button>
                 </div>
               ) : (
-                <button 
-                  onClick={handleLogin}
+                <Link 
+                  to="/login"
                   className="bg-gray-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors"
                 >
                   Sign In
-                </button>
+                </Link>
               )}
             </div>
 
@@ -91,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <button onClick={handleLogout} className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-gray-50">Sign Out</button>
               </>
             ) : (
-              <button onClick={handleLogin} className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Sign In</button>
+              <Link to="/login" className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Sign In</Link>
             )}
           </div>
         )}

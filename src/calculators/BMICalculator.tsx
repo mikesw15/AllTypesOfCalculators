@@ -1,10 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
 import { Scale, Ruler } from 'lucide-react';
+import { useHistory } from '../contexts/HistoryContext';
 
 export default function BMICalculator() {
+  const { saveToHistory } = useHistory();
   const [system, setSystem] = useState<'metric' | 'imperial'>('imperial');
   const [weight, setWeight] = useState<number>(160); // lbs or kg
   const [heightFt, setHeightFt] = useState<number>(5);
@@ -32,6 +34,15 @@ export default function BMICalculator() {
   };
 
   const category = getCategory(bmi);
+
+  useEffect(() => {
+    if (bmi > 0) {
+      const timer = setTimeout(() => {
+        saveToHistory('bmi', 'BMI Calculator', { weight, system }, { bmi: bmi.toFixed(1), category: category.label });
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [bmi, saveToHistory]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
