@@ -276,8 +276,8 @@ export default function PeptideCalculator() {
         ) : null}
 
         {mode !== 'dosage' && (
-          <div className="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200 flex flex-col items-center">
-            <div className="text-center mb-10 w-full">
+          <div className="w-full bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-200 overflow-hidden flex flex-col items-center">
+            <div className="text-center mb-10 w-full relative z-20">
               <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">
                 {mode === 'units' ? 'Syringe Draw Line' : 'Target Draw Line'}
               </p>
@@ -294,59 +294,72 @@ export default function PeptideCalculator() {
               )}
             </div>
 
-            <div className="w-full max-w-md mx-auto relative mb-6">
-              {/* Syringe Graphic */}
+            <div className="w-full max-w-[240px] md:max-w-[280px] relative mb-8 ml-[-60px] md:ml-[-100px] mr-auto lg:mx-auto lg:ml-[-80px] xl:ml-[-120px]">
+              {/* Syringe Graphic Container */}
               <div className="relative w-full h-24 flex items-center">
                 {/* Needle */}
-                <div className="w-8 h-1 bg-gray-400 rounded-l-full z-10 relative">
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-4 bg-gray-300 rounded-sm"></div>
+                <div className="w-10 h-1 bg-gray-400 rounded-l-full z-10 relative flex-shrink-0">
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-5 bg-gray-300 border border-gray-400 rounded-sm"></div>
                 </div>
                 
                 {/* Syringe Body */}
-                <div className="flex-1 h-20 border-y-2 border-l-2 border-gray-400 rounded-l-lg rounded-r-sm relative bg-white/90 overflow-hidden shadow-inner flex items-center">
-                  {/* Liquid Fill */}
-                  <div 
-                    className="absolute top-0 left-0 bottom-0 bg-blue-400/30 transition-all duration-700 ease-in-out border-r-4 border-blue-500/80 shadow-[inset_0_0_10px_rgba(59,130,246,0.3)] flex items-center justify-center overflow-hidden"
-                    style={{ width: `${fillPercentage}%` }}
-                  >
-                    {fillPercentage > 15 && (
-                      <span className="text-xs font-bold text-blue-900 pointer-events-none drop-shadow-sm whitespace-nowrap">
-                        {Math.round(fillPercentage)}%
-                      </span>
-                    )}
-                  </div>
-                  
-                  {/* Tick Marks Layout (10 main segments) */}
-                  <div className="absolute inset-0 flex flex-col justify-between py-1 pointer-events-none z-10 w-full pr-4">
-                    <div className="flex justify-between w-full pl-2">
-                      {Array.from({ length: 11 }).map((_, i) => (
-                        <div key={`top-${i}`} className={`w-0.5 bg-gray-800 ${i % 5 === 0 ? 'h-3' : 'h-1.5'}`} />
+                <div className="flex-1 h-20 relative bg-white shadow-inner flex items-center z-10 rounded-l-lg rounded-r-md border-2 border-gray-400">
+                  {/* Drawable Area - represents the calibrated volume of the syringe */}
+                  <div className="absolute inset-y-0 left-[2%] right-[10%] flex items-center z-10">
+                    {/* Liquid Fill */}
+                    <div 
+                      className="absolute top-0 left-0 bottom-0 bg-blue-400/30 transition-all duration-700 ease-in-out border-r-[3px] border-blue-500/80 shadow-[inset_0_0_10px_rgba(59,130,246,0.3)] flex items-center justify-center overflow-hidden"
+                      style={{ width: `${fillPercentage}%` }}
+                    >
+                      {fillPercentage > 20 && (
+                        <span className="text-xs font-bold text-blue-900 pointer-events-none drop-shadow-sm whitespace-nowrap opacity-80">
+                          {Math.round(fillPercentage)}% Fill
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* Tick Marks Layout (10 main segments) */}
+                    <div className="absolute inset-0 flex flex-col justify-between py-[2px] pointer-events-none z-20">
+                      <div className="flex justify-between w-full">
+                        {Array.from({ length: 11 }).map((_, i) => (
+                          <div key={`top-${i}`} className={`w-[2px] bg-gray-800 ${i % 5 === 0 ? 'h-3' : 'h-1.5'}`} />
+                        ))}
+                      </div>
+                      <div className="flex justify-between w-full">
+                        {Array.from({ length: 11 }).map((_, i) => (
+                          <div key={`bottom-${i}`} className={`w-[2px] bg-gray-600 ${i % 5 === 0 ? 'h-3' : 'h-1.5'}`} />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Numbers */}
+                    <div className="absolute inset-0 flex justify-between items-center z-20 pointer-events-none">
+                      {Array.from({ length: 11 }).filter((_, i) => i % 2 === 0).map((_, i) => (
+                        <span key={`num-${i}`} className="text-[10px] font-bold text-gray-700 text-center w-6 -ml-3 first:ml-0 first:text-left last:-mr-3 last:text-right">
+                           {i === 0 ? '' : Math.round((maxUnits / 5) * i)}
+                        </span>
                       ))}
                     </div>
-                    <div className="flex justify-between w-full pl-2">
-                      {Array.from({ length: 11 }).map((_, i) => (
-                        <div key={`bottom-${i}`} className={`w-0.5 bg-gray-600 ${i % 5 === 0 ? 'h-3' : 'h-1.5'}`} />
-                      ))}
+
+                    {/* Plunger - Absolute positioned to move entirely left/right based on fillPercentage */}
+                    <div 
+                      className="absolute top-1/2 -translate-y-1/2 h-[72px] flex items-center transition-all duration-700 ease-in-out z-0 pointer-events-none"
+                      style={{ left: `${fillPercentage}%`, width: '200px' }}
+                    >
+                       {/* Rubber Tip */}
+                       <div className="w-3 h-full bg-gray-800 rounded-sm shadow-[inset_-2px_0_4px_rgba(255,255,255,0.2)] relative z-10 flex-shrink-0 -ml-[2px]"></div>
+                       {/* Stem */}
+                       <div className="flex-1 h-[56px] bg-gradient-to-b from-gray-100 via-gray-50 to-gray-200 border-y-2 border-gray-400 opacity-95 shadow-inner relative z-0 flex items-center justify-center">
+                          {/* Stem structural line */}
+                          <div className="w-full h-1 bg-gray-300/50"></div>
+                       </div>
+                       {/* Thumb Rest */}
+                       <div className="w-5 h-[90px] bg-gray-200 rounded-r-xl rounded-l-sm border-2 border-gray-400 relative z-10 flex-shrink-0 -ml-1"></div>
                     </div>
                   </div>
-                  
-                  {/* Numbers */}
-                  <div className="absolute inset-0 flex justify-between items-center z-10 pointer-events-none w-full pr-4 pl-2">
-                    {Array.from({ length: 11 }).filter((_, i) => i % 2 === 0).map((_, i) => (
-                      <span key={`num-${i}`} className="text-[10px] font-bold text-gray-700 text-center w-4 -ml-2 first:ml-0 first:text-transparent">
-                         {Math.round((maxUnits / 5) * i)}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Plunger */}
-                <div className="w-12 h-18 border-2 border-gray-400 border-l-0 bg-gray-200 relative rounded-r-md z-0 shadow-sm">
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-24 bg-gray-300 rounded-r-xl border-y-2 border-r-2 border-gray-400"></div>
-                  <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-3 h-18 bg-gray-800 rounded-sm"></div>
                 </div>
               </div>
-              <p className="text-center text-xs font-bold text-gray-400 mt-6 uppercase tracking-wider">Visual Syringe Guide (Total: {maxUnits} U)</p>
+              <p className="text-center text-xs font-bold text-gray-400 mt-6 uppercase tracking-wider relative z-20 whitespace-nowrap lg:ml-10">Visual Syringe Guide ({maxUnits} U Max)</p>
             </div>
           </div>
         )}
