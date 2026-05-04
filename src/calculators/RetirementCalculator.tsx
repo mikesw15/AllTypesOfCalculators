@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { PiggyBank, TrendingUp, Calendar, DollarSign, Info } from 'lucide-react';
+import { PiggyBank, TrendingUp, Calendar, DollarSign, Info, Banknote } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function RetirementCalculator() {
+  const { currency } = useCurrency();
   const [currentAge, setCurrentAge] = useState<number>(30);
   const [retirementAge, setRetirementAge] = useState<number>(65);
   const [currentSavings, setCurrentSavings] = useState<number>(50000);
@@ -65,7 +67,7 @@ export default function RetirementCalculator() {
 
           <div className="bg-white p-8 rounded-3xl shadow-sm border-2 border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <DollarSign className="w-5 h-5 text-blue-500" />
+              <Banknote className="w-5 h-5 text-blue-500" />
               Savings & Contributions
             </h3>
             <div className="space-y-4">
@@ -73,14 +75,14 @@ export default function RetirementCalculator() {
                 label="Current Savings"
                 value={currentSavings}
                 onChange={setCurrentSavings}
-                prefix="$"
+                prefix={currency.symbol}
                 min={0}
               />
               <CalculatorInput
                 label="Monthly Contribution"
                 value={monthlyContribution}
                 onChange={setMonthlyContribution}
-                prefix="$"
+                prefix={currency.symbol}
                 min={0}
               />
             </div>
@@ -114,7 +116,7 @@ export default function RetirementCalculator() {
         <div className="space-y-6">
           <CalculatorResult
             label="Estimated Nest Egg"
-            value={`$${finalBalance.toLocaleString()}`}
+            value={`${currency.symbol}${finalBalance.toLocaleString()}`}
             description={`In ${yearsToRetire} years at age ${retirementAge}.`}
             color="blue"
             icon={<PiggyBank className="w-8 h-8 text-blue-600" />}
@@ -122,8 +124,8 @@ export default function RetirementCalculator() {
 
           <div className="bg-green-50 p-6 rounded-2xl border-2 border-green-100">
             <p className="text-[10px] font-bold text-green-600 uppercase tracking-wider mb-1">Inflation Adjusted Value</p>
-            <p className="text-3xl font-black text-green-700">${finalAdjusted.toLocaleString()}</p>
-            <p className="text-xs text-green-600/70 mt-1">What this amount is worth in today's dollars.</p>
+            <p className="text-3xl font-black text-green-700">{currency.symbol}{finalAdjusted.toLocaleString()}</p>
+            <p className="text-xs text-green-600/70 mt-1">What this amount is worth in today's money.</p>
           </div>
 
           <div className="bg-white p-6 rounded-2xl border-2 border-gray-100 h-64">
@@ -140,7 +142,7 @@ export default function RetirementCalculator() {
                 <XAxis dataKey="year" hide />
                 <YAxis hide domain={['auto', 'auto']} />
                 <Tooltip 
-                  formatter={(value: number) => [`$${value.toLocaleString()}`, 'Balance']}
+                  formatter={(value: number) => [`${currency.symbol}${value.toLocaleString()}`, 'Balance']}
                   labelFormatter={(label) => `Age ${label}`}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                 />
