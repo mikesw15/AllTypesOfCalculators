@@ -1,8 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCalculatorsByCategory } from '../calculators';
-import { Home as HomeIcon, Activity, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun } from 'lucide-react';
+import { Home as HomeIcon, Activity, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, DollarSign, FlaskConical, Coffee, Hammer } from 'lucide-react';
 import SEO from '../components/SEO';
+
+const getCategoryIcon = (categoryName: string) => {
+  switch (categoryName) {
+    case 'Finance & Money': return <DollarSign className="w-8 h-8 text-green-600 mr-3" />;
+    case 'Health & Fitness': return <Heart className="w-8 h-8 text-red-600 mr-3" />;
+    case 'Math & Science': return <FlaskConical className="w-8 h-8 text-purple-600 mr-3" />;
+    case 'Everyday Life': return <Coffee className="w-8 h-8 text-orange-600 mr-3" />;
+    case 'Home Improvement & DIY': return <Hammer className="w-8 h-8 text-amber-600 mr-3" />;
+    case 'Fun / Viral':
+    case 'Fun & Niche':
+      return <Flame className="w-8 h-8 text-pink-600 mr-3" />;
+    default: return <Calculator className="w-8 h-8 text-blue-600 mr-3" />;
+  }
+};
 
 export default function Categories() {
   const groupedCalculators = getCalculatorsByCategory();
@@ -19,7 +33,10 @@ export default function Categories() {
       <div className="space-y-16">
         {Object.entries(groupedCalculators).map(([category, calcs]) => (
           <div key={category} id={category.toLowerCase().split(' ')[0]}>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">{category}</h2>
+            <div className="flex items-center mb-6 pb-2 border-b border-gray-200">
+              {getCategoryIcon(category)}
+              <h2 className="text-2xl font-bold text-gray-900">{category}</h2>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {calcs.map(calc => (
                 <Link 

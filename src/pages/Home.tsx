@@ -10,6 +10,7 @@ const categories = [
   { name: 'Math & Science', icon: FlaskConical, color: 'text-purple-600', bg: 'bg-purple-100' },
   { name: 'Everyday Life', icon: Coffee, color: 'text-orange-600', bg: 'bg-orange-100' },
   { name: 'Home Improvement & DIY', icon: Hammer, color: 'text-amber-600', bg: 'bg-amber-100' },
+  { name: 'Fun & Niche', icon: Flame, color: 'text-pink-600', bg: 'bg-pink-100' },
 ];
 
 export default function Home() {

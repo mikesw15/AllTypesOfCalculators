@@ -109,6 +109,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <li><Link to="/categories#math" className="hover:text-blue-600">Math & Science</Link></li>
                 <li><Link to="/categories#everyday" className="hover:text-blue-600">Everyday Life</Link></li>
                 <li><Link to="/categories#home" className="hover:text-blue-600">Home Improvement</Link></li>
+                <li><Link to="/categories#fun" className="hover:text-blue-600">Fun & Niche</Link></li>
               </ul>
             </div>
             <div>
