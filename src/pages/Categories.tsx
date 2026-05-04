@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCalculatorsByCategory } from '../calculators';
-import { Home as HomeIcon, Activity, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, DollarSign, FlaskConical, Coffee, Hammer, PiggyBank } from 'lucide-react';
+import { Home as HomeIcon, Activity, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, DollarSign, FlaskConical, Coffee, Hammer, PiggyBank, Percent, Divide, Users, Layers } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const getCategoryIcon = (categoryName: string) => {
@@ -76,6 +76,11 @@ export default function Categories() {
                     {calc.icon === 'HardHat' && <HardHat className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                     {calc.icon === 'ThermometerSun' && <ThermometerSun className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                     {calc.icon === 'PiggyBank' && <PiggyBank className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                    {calc.icon === 'DollarSign' && <DollarSign className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                    {calc.icon === 'Percent' && <Percent className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                    {calc.icon === 'Divide' && <Divide className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                    {calc.icon === 'Users' && <Users className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                    {calc.icon === 'Layers' && <Layers className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                   </div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{calc.title}</h3>
                   <p className="text-gray-600 text-sm line-clamp-2">{calc.description}</p>
