@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCalculatorsByCategory } from '../calculators';
-import { Home as HomeIcon, Activity, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, DollarSign, FlaskConical, Coffee, Hammer, PiggyBank, Percent, Divide, Users, Layers } from 'lucide-react';
+import { Home as HomeIcon, Activity, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, DollarSign, FlaskConical, Coffee, Hammer, PiggyBank, Percent, Divide, Users, Layers, Baby } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const getCategoryIcon = (categoryName: string) => {
@@ -21,11 +21,20 @@ const getCategoryIcon = (categoryName: string) => {
 export default function Categories() {
   const groupedCalculators = getCalculatorsByCategory();
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Calculator Categories",
+    "description": "Explore our wide range of free online calculators organized by category.",
+    "url": "https://alltypesofcalculators.com/categories"
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <SEO 
         title="Calculator Categories | Browse All Tools"
         description="Explore our wide range of free online calculators organized by category: Finance, Health, Math, Science, and more."
+        structuredData={schemaData}
       />
       <h1 className="text-4xl font-bold text-gray-900 mb-4">All Categories</h1>
       <p className="text-xl text-gray-600 mb-12">Browse our complete collection of calculators.</p>
@@ -81,6 +90,7 @@ export default function Categories() {
                     {calc.icon === 'Divide' && <Divide className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                     {calc.icon === 'Users' && <Users className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                     {calc.icon === 'Layers' && <Layers className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                    {calc.icon === 'Baby' && <Baby className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                   </div>
                   <h3 className="text-lg font-bold text-gray-900 mb-2">{calc.title}</h3>
                   <p className="text-gray-600 text-sm line-clamp-2">{calc.description}</p>

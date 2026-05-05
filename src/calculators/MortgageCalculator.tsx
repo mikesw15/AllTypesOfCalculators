@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { ChevronDown, ChevronUp, Info, Home, Wallet, Percent, Calendar, Shield, Landmark } from 'lucide-react';
 import { useCurrency } from '../contexts/CurrencyContext';
@@ -7,24 +7,25 @@ import { useEffect } from 'react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
+import { useCalculatorState } from '../hooks/useCalculatorState';
 
 export default function MortgageCalculator() {
   const { saveToHistory } = useHistory();
   const { currency, formatCurrency } = useCurrency();
-  const [homePrice, setHomePrice] = useState<number>(300000);
-  const [downPayment, setDownPayment] = useState<number>(60000);
-  const [loanTerm, setLoanTerm] = useState<number>(30);
-  const [interestRate, setInterestRate] = useState<number>(6.5);
-  const [propertyTax, setPropertyTax] = useState<number>(1.2);
-  const [homeInsurance, setHomeInsurance] = useState<number>(1200);
-  const [hoaFees, setHoaFees] = useState<number>(0);
-  const [pmiRate, setPmiRate] = useState<number>(0.5);
-  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+  const [homePrice, setHomePrice] = useCalculatorState<number>('price', 300000);
+  const [downPayment, setDownPayment] = useCalculatorState<number>('dp', 60000);
+  const [loanTerm, setLoanTerm] = useCalculatorState<number>('term', 30);
+  const [interestRate, setInterestRate] = useCalculatorState<number>('rate', 6.5);
+  const [propertyTax, setPropertyTax] = useCalculatorState<number>('tax', 1.2);
+  const [homeInsurance, setHomeInsurance] = useCalculatorState<number>('ins', 1200);
+  const [hoaFees, setHoaFees] = useCalculatorState<number>('hoa', 0);
+  const [pmiRate, setPmiRate] = useCalculatorState<number>('pmi', 0.5);
+  const [isAdvancedOpen, setIsAdvancedOpen] = useCalculatorState<boolean>('adv', false);
   
   // ARM State
-  const [isARM, setIsARM] = useState(false);
-  const [armInitialPeriod, setArmInitialPeriod] = useState<number>(5);
-  const [armExpectedRate, setArmExpectedRate] = useState<number>(8.5);
+  const [isARM, setIsARM] = useCalculatorState<boolean>('arm', false);
+  const [armInitialPeriod, setArmInitialPeriod] = useCalculatorState<number>('armPeriod', 5);
+  const [armExpectedRate, setArmExpectedRate] = useCalculatorState<number>('armRate', 8.5);
 
   const results = useMemo(() => {
     const principal = homePrice - downPayment;

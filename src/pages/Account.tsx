@@ -10,6 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 interface SavedPassword {
   id: string;
   password: string;
+  label?: string;
   createdAt: any;
 }
 
@@ -239,8 +240,15 @@ export default function Account() {
                 <div className="space-y-3">
                   {savedPasswords.map((pwd) => (
                     <div key={pwd.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100 group">
-                      <div className="font-mono text-gray-800 font-medium tracking-wider truncate mr-4">
-                        {pwd.password}
+                      <div className="flex flex-col mr-4 overflow-hidden">
+                        {pwd.label && (
+                          <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 truncate">
+                            {pwd.label}
+                          </span>
+                        )}
+                        <span className="font-mono text-gray-800 font-medium tracking-wider truncate">
+                          {pwd.password}
+                        </span>
                       </div>
                       <button 
                         onClick={() => copyToClipboard(pwd.password, pwd.id)}

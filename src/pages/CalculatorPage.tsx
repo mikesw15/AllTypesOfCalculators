@@ -35,19 +35,61 @@ export default function CalculatorPage() {
     ? calculators.filter(c => calculator.relatedIds?.includes(c.id))
     : [];
 
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": calculator.title,
-    "description": calculator.description,
-    "applicationCategory": "CalculatorApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+  const schemaData: any[] = [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": calculator.title,
+      "description": calculator.seoDescription || calculator.description,
+      "applicationCategory": "BrowserApplication",
+      "operatingSystem": "All",
+      "url": `https://alltypesofcalculators.com/calculators/${calculator.id}`,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://alltypesofcalculators.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Categories",
+          "item": "https://alltypesofcalculators.com/categories"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": calculator.title,
+          "item": `https://alltypesofcalculators.com/calculators/${calculator.id}`
+        }
+      ]
     }
-  };
+  ];
+
+  if (calculator.faq && calculator.faq.length > 0) {
+    schemaData.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": calculator.faq.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    });
+  }
 
   return (
     <>

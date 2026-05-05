@@ -50,8 +50,19 @@ import BodyFatCalculator from './BodyFatCalculator';
 import TipCalculator from './TipCalculator';
 import WallpaperCalculator from './WallpaperCalculator';
 import FractionCalculator from './FractionCalculator';
+import ConceptionCalculator from './ConceptionCalculator';
 
 export const calculators: CalculatorMeta[] = [
+  {
+    id: 'conception',
+    title: 'Conception Calculator',
+    description: 'Calculate your probable conception date, intercourse window, and expected due date.',
+    category: 'Health & Fitness',
+    icon: 'Baby',
+    component: ConceptionCalculator,
+    seoTitle: 'Conception Calculator | Reverse Calculate Conception Date',
+    seoDescription: 'Calculate the exact date of conception based on your due date or last period. Discover your intercourse window and pregnancy milestones.'
+  },
   {
     id: 'car-loan',
     title: 'Car Loan Calculator',
@@ -59,8 +70,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance & Money',
     icon: 'Car',
     component: CarLoanCalculator,
-    seoTitle: 'Car Loan Calculator | AllTypesOfCalculators',
-    seoDescription: 'Estimate your monthly car payments and total interest.'
+    seoTitle: 'Auto Loan & Car Loan Calculator | Estimate Monthly Payments',
+    seoDescription: 'Free car loan calculator to estimate your monthly auto loan payments, total interest paid, and the total cost of your vehicle over time.'
   },
   {
     id: 'compound-interest',
@@ -69,8 +80,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance & Money',
     icon: 'TrendingUp',
     component: CompoundInterestCalculator,
-    seoTitle: 'Compound Interest Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate future value of investments with compound interest.'
+    seoTitle: 'Compound Interest Calculator | Predict Your Investment Growth',
+    seoDescription: 'Free compound interest calculator. Discover how your investments, savings, and returns will grow over time with the power of compounding.'
   },
   {
     id: 'retirement-savings',
@@ -79,8 +90,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance & Money',
     icon: 'PiggyBank',
     component: RetirementCalculator,
-    seoTitle: 'Retirement Savings Calculator | AllTypesOfCalculators',
-    seoDescription: 'Estimate your future retirement savings and see if you are on track for your goals.'
+    seoTitle: 'Retirement Savings Calculator | Plan Your Financial Future',
+    seoDescription: 'Calculate your retirement savings with our free retirement calculator. Estimate your future nest egg, returns, and see if your goals are on track.'
   },
   {
     id: 'salary-calculator',
@@ -89,8 +100,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance & Money',
     icon: 'Briefcase',
     component: SalaryCalculator,
-    seoTitle: 'Salary Converter & Calculator | AllTypesOfCalculators',
-    seoDescription: 'Convert hourly wage to annual salary and vice versa.'
+    seoTitle: 'Salary Calculator & Hourly Pay Converter | Calculate Take-Home Pay',
+    seoDescription: 'Free salary calculator to seamlessly convert your wage between hourly, daily, weekly, monthly, and annual yearly income.'
   },
   {
     id: 'crypto-roi',
@@ -99,8 +110,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance & Money',
     icon: 'Bitcoin',
     component: CryptoROICalculator,
-    seoTitle: 'Crypto ROI Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate your cryptocurrency return on investment.'
+    seoTitle: 'Crypto ROI Calculator | Cryptocurrency Profit & Loss Estimator',
+    seoDescription: 'Calculate your cryptocurrency return on investment (ROI), total profit, and loss for Bitcoin, Ethereum, and other altcoins instantly.'
   },
   {
     id: 'currency-converter',
@@ -136,8 +147,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance & Money',
     icon: 'Home',
     component: MortgageCalculator,
-    seoTitle: 'Free Mortgage Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate your monthly mortgage payments, total interest, and amortization schedule instantly.'
+    seoTitle: 'Free Mortgage Calculator with Taxes and Insurance',
+    seoDescription: 'Calculate your monthly mortgage payments, including property taxes, home insurance, and PMI. Generate instant amortization schedules.'
   },
   {
     id: 'bmi',
@@ -146,8 +157,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health & Fitness',
     icon: 'Activity',
     component: BMICalculator,
-    seoTitle: 'BMI Calculator - Check Your Body Mass Index | AllTypesOfCalculators',
-    seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range.'
+    seoTitle: 'Body Mass Index (BMI) Calculator | Check Your Healthy Weight',
+    seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range for adult men and women based on height and weight.'
   },
   {
     id: 'bmr-tdee',
@@ -156,8 +167,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health & Fitness',
     icon: 'Flame',
     component: BMRCalculator,
-    seoTitle: 'BMR & TDEE Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate your daily calorie needs based on your activity level and body metrics.'
+    seoTitle: 'BMR & TDEE Calculator | Calculate Daily Calorie & Energy Needs',
+    seoDescription: 'Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE). Discover your exact daily calorie needs for weight loss, maintenance, or muscle gain.'
   },
   {
     id: 'water-intake',
@@ -166,8 +177,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health & Fitness',
     icon: 'Droplets',
     component: WaterIntakeCalculator,
-    seoTitle: 'Daily Water Intake Calculator | AllTypesOfCalculators',
-    seoDescription: 'Stay hydrated with our personalized water intake recommendations.'
+    seoTitle: 'Water Intake Calculator | How Much Water Should I Drink?',
+    seoDescription: 'Calculate daily water intake. Find out exactly how many ounces or liters of water you should drink per day to stay hydrated based on weight and activity.'
   },
   {
     id: 'heart-rate-zones',
@@ -176,8 +187,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health & Fitness',
     icon: 'HeartPulse',
     component: HeartRateCalculator,
-    seoTitle: 'Heart Rate Zone Calculator | AllTypesOfCalculators',
-    seoDescription: 'Optimize your workouts by training in the right heart rate zones.'
+    seoTitle: 'Target Heart Rate Zone Calculator | Fat Burning & Cardio',
+    seoDescription: 'Calculate your target heart rate zones for maximum fat burning, cardio capacity, and optimal athletic training.'
   },
   {
     id: 'body-fat-calculator',
@@ -186,8 +197,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health & Fitness',
     icon: 'Percent',
     component: BodyFatCalculator,
-    seoTitle: 'Body Fat Calculator - US Navy Method | AllTypesOfCalculators',
-    seoDescription: 'Calculate your estimated body fat percentage based on body measurements.'
+    seoTitle: 'Body Fat Calculator - US Navy Method | Estimate Body Fat %',
+    seoDescription: 'Determine your body fat percentage, lean body mass, and fat mass using the highly accurate US Navy method. Free online body fat estimator.'
   },
   {
     id: 'peptide-calculator',
@@ -265,8 +276,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health & Fitness',
     icon: 'PieChart',
     component: MacroCalculator,
-    seoTitle: 'Macro Calculator | AllTypesOfCalculators',
-    seoDescription: 'Find your optimal macronutrient split for weight loss or muscle gain.'
+    seoTitle: 'Macro Calculator | Fast Track Your Diet & Nutrition',
+    seoDescription: 'Determine your ideal daily macronutrient split—protein, carbs, and fat—for weight loss, muscle gain, or maintenance. Free macro diet planner.'
   },
   {
     id: 'scientific-calculator',
@@ -275,8 +286,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Math & Science',
     icon: 'Calculator',
     component: ScientificCalculator,
-    seoTitle: 'Online Scientific Calculator | AllTypesOfCalculators',
-    seoDescription: 'Free online scientific calculator with advanced functions.'
+    seoTitle: 'Online Scientific Calculator | Advanced Math Functions',
+    seoDescription: 'Free online scientific calculator. Perform advanced mathematical operations, trigonometry, logarithms, fractions, and exponential algebra easily.'
   },
   {
     id: 'unit-converter',
@@ -285,8 +296,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Math & Science',
     icon: 'Scale',
     component: UnitConverter,
-    seoTitle: 'Universal Unit Converter | AllTypesOfCalculators',
-    seoDescription: 'Convert length, weight, and other measurements instantly.'
+    seoTitle: 'Universal Unit Converter | Length, Weight, Volume & More',
+    seoDescription: 'Fast, free universal unit converter. Instantly convert measurements for length, weight, volume, temperature, and area.'
   },
   {
     id: 'date-time',
@@ -295,8 +306,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Math & Science',
     icon: 'Calendar',
     component: DateTimeCalculator,
-    seoTitle: 'Date Difference Calculator | AllTypesOfCalculators',
-    seoDescription: 'Find out exactly how many days are between two dates.'
+    seoTitle: 'Date & Time Calculator | Add/Subtract Days & Find Duration',
+    seoDescription: 'Easily calculate the duration between two dates, find business days, or add/subtract days, weeks, and months to a calendar date.'
   },
   {
     id: 'statistics-calculator',
@@ -305,8 +316,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Math & Science',
     icon: 'BarChart',
     component: StatisticsCalculator,
-    seoTitle: 'Statistics Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate standard deviation, mean, and median easily.'
+    seoTitle: 'Statistics Calculator | Mean, Median, Mode & Standard Deviation',
+    seoDescription: 'Free statistics calculator to compute the mean, median, mode, variance, range, and standard deviation for any data set.'
   },
   {
     id: 'probability-calculator',
@@ -335,8 +346,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday Life',
     icon: 'Fuel',
     component: FuelCostCalculator,
-    seoTitle: 'Trip Fuel Cost Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate how much gas will cost for your road trip.'
+    seoTitle: 'Fuel Cost \& Gas Trip Calculator | Plan Your Road Trip Expenses',
+    seoDescription: 'Accurately estimate the total gas cost for your next road trip, commute, or travel plan based on vehicle MPG and current fuel prices.'
   },
   {
     id: 'rent-vs-buy',
@@ -345,8 +356,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday Life',
     icon: 'Home',
     component: RentVsBuyCalculator,
-    seoTitle: 'Rent vs Buy Calculator | AllTypesOfCalculators',
-    seoDescription: 'Should you rent or buy? Find out which makes more financial sense.'
+    seoTitle: 'Rent vs Buy Calculator | Real Estate & Housing Decision Model',
+    seoDescription: 'Unsure whether to rent or buy a home? Compare the long-term financial impact, ROI, mortgage costs, and rent appreciation to find the best choice.'
   },
   {
     id: 'gpa-calculator',
@@ -355,8 +366,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday Life',
     icon: 'GraduationCap',
     component: GPACalculator,
-    seoTitle: 'College & High School GPA Calculator | AllTypesOfCalculators',
-    seoDescription: 'Easily calculate your semester or cumulative GPA.'
+    seoTitle: 'GPA Calculator | High School & College Grade Planner',
+    seoDescription: 'Calculate your semester and cumulative Grade Point Average (GPA). A free tool for high school and college students to track academic progress.'
   },
   {
     id: 'password-generator',
@@ -405,8 +416,8 @@ export const calculators: CalculatorMeta[] = [
     category: 'Fun / Viral',
     icon: 'Moon',
     component: SleepCycleCalculator,
-    seoTitle: 'Sleep Cycle Calculator | AllTypesOfCalculators',
-    seoDescription: 'Calculate when to sleep based on 90-minute sleep cycles.'
+    seoTitle: 'Sleep Cycle Calculator | Wake Up Refreshed & Energized',
+    seoDescription: 'Find your perfect bedtime and wake-up time based on 90-minute REM sleep cycles. Stop waking up groggy with our free sleep cycle planner.'
   },
   {
     id: 'carbon-footprint',

@@ -18,6 +18,7 @@ export default function PasswordGenerator() {
   const [copied, setCopied] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveLabel, setSaveLabel] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const [strength, setStrength] = useState({ label: '', color: '', width: '0%', entropy: 0 });
 
@@ -131,9 +132,11 @@ export default function PasswordGenerator() {
         setIsSaving(true);
         await addDoc(collection(db, `users/${currentUser.uid}/saved_passwords`), {
           password: password,
+          label: saveLabel.trim(),
           createdAt: serverTimestamp()
         });
         setSaveSuccess(true);
+        setSaveLabel('');
         setTimeout(() => setSaveSuccess(false), 2000);
       }
     } catch (error) {
@@ -150,34 +153,47 @@ export default function PasswordGenerator() {
         
         {/* Password Display */}
         <div className="relative mb-6">
-          <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-4 md:p-6 flex items-center justify-between gap-4 min-h-[80px]">
-            <div className="font-mono text-xl md:text-2xl text-gray-900 break-all font-bold tracking-wider">
-              {password || <span className="text-gray-400 font-normal text-base">Select options to generate</span>}
+          <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-4 md:p-6 flex flex-col gap-4">
+            <div className="flex items-center justify-between gap-4 min-h-[60px]">
+              <div className="font-mono text-xl md:text-2xl text-gray-900 break-all font-bold tracking-wider">
+                {password || <span className="text-gray-400 font-normal text-base">Select options to generate</span>}
+              </div>
+              <div className="flex gap-2 shrink-0">
+                <button 
+                  onClick={generate}
+                  className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  title="Generate New"
+                >
+                  <RefreshCw className="w-5 h-5" />
+                </button>
+                <button 
+                  onClick={() => copyToClipboard(password)}
+                  disabled={!password}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                    copied 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed'
+                  }`}
+                >
+                  <Copy className="w-4 h-4" />
+                  <span className="hidden sm:inline">{copied ? 'Copied!' : 'Copy'}</span>
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2 shrink-0">
-              <button 
-                onClick={generate}
-                className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                title="Generate New"
-              >
-                <RefreshCw className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={() => copyToClipboard(password)}
-                disabled={!password}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                  copied 
-                    ? 'bg-green-500 text-white' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed'
-                }`}
-              >
-                <Copy className="w-4 h-4" />
-                <span className="hidden sm:inline">{copied ? 'Copied!' : 'Copy'}</span>
-              </button>
+            
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+              <input 
+                type="text" 
+                placeholder="What is this password for? (e.g. Gmail)"
+                value={saveLabel}
+                onChange={(e) => setSaveLabel(e.target.value)}
+                className="flex-1 bg-white border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                maxLength={50}
+              />
               <button 
                 onClick={handleSavePassword}
                 disabled={!password || isSaving || saveSuccess}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-all shrink-0 ${
                   saveSuccess 
                     ? 'bg-green-500 text-white' 
                     : 'bg-gray-800 text-white hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'
@@ -185,7 +201,7 @@ export default function PasswordGenerator() {
                 title="Save to Account"
               >
                 {saveSuccess ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
-                <span className="hidden sm:inline">{saveSuccess ? 'Saved!' : isSaving ? 'Saving...' : 'Save'}</span>
+                <span>{saveSuccess ? 'Saved!' : isSaving ? 'Saving...' : 'Save'}</span>
               </button>
             </div>
           </div>

@@ -1,18 +1,19 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { TrendingUp, Wallet, PlusCircle, Calendar, Percent } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
+import { useCalculatorState } from '../hooks/useCalculatorState';
 
 export default function CompoundInterestCalculator() {
   const { currency, formatCurrency } = useCurrency();
   const { isDark } = useTheme();
-  const [principal, setPrincipal] = useState<number>(10000);
-  const [monthlyContribution, setMonthlyContribution] = useState<number>(500);
-  const [years, setYears] = useState<number>(10);
-  const [rate, setRate] = useState<number>(7);
+  const [principal, setPrincipal] = useCalculatorState<number>('principal', 10000);
+  const [monthlyContribution, setMonthlyContribution] = useCalculatorState<number>('monthly', 500);
+  const [years, setYears] = useCalculatorState<number>('years', 10);
+  const [rate, setRate] = useCalculatorState<number>('rate', 7);
 
   const { futureValue, totalContributions, totalInterest, chartData } = useMemo(() => {
     let futureValue = principal;

@@ -4,7 +4,7 @@ import { auth, db } from '../firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
 import { getCalculatorById } from '../calculators';
 import { CalculatorMeta } from '../types';
-import { Home as HomeIcon, Activity, Image as ImageIcon, Star, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun } from 'lucide-react';
+import { Home as HomeIcon, Activity, Image as ImageIcon, Star, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Calculator, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Heart, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Baby } from 'lucide-react';
 import SEO from '../components/SEO';
 
 export default function Favorites() {
@@ -102,6 +102,7 @@ export default function Favorites() {
                   {calc.icon === 'Grid' && <Grid className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                   {calc.icon === 'HardHat' && <HardHat className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                   {calc.icon === 'ThermometerSun' && <ThermometerSun className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                  {calc.icon === 'Baby' && <Baby className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                 </div>
                 <Star className="w-5 h-5 text-yellow-500" fill="currentColor" />
               </div>

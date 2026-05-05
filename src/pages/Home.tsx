@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer, Clock } from 'lucide-react';
+import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer, Clock, Baby } from 'lucide-react';
 import { calculators } from '../calculators';
 import SEO from '../components/SEO';
 import { useRecentCalculators } from '../hooks/useRecentCalculators';
@@ -27,11 +27,24 @@ export default function Home() {
     .map(id => calculators.find(c => c.id === id))
     .filter(Boolean);
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "All Types of Calculators",
+    "url": "https://alltypesofcalculators.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://alltypesofcalculators.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <div>
       <SEO 
         title="All Types of Calculators | Fast, Accurate & Free Online Tools"
         description="Free online calculators for finance, health, math, and everyday life. Get instant results with our easy-to-use tools including Mortgage, BMI, and Currency Converter."
+        structuredData={schemaData}
       />
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-200">
@@ -170,6 +183,7 @@ export default function Home() {
                   {calc.icon === 'Grid' && <Grid className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                   {calc.icon === 'HardHat' && <HardHat className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                   {calc.icon === 'ThermometerSun' && <ThermometerSun className="w-6 h-6 text-blue-600 group-hover:text-white" />}
+                  {calc.icon === 'Baby' && <Baby className="w-6 h-6 text-blue-600 group-hover:text-white" />}
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{calc.title}</h3>
                 <p className="text-gray-600 text-sm line-clamp-2">{calc.description}</p>
