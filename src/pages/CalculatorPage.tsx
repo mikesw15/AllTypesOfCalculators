@@ -3,16 +3,20 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getCalculatorById, calculators } from '../calculators';
 import CalculatorLayout from '../components/CalculatorLayout';
 import SEO from '../components/SEO';
+import { useRecentCalculators } from '../hooks/useRecentCalculators';
 
 export default function CalculatorPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { addRecent } = useRecentCalculators();
   
   const calculator = id ? getCalculatorById(id) : undefined;
 
   React.useEffect(() => {
     if (!calculator) {
       navigate('/');
+    } else {
+      addRecent(calculator.id);
     }
   }, [calculator, navigate]);
 

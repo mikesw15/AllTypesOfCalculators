@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useCurrency } from '../contexts/CurrencyContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { TrendingUp, Wallet, PlusCircle, Calendar, Percent } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 
 export default function CompoundInterestCalculator() {
   const { currency, formatCurrency } = useCurrency();
+  const { isDark } = useTheme();
   const [principal, setPrincipal] = useState<number>(10000);
   const [monthlyContribution, setMonthlyContribution] = useState<number>(500);
   const [years, setYears] = useState<number>(10);
@@ -95,13 +97,13 @@ export default function CompoundInterestCalculator() {
           color="green"
         />
         
-        <div className="bg-white rounded-2xl border-2 border-gray-100 p-8 shadow-sm">
-          <h3 className="text-lg font-bold text-gray-900 mb-8 text-center">Growth Over Time</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-100 dark:border-gray-700 p-8 shadow-sm">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-8 text-center">Growth Over Time</h3>
           
           <div className="h-64 mb-8">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? '#374151' : '#f3f4f6'} />
                 <XAxis 
                   dataKey="year" 
                   tick={{ fontSize: 12, fill: '#9ca3af' }} 
@@ -115,11 +117,11 @@ export default function CompoundInterestCalculator() {
                   axisLine={false} 
                 />
                 <Tooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', backgroundColor: isDark ? '#1f2937' : '#ffffff', color: isDark ? '#f3f4f6' : '#111827' }}
                   formatter={(value: number) => formatCurrency(value)} 
                   labelFormatter={(label) => `Year ${label}`} 
                 />
-                <Legend />
+                <Legend wrapperStyle={{ color: isDark ? '#f3f4f6' : '#111827' }} />
                 <Area 
                   type="monotone" 
                   dataKey="principal" 
@@ -141,13 +143,13 @@ export default function CompoundInterestCalculator() {
           </div>
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center p-3 rounded-xl hover:bg-gray-50 transition-colors">
-              <span className="text-sm font-bold text-gray-600">Total Contributions</span>
-              <span className="font-bold text-gray-900">{formatCurrency(totalContributions)}</span>
+            <div className="flex justify-between items-center p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+              <span className="text-sm font-bold text-gray-600 dark:text-gray-400">Total Contributions</span>
+              <span className="font-bold text-gray-900 dark:text-white">{formatCurrency(totalContributions)}</span>
             </div>
-            <div className="flex justify-between items-center p-3 rounded-xl bg-green-50 transition-colors">
-              <span className="text-sm font-bold text-green-700">Total Interest Earned</span>
-              <span className="font-bold text-green-900">{formatCurrency(totalInterest)}</span>
+            <div className="flex justify-between items-center p-3 rounded-xl bg-green-50 dark:bg-green-500/10 transition-colors">
+              <span className="text-sm font-bold text-green-700 dark:text-green-400">Total Interest Earned</span>
+              <span className="font-bold text-green-900 dark:text-green-300">{formatCurrency(totalInterest)}</span>
             </div>
           </div>
         </div>

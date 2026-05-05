@@ -32,13 +32,13 @@ export default function CalculatorInput({
 }: CalculatorInputProps) {
   return (
     <div className="w-full">
-      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
         {Icon && <Icon className="w-4 h-4 text-blue-500" />}
         {label}
       </label>
       <div className="relative group">
         {prefix && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium pointer-events-none group-focus-within:text-blue-500 transition-colors">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 font-medium pointer-events-none group-focus-within:text-blue-500 transition-colors">
             {prefix}
           </div>
         )}
@@ -50,17 +50,17 @@ export default function CalculatorInput({
           max={max}
           step={step}
           placeholder={placeholder}
-          className={`w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none
-            hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium
+          className={`w-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-xl py-3 px-4 transition-all outline-none
+            hover:border-gray-200 dark:hover:border-gray-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 dark:focus:ring-blue-900/50 text-gray-900 dark:text-white font-medium
             ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-12' : ''}`}
         />
         {suffix && (
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium pointer-events-none group-focus-within:text-blue-500 transition-colors">
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 font-medium pointer-events-none group-focus-within:text-blue-500 transition-colors">
             {suffix}
           </div>
         )}
       </div>
-      {helpText && <p className="mt-2 text-xs text-gray-400 font-medium">{helpText}</p>}
+      {helpText && <p className="mt-2 text-xs text-gray-400 dark:text-gray-500 font-medium">{helpText}</p>}
     </div>
   );
 }

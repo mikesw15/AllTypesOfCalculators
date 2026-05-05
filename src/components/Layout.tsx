@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, Calculator, User, LogOut } from 'lucide-react';
+import { Search, Menu, X, Calculator, User, LogOut, Sun, Moon as MoonIcon } from 'lucide-react';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import CurrencySelector from './CurrencySelector';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
+import SearchModal from './SearchModal';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { user } = useAuth();
+  const { theme, setTheme, isDark } = useTheme();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -33,7 +52,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to="/categories" className="text-gray-600 hover:text-gray-900 font-medium">Categories</Link>
               <Link to="/favorites" className="text-gray-600 hover:text-gray-900 font-medium">Favorites</Link>
               
-              <CurrencySelector />
+              <button 
+                onClick={() => setIsSearchOpen(true)}
+                className="flex items-center gap-2 text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition-colors"
+                aria-label="Search calculators"
+              >
+                <Search className="w-4 h-4" />
+                <span className="text-sm font-medium hidden lg:block">Search...</span>
+                <kbd className="hidden lg:inline-flex items-center gap-1 text-[10px] bg-white text-gray-500 border border-gray-200 rounded px-1.5 py-0.5 ml-2 font-sans font-medium">
+                  <span className="text-[12px]">⌘</span> K
+                </kbd>
+              </button>
+
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                  className="p-2 rounded-full text-gray-500 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 transition-colors"
+                  aria-label="Toggle theme"
+                >
+                  {isDark ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+                </button>
+                <CurrencySelector />
+              </div>
 
               {user ? (
                 <div className="flex items-center gap-4">
@@ -127,6 +167,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      <SearchModal 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+      />
     </div>
   );
 }

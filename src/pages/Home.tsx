@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer } from 'lucide-react';
+import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer, Clock } from 'lucide-react';
 import { calculators } from '../calculators';
 import SEO from '../components/SEO';
+import { useRecentCalculators } from '../hooks/useRecentCalculators';
 
 const categories = [
   { name: 'Finance & Money', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
@@ -16,10 +17,15 @@ const categories = [
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { recentIds } = useRecentCalculators();
 
   const filteredCalculators = searchQuery 
     ? calculators.filter(c => c.title.toLowerCase().includes(searchQuery.toLowerCase()) || c.description.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
+
+  const recentCalculators = recentIds
+    .map(id => calculators.find(c => c.id === id))
+    .filter(Boolean);
 
   return (
     <div>
@@ -89,6 +95,29 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Recently Used Section */}
+      {recentCalculators.length > 0 && (
+        <section className="py-12 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-6">
+              <Clock className="w-5 h-5 text-gray-400" />
+              <h2 className="text-xl font-bold text-gray-900">Recently Used</h2>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {recentCalculators.map(calc => calc && (
+                <Link
+                  key={`recent-${calc.id}`}
+                  to={`/calculators/${calc.id}`}
+                  className="flex items-center gap-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-200 px-4 py-2.5 rounded-xl transition-colors"
+                >
+                  <span className="font-medium text-gray-900">{calc.title}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Trending Section */}
       <section className="py-16 bg-gray-50">

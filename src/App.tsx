@@ -17,6 +17,8 @@ import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { HistoryProvider } from './contexts/HistoryContext';
 import { Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'motion/react';
+import AnimatedPage from './components/AnimatedPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -28,42 +30,57 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function AppRoutes() {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      {/* @ts-ignore */}
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
+        <Route path="/categories" element={<AnimatedPage><Categories /></AnimatedPage>} />
+        <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
+        <Route 
+          path="/favorites" 
+          element={
+            <ProtectedRoute>
+              <AnimatedPage><Favorites /></AnimatedPage>
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/account" 
+          element={
+            <ProtectedRoute>
+              <AnimatedPage><Account /></AnimatedPage>
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/calculators/:id" element={<AnimatedPage><CalculatorPage /></AnimatedPage>} />
+        {/* Fallback route */}
+        <Route path="*" element={<AnimatedPage><Home /></AnimatedPage>} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+import { ThemeProvider } from './contexts/ThemeContext';
+
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <HistoryProvider>
-          <CurrencyProvider>
-            <ScrollToTop />
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/categories" element={<Categories />} />
-                <Route path="/login" element={<Login />} />
-                <Route 
-                  path="/favorites" 
-                  element={
-                    <ProtectedRoute>
-                      <Favorites />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/account" 
-                  element={
-                    <ProtectedRoute>
-                      <Account />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route path="/calculators/:id" element={<CalculatorPage />} />
-                {/* Fallback route */}
-                <Route path="*" element={<Home />} />
-              </Routes>
-            </Layout>
-          </CurrencyProvider>
-        </HistoryProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <HistoryProvider>
+            <CurrencyProvider>
+              <ScrollToTop />
+              <Layout>
+                <AppRoutes />
+              </Layout>
+            </CurrencyProvider>
+          </HistoryProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
