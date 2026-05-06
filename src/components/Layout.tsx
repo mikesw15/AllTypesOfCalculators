@@ -124,6 +124,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
               </button>
+              <div className="scale-90 origin-right">
+                <CurrencySelector />
+              </div>
               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>

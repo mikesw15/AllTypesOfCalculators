@@ -4,6 +4,7 @@ import { auth, db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useHistory } from '../contexts/HistoryContext';
+import { handleFirestoreError, OperationType } from '../utils/firestoreErrors';
 
 export default function PasswordGenerator() {
   const { saveToHistory } = useHistory();
@@ -98,16 +99,27 @@ export default function PasswordGenerator() {
     setPassword(result);
     calculateStrength(result, pool.length);
 
-    saveToHistory('password-generator', 'Password Generator', { length, uppercase, lowercase, numbers, symbols }, { strength: strength.label });
-
     setHistory(prev => {
       const newHistory = [result, ...prev.filter(p => p !== result)].slice(0, 5);
       return newHistory;
     });
+
+    // Debounce history saving to 1 second
+    const timeoutId = setTimeout(() => {
+      saveToHistory('password-generator', 'Password Generator', 
+        { length, uppercase, lowercase, numbers, symbols, excludeAmbiguous }, 
+        { strength: strength.label }
+      );
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
   };
 
   useEffect(() => {
-    generate();
+    const cleanup = generate();
+    return () => {
+      if (typeof cleanup === 'function') cleanup();
+    };
   }, [length, uppercase, lowercase, numbers, symbols, excludeAmbiguous]);
 
   const copyToClipboard = (text: string) => {
@@ -120,30 +132,35 @@ export default function PasswordGenerator() {
   const handleSavePassword = async () => {
     if (!password) return;
     
-    try {
-      let currentUser = auth.currentUser;
-      if (!currentUser) {
+    let currentUser = auth.currentUser;
+    if (!currentUser) {
+      try {
         const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
         currentUser = result.user;
+      } catch (authError) {
+        console.error("Auth error:", authError);
+        return; // User cancelled or failed to log in
       }
+    }
 
-      if (currentUser) {
-        setIsSaving(true);
-        await addDoc(collection(db, `users/${currentUser.uid}/saved_passwords`), {
+    if (currentUser) {
+      setIsSaving(true);
+      const path = `users/${currentUser.uid}/saved_passwords`;
+      try {
+        await addDoc(collection(db, path), {
           password: password,
           label: saveLabel.trim(),
           createdAt: serverTimestamp()
         });
         setSaveSuccess(true);
         setSaveLabel('');
-        setTimeout(() => setSaveSuccess(false), 2000);
+        setTimeout(() => setSaveSuccess(false), 3000);
+      } catch (error) {
+        handleFirestoreError(error, OperationType.WRITE, path);
+      } finally {
+        setIsSaving(false);
       }
-    } catch (error) {
-      console.error("Error saving password:", error);
-      alert("Failed to save password. Please try again.");
-    } finally {
-      setIsSaving(false);
     }
   };
 

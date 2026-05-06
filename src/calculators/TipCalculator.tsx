@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Users, DollarSign, Calculator, Info, Wallet } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function TipCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [billAmount, setBillAmount] = useState<number>(50);
   const [tipPercentage, setTipPercentage] = useState<number>(15);
   const [numberOfPeople, setNumberOfPeople] = useState<number>(1);
@@ -28,7 +30,7 @@ export default function TipCalculator() {
                 label="Bill Amount"
                 value={billAmount}
                 onChange={setBillAmount}
-                prefix="$"
+                prefix={currency.symbol}
                 min={0}
                 step={0.01}
               />
@@ -77,8 +79,8 @@ export default function TipCalculator() {
         <div className="space-y-6">
           <CalculatorResult
             label="Total Per Person"
-            value={`$${perPerson.toFixed(2)}`}
-            description={`Including $${tipPerPerson.toFixed(2)} tip per person.`}
+            value={formatCurrency(perPerson)}
+            description={`Including ${formatCurrency(tipPerPerson)} tip per person.`}
             color="blue"
             icon={<DollarSign className="w-8 h-8 text-blue-600" />}
           />
@@ -86,11 +88,11 @@ export default function TipCalculator() {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-green-50 p-6 rounded-2xl border-2 border-green-100">
               <p className="text-[10px] font-bold text-green-600 uppercase tracking-wider mb-1">Total Tip</p>
-              <p className="text-3xl font-black text-green-700">${totalTip.toFixed(2)}</p>
+              <p className="text-3xl font-black text-green-700">{formatCurrency(totalTip)}</p>
             </div>
             <div className="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">
               <p className="text-[10px] font-bold text-purple-600 uppercase tracking-wider mb-1">Total Bill</p>
-              <p className="text-3xl font-black text-purple-700">${totalBill.toFixed(2)}</p>
+              <p className="text-3xl font-black text-purple-700">{formatCurrency(totalBill)}</p>
             </div>
           </div>
 
@@ -99,15 +101,15 @@ export default function TipCalculator() {
             <div className="space-y-4">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Subtotal</span>
-                <span className="font-bold text-gray-900">${billAmount.toFixed(2)}</span>
+                <span className="font-bold text-gray-900">{formatCurrency(billAmount)}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Tip ({tipPercentage}%)</span>
-                <span className="font-bold text-gray-900">${totalTip.toFixed(2)}</span>
+                <span className="font-bold text-gray-900">{formatCurrency(totalTip)}</span>
               </div>
               <div className="pt-4 border-t border-gray-100 flex justify-between text-lg font-black">
                 <span className="text-gray-900">Total</span>
-                <span className="text-blue-600">${totalBill.toFixed(2)}</span>
+                <span className="text-blue-600">{formatCurrency(totalBill)}</span>
               </div>
             </div>
           </div>

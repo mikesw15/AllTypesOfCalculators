@@ -34,6 +34,7 @@ service cloud.firestore {
     // Document ID: {passwordId}
     // Fields:
     //   - password: string (required)
+    //   - label: string (optional)
     //   - createdAt: timestamp (required, immutable)
     //
     // ===============================================================
@@ -89,8 +90,9 @@ service cloud.firestore {
     }
 
     function isValidSavedPassword(data) {
-      return hasOnlyAllowedFields(['password', 'createdAt']) &&
+      return hasOnlyAllowedFields(['password', 'label', 'createdAt']) &&
              data.password is string && data.password.size() > 0 && data.password.size() < 1000 &&
+             (!('label' in data) || (data.label is string && data.label.size() <= 100)) &&
              data.createdAt is timestamp;
     }
 

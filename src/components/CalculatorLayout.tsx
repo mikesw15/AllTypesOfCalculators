@@ -7,6 +7,7 @@ import { db } from '../firebase';
 import { collection, addDoc, deleteDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import { exportToPDF } from '../utils/exportPdf';
+import { handleFirestoreError, OperationType } from '../utils/firestoreErrors';
 
 import ShareModal from './ShareModal';
 
@@ -74,13 +75,18 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
         setFavoriteId(null);
       } else {
         // Add favorite
-        const docRef = await addDoc(collection(db, `users/${user.uid}/favorites`), {
-          userId: user.uid,
-          calculatorId: meta.id,
-          addedAt: serverTimestamp()
-        });
-        setIsFavorite(true);
-        setFavoriteId(docRef.id);
+        const path = `users/${user.uid}/favorites`;
+        try {
+          const docRef = await addDoc(collection(db, path), {
+            userId: user.uid,
+            calculatorId: meta.id,
+            addedAt: serverTimestamp()
+          });
+          setIsFavorite(true);
+          setFavoriteId(docRef.id);
+        } catch (error) {
+          handleFirestoreError(error, OperationType.WRITE, path);
+        }
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);

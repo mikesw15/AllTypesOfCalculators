@@ -2,6 +2,7 @@ import React, { createContext, useContext, useCallback } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from './AuthContext';
+import { handleFirestoreError, OperationType } from '../utils/firestoreErrors';
 
 interface HistoryItem {
   calculatorId: string;
@@ -28,7 +29,8 @@ export const HistoryProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (!user) return;
 
     try {
-      await addDoc(collection(db, `users/${user.uid}/history`), {
+      const path = `users/${user.uid}/history`;
+      await addDoc(collection(db, path), {
         calculatorId,
         calculatorTitle,
         inputs,
@@ -36,7 +38,7 @@ export const HistoryProvider: React.FC<{ children: React.ReactNode }> = ({ child
         timestamp: serverTimestamp(),
       });
     } catch (error) {
-      console.error("Error saving to history:", error);
+      handleFirestoreError(error, OperationType.WRITE, `users/${user.uid}/history`);
     }
   }, [user]);
 

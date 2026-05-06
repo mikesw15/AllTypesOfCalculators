@@ -6,7 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function RetirementCalculator() {
-  const { currency } = useCurrency();
+  const { currency, formatCurrency } = useCurrency();
   const [currentAge, setCurrentAge] = useState<number>(30);
   const [retirementAge, setRetirementAge] = useState<number>(65);
   const [currentSavings, setCurrentSavings] = useState<number>(50000);
@@ -116,7 +116,7 @@ export default function RetirementCalculator() {
         <div className="space-y-6">
           <CalculatorResult
             label="Estimated Nest Egg"
-            value={`${currency.symbol}${finalBalance.toLocaleString()}`}
+            value={formatCurrency(finalBalance)}
             description={`In ${yearsToRetire} years at age ${retirementAge}.`}
             color="blue"
             icon={<PiggyBank className="w-8 h-8 text-blue-600" />}
@@ -124,7 +124,7 @@ export default function RetirementCalculator() {
 
           <div className="bg-green-50 p-6 rounded-2xl border-2 border-green-100">
             <p className="text-[10px] font-bold text-green-600 uppercase tracking-wider mb-1">Inflation Adjusted Value</p>
-            <p className="text-3xl font-black text-green-700">{currency.symbol}{finalAdjusted.toLocaleString()}</p>
+            <p className="text-3xl font-black text-green-700">{formatCurrency(finalAdjusted)}</p>
             <p className="text-xs text-green-600/70 mt-1">What this amount is worth in today's money.</p>
           </div>
 
@@ -142,7 +142,7 @@ export default function RetirementCalculator() {
                 <XAxis dataKey="year" hide />
                 <YAxis hide domain={['auto', 'auto']} />
                 <Tooltip 
-                  formatter={(value: number) => [`${currency.symbol}${value.toLocaleString()}`, 'Balance']}
+                  formatter={(value: number) => [formatCurrency(value), 'Balance']}
                   labelFormatter={(label) => `Age ${label}`}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                 />

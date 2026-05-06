@@ -42,10 +42,20 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   };
 
   const formatCurrency = (amount: number) => {
-    return `${currency.symbol}${amount.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`;
+    try {
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: currency.code,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(amount);
+    } catch (e) {
+      // Fallback for custom or unsupported currencies
+      return `${currency.symbol}${amount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
+    }
   };
 
   return (

@@ -36,6 +36,17 @@
         "calculatedAt": { "type": "timestamp" }
       },
       "required": ["userId", "calculatorId", "calculatedAt"]
+    },
+    "SavedPassword": {
+      "title": "Saved Password",
+      "description": "A saved generated password",
+      "type": "object",
+      "properties": {
+        "password": { "type": "string" },
+        "label": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["password", "createdAt"]
     }
   },
   "firestore": {
@@ -50,6 +61,10 @@
     "/users/{userId}/history/{historyId}": {
       "schema": { "$ref": "#/entities/History" },
       "description": "User's calculation history"
+    },
+    "/users/{userId}/saved_passwords/{passwordId}": {
+      "schema": { "$ref": "#/entities/SavedPassword" },
+      "description": "User's saved passwords"
     }
   }
 }
