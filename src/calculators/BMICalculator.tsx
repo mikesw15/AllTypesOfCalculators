@@ -1,13 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
-import CalculatorToggle from '../components/calculator/CalculatorToggle';
 import { Scale, Ruler } from 'lucide-react';
 import { useHistory } from '../contexts/HistoryContext';
+import { useUnit } from '../contexts/UnitContext';
 
 export default function BMICalculator() {
   const { saveToHistory } = useHistory();
-  const [system, setSystem] = useState<'metric' | 'imperial'>('imperial');
+  const { unit: system } = useUnit();
   const [weight, setWeight] = useState<number>(160); // lbs or kg
   const [heightFt, setHeightFt] = useState<number>(5);
   const [heightIn, setHeightIn] = useState<number>(9);
@@ -48,16 +48,6 @@ export default function BMICalculator() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
       {/* Inputs */}
       <div className="space-y-8">
-        <CalculatorToggle
-          label="Measurement System"
-          value={system}
-          onChange={setSystem}
-          options={[
-            { label: 'Imperial (lbs, ft/in)', value: 'imperial' },
-            { label: 'Metric (kg, cm)', value: 'metric' }
-          ]}
-        />
-
         <CalculatorInput
           label={`Weight (${system === 'imperial' ? 'lbs' : 'kg'})`}
           value={weight}

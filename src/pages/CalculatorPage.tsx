@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCalculatorById, calculators } from '../calculators';
+import { calculatorExplanations } from '../calculators/explanations';
 import CalculatorLayout from '../components/CalculatorLayout';
 import SEO from '../components/SEO';
 import { useRecentCalculators } from '../hooks/useRecentCalculators';
@@ -100,7 +101,7 @@ export default function CalculatorPage() {
       />
       <CalculatorLayout 
         meta={calculator} 
-        explanation={calculator.explanation || defaultExplanation}
+        explanation={calculator.explanation || calculatorExplanations[calculator.id] || defaultExplanation}
         faq={calculator.faq}
         relatedCalculators={relatedCalculators}
       >

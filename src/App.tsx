@@ -12,6 +12,7 @@ import Categories from './pages/Categories';
 import Favorites from './pages/Favorites';
 import Account from './pages/Account';
 import Login from './pages/Login';
+import About from './pages/About';
 import ScrollToTop from './components/ScrollToTop';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -40,6 +41,7 @@ function AppRoutes() {
         <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
         <Route path="/categories" element={<AnimatedPage><Categories /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
+        <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
         <Route 
           path="/favorites" 
           element={
@@ -66,20 +68,24 @@ function AppRoutes() {
 
 import { ThemeProvider } from './contexts/ThemeContext';
 
+import { UnitProvider } from './contexts/UnitContext';
+
 export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
-        <AuthProvider>
-          <HistoryProvider>
-            <CurrencyProvider>
-              <ScrollToTop />
-              <Layout>
-                <AppRoutes />
-              </Layout>
-            </CurrencyProvider>
-          </HistoryProvider>
-        </AuthProvider>
+        <UnitProvider>
+          <AuthProvider>
+            <HistoryProvider>
+              <CurrencyProvider>
+                <ScrollToTop />
+                <Layout>
+                  <AppRoutes />
+                </Layout>
+              </CurrencyProvider>
+            </HistoryProvider>
+          </AuthProvider>
+        </UnitProvider>
       </ThemeProvider>
     </BrowserRouter>
   );

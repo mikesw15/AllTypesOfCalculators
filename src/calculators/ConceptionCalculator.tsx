@@ -8,6 +8,23 @@ export default function ConceptionCalculator() {
   const [method, setMethod] = useCalculatorState<'dueDate' | 'lmp'>('method', 'dueDate');
   const [dateStr, setDateStr] = useCalculatorState<string>('date', new Date().toISOString().split('T')[0]);
   const [cycleLength, setCycleLength] = useCalculatorState<number>('cycle', 28);
+  const [lutealPhase, setLutealPhase] = useCalculatorState<number>('luteal', 14);
+  const [isAdvanced, setIsAdvanced] = useCalculatorState<boolean>('adv', false);
+
+  const follicularPhase = cycleLength - lutealPhase;
+
+  const handleCycleChange = (val: number) => {
+    setCycleLength(val);
+  };
+
+  const handleLutealChange = (val: number) => {
+    setLutealPhase(val);
+    setCycleLength(follicularPhase + val);
+  };
+
+  const handleFollicularChange = (val: number) => {
+    setCycleLength(val + lutealPhase);
+  };
 
   const results = useMemo(() => {
     if (!dateStr) return null;
@@ -49,8 +66,8 @@ export default function ConceptionCalculator() {
       lmpDate = addDays(dueDate, -280); // Based on standard 28-day cycle 
     } else {
       lmpDate = baseDate;
-      // Ovulation/Conception usually happens 14 days before the NEXT period
-      const daysToOvulation = cycleLength - 14;
+      // Ovulation/Conception happens after the follicular phase
+      const daysToOvulation = follicularPhase;
       conceptionDate = addDays(lmpDate, daysToOvulation);
       dueDate = addDays(conceptionDate, 266);
       windowStart = addDays(conceptionDate, -5);
@@ -63,8 +80,15 @@ export default function ConceptionCalculator() {
       windowStartStr: formatDate(windowStart),
       windowEndStr: formatDate(windowEnd),
       lmpDateStr: formatDate(lmpDate),
+      milestones: [
+        { label: 'First Heartbeat (Week 6-7)', date: formatDate(addDays(lmpDate, 45)) },
+        { label: 'End of First Trimester (Week 13)', date: formatDate(addDays(lmpDate, 91)) },
+        { label: 'Anatomy Scan (Week 18-20)', date: formatDate(addDays(lmpDate, 133)) },
+        { label: 'Viability (Week 24)', date: formatDate(addDays(lmpDate, 168)) },
+        { label: 'End of Second Trimester (Week 27)', date: formatDate(addDays(lmpDate, 189)) },
+      ]
     };
-  }, [method, dateStr, cycleLength]);
+  }, [method, dateStr, follicularPhase]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -120,16 +144,54 @@ export default function ConceptionCalculator() {
               </div>
 
               {method === 'lmp' && (
-                <CalculatorInput
-                  label="Average Cycle Length"
-                  value={cycleLength}
-                  onChange={setCycleLength}
-                  min={20}
-                  max={45}
-                  step={1}
-                  suffix=" days"
-                  icon={<Activity className="w-5 h-5 text-gray-400" />}
-                />
+                <div className="space-y-4">
+                  <CalculatorInput
+                    label="Average Cycle Length"
+                    value={cycleLength}
+                    onChange={handleCycleChange}
+                    min={20}
+                    max={45}
+                    step={1}
+                    suffix=" days"
+                    icon={Activity}
+                  />
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => setIsAdvanced(!isAdvanced)}
+                      className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                    >
+                      {isAdvanced ? '- Hide' : '+ Show'} Advanced Cycle Options
+                    </button>
+                  </div>
+
+                  {isAdvanced && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                      <CalculatorInput
+                        label="Follicular Phase"
+                        value={follicularPhase}
+                        onChange={handleFollicularChange}
+                        min={5}
+                        max={30}
+                        step={1}
+                        suffix=" days"
+                      />
+                      <CalculatorInput
+                        label="Luteal Phase"
+                        value={lutealPhase}
+                        onChange={handleLutealChange}
+                        min={5}
+                        max={20}
+                        step={1}
+                        suffix=" days"
+                      />
+                      <p className="text-xs text-gray-500 md:col-span-2 mt-1">
+                        The follicular phase is from the first day of your period until ovulation. 
+                        The luteal phase is from ovulation until your next period (typically 14 days).
+                      </p>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -192,6 +254,18 @@ export default function ConceptionCalculator() {
                   <p className="text-xs text-gray-500 mt-2">
                     Sperm can survive in the female reproductive tract for up to 5 days, so intercourse up to 5 days before ovulation can lead to conception.
                   </p>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-5 border border-gray-200">
+                  <p className="text-gray-600 font-medium text-sm mb-3">Key Pregnancy Milestones (Estimates):</p>
+                  <ul className="space-y-3">
+                    {results.milestones.map((m, idx) => (
+                      <li key={idx} className="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+                        <span className="text-sm font-medium text-gray-700">{m.label}</span>
+                        <span className="text-sm font-bold text-gray-900 text-right ml-4">{m.date}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>

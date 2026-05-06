@@ -61,7 +61,7 @@ export default function Account() {
         });
 
         historyItems.sort((a, b) => (b.timestamp?.toMillis?.() || 0) - (a.timestamp?.toMillis?.() || 0));
-        setHistory(historyItems.slice(0, 5));
+        setHistory(historyItems.slice(0, 10));
       } catch (error) {
         console.error("Error fetching account data:", error);
       } finally {

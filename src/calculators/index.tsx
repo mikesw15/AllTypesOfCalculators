@@ -51,6 +51,8 @@ import TipCalculator from './TipCalculator';
 import WallpaperCalculator from './WallpaperCalculator';
 import FractionCalculator from './FractionCalculator';
 import ConceptionCalculator from './ConceptionCalculator';
+import OvulationCalculator from './OvulationCalculator';
+import PregnancyWeightCalculator from './PregnancyWeightCalculator';
 
 export const calculators: CalculatorMeta[] = [
   {
@@ -61,7 +63,37 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Baby',
     component: ConceptionCalculator,
     seoTitle: 'Conception Calculator | Reverse Calculate Conception Date',
-    seoDescription: 'Calculate the exact date of conception based on your due date or last period. Discover your intercourse window and pregnancy milestones.'
+    seoDescription: 'Calculate the exact date of conception based on your due date or last period. Discover your intercourse window and pregnancy milestones.',
+    sources: [
+      { title: 'ACOG - Methods for Estimating Due Date', url: 'https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-due-date' }
+    ]
+  },
+  {
+    id: 'ovulation',
+    title: 'Ovulation Calculator',
+    description: 'Predict your fertile windows and ovulation days for the upcoming months.',
+    category: 'Health & Fitness',
+    icon: 'Calendar',
+    component: OvulationCalculator,
+    seoTitle: 'Ovulation Calculator | Predict Your Fertile Window',
+    seoDescription: 'Accurately predict your ovulation day and fertile window for the next several months based on your cycle.',
+    sources: [
+      { title: 'Mayo Clinic - Menstrual Cycle', url: 'https://www.mayoclinic.org/healthy-lifestyle/womens-health/in-depth/menstrual-cycle/art-20047186' }
+    ]
+  },
+  {
+    id: 'pregnancy-weight',
+    title: 'Pregnancy Weight Gain Calculator',
+    description: 'Track healthy weight gain ranges during pregnancy based on your pre-pregnancy BMI.',
+    category: 'Health & Fitness',
+    icon: 'Baby',
+    component: PregnancyWeightCalculator,
+    seoTitle: 'Pregnancy Weight Gain Calculator | IOM Guidelines',
+    seoDescription: 'Calculate the recommended healthy weight gain range during your pregnancy based on IOM guidelines.',
+    sources: [
+      { title: 'CDC - Weight Gain During Pregnancy', url: 'https://www.cdc.gov/pregnancy/maternal-health/weight-gain.html' },
+      { title: 'IOM Guidelines', url: 'https://www.ncbi.nlm.nih.gov/books/NBK32813/' }
+    ]
   },
   {
     id: 'car-loan',
@@ -71,7 +103,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Car',
     component: CarLoanCalculator,
     seoTitle: 'Auto Loan & Car Loan Calculator | Estimate Monthly Payments',
-    seoDescription: 'Free car loan calculator to estimate your monthly auto loan payments, total interest paid, and the total cost of your vehicle over time.'
+    seoDescription: 'Free car loan calculator to estimate your monthly auto loan payments, total interest paid, and the total cost of your vehicle over time.',
+    sources: [
+      { title: 'CFPB - Auto Loans', url: 'https://www.consumerfinance.gov/consumer-tools/auto-loans/' }
+    ]
   },
   {
     id: 'compound-interest',
@@ -81,7 +116,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'TrendingUp',
     component: CompoundInterestCalculator,
     seoTitle: 'Compound Interest Calculator | Predict Your Investment Growth',
-    seoDescription: 'Free compound interest calculator. Discover how your investments, savings, and returns will grow over time with the power of compounding.'
+    seoDescription: 'Free compound interest calculator. Discover how your investments, savings, and returns will grow over time with the power of compounding.',
+    sources: [
+      { title: 'SEC - Fast Answers: Compound Interest', url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/compound-interest' }
+    ]
   },
   {
     id: 'retirement-savings',
@@ -91,7 +129,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'PiggyBank',
     component: RetirementCalculator,
     seoTitle: 'Retirement Savings Calculator | Plan Your Financial Future',
-    seoDescription: 'Calculate your retirement savings with our free retirement calculator. Estimate your future nest egg, returns, and see if your goals are on track.'
+    seoDescription: 'Calculate your retirement savings with our free retirement calculator. Estimate your future nest egg, returns, and see if your goals are on track.',
+    sources: [
+      { title: 'IRS - Retirement Topics', url: 'https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-benefits-of-saving-now' }
+    ]
   },
   {
     id: 'salary-calculator',
@@ -148,7 +189,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Home',
     component: MortgageCalculator,
     seoTitle: 'Free Mortgage Calculator with Taxes and Insurance',
-    seoDescription: 'Calculate your monthly mortgage payments, including property taxes, home insurance, and PMI. Generate instant amortization schedules.'
+    seoDescription: 'Calculate your monthly mortgage payments, including property taxes, home insurance, and PMI. Generate instant amortization schedules.',
+    sources: [
+      { title: 'CFPB - Mortgages', url: 'https://www.consumerfinance.gov/consumer-tools/mortgages/' }
+    ]
   },
   {
     id: 'bmi',
@@ -158,7 +202,11 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Activity',
     component: BMICalculator,
     seoTitle: 'Body Mass Index (BMI) Calculator | Check Your Healthy Weight',
-    seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range for adult men and women based on height and weight.'
+    seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range for adult men and women based on height and weight.',
+    sources: [
+      { title: 'CDC - About Adult BMI', url: 'https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html' },
+      { title: 'WHO - Body Mass Index', url: 'https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index' }
+    ]
   },
   {
     id: 'bmr-tdee',
@@ -168,7 +216,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Flame',
     component: BMRCalculator,
     seoTitle: 'BMR & TDEE Calculator | Calculate Daily Calorie & Energy Needs',
-    seoDescription: 'Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE). Discover your exact daily calorie needs for weight loss, maintenance, or muscle gain.'
+    seoDescription: 'Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE). Discover your exact daily calorie needs for weight loss, maintenance, or muscle gain.',
+    sources: [
+      { title: 'National Library of Medicine - Mifflin St Jeor Equation', url: 'https://pubmed.ncbi.nlm.nih.gov/2305711/' }
+    ]
   },
   {
     id: 'water-intake',
@@ -178,7 +229,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Droplets',
     component: WaterIntakeCalculator,
     seoTitle: 'Water Intake Calculator | How Much Water Should I Drink?',
-    seoDescription: 'Calculate daily water intake. Find out exactly how many ounces or liters of water you should drink per day to stay hydrated based on weight and activity.'
+    seoDescription: 'Calculate daily water intake. Find out exactly how many ounces or liters of water you should drink per day to stay hydrated based on weight and activity.',
+    sources: [
+      { title: 'National Academies of Sciences - Dietary Reference Intakes for Water', url: 'https://www.nationalacademies.org/news/2004/02/report-sets-dietary-intake-levels-for-water-salt-and-potassium-to-maintain-health-and-reduce-chronic-disease-risk' }
+    ]
   },
   {
     id: 'heart-rate-zones',
@@ -188,7 +242,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'HeartPulse',
     component: HeartRateCalculator,
     seoTitle: 'Target Heart Rate Zone Calculator | Fat Burning & Cardio',
-    seoDescription: 'Calculate your target heart rate zones for maximum fat burning, cardio capacity, and optimal athletic training.'
+    seoDescription: 'Calculate your target heart rate zones for maximum fat burning, cardio capacity, and optimal athletic training.',
+    sources: [
+      { title: 'AHA - Target Heart Rates Chart', url: 'https://www.heart.org/en/healthy-living/fitness/fitness-basics/target-heart-rates' }
+    ]
   },
   {
     id: 'body-fat-calculator',
@@ -198,7 +255,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'Percent',
     component: BodyFatCalculator,
     seoTitle: 'Body Fat Calculator - US Navy Method | Estimate Body Fat %',
-    seoDescription: 'Determine your body fat percentage, lean body mass, and fat mass using the highly accurate US Navy method. Free online body fat estimator.'
+    seoDescription: 'Determine your body fat percentage, lean body mass, and fat mass using the highly accurate US Navy method. Free online body fat estimator.',
+    sources: [
+      { title: 'U.S. Department of Defense - Physical Fitness', url: 'https://www.med.navy.mil/Navy-Marine-Corps-Public-Health-Center/Population-Health/Health-Promotion-and-Wellness/A-Z-Health-Topics/Physical-Fitness/' }
+    ]
   },
   {
     id: 'peptide-calculator',
@@ -277,7 +337,10 @@ export const calculators: CalculatorMeta[] = [
     icon: 'PieChart',
     component: MacroCalculator,
     seoTitle: 'Macro Calculator | Fast Track Your Diet & Nutrition',
-    seoDescription: 'Determine your ideal daily macronutrient split—protein, carbs, and fat—for weight loss, muscle gain, or maintenance. Free macro diet planner.'
+    seoDescription: 'Determine your ideal daily macronutrient split—protein, carbs, and fat—for weight loss, muscle gain, or maintenance. Free macro diet planner.',
+    sources: [
+      { title: 'USDA - Dietary Guidelines for Americans', url: 'https://www.dietaryguidelines.gov/' }
+    ]
   },
   {
     id: 'scientific-calculator',

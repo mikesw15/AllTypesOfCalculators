@@ -14,4 +14,5 @@ export interface CalculatorMeta {
   explanation?: React.ReactNode;
   faq?: { question: string; answer: string }[];
   relatedIds?: string[];
+  sources?: { title: string; url: string }[];
 }
