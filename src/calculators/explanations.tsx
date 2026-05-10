@@ -58,7 +58,7 @@ export const calculatorExplanations: Record<string, React.ReactNode> = {
   'mortgage': (
     <>
       <p><strong>Formula:</strong> M = P [ i(1 + i)^n ] / [ (1 + i)^n - 1 ]</p>
-      <p>Where <strong>M</strong> is your total monthly mortgage payment, <strong>P</strong> is the principal loan amount, <strong>i</strong> is your monthly interest rate, and <strong>n</strong> is the number of months. Monthly property taxes and insurance are added to this base to calculate the total payment.</p>
+      <p>Where <strong>M</strong> is your total monthly mortgage payment, <strong>P</strong> is the principal loan amount, <strong>i</strong> is your monthly interest rate, and <strong>n</strong> is the number of months. Monthly property taxes, insurance, and PMI are added to this base to calculate the total payment.</p>
     </>
   ),
   'bmi': (

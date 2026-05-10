@@ -148,15 +148,49 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
         </div>
       </div>
 
-      {explanation && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
-          <div className="flex items-center gap-2 mb-6">
-            <Info className="w-6 h-6 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900">How it works</h2>
-          </div>
-          <div className="prose prose-blue max-w-none text-gray-600">
-            {explanation}
-          </div>
+      {(explanation || (meta.sources && meta.sources.length > 0)) && (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 overflow-hidden">
+          <details className="group">
+            <summary className="flex items-center justify-between gap-2 p-6 md:p-8 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+              <div className="flex items-center gap-2">
+                <Info className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">How it works: Formulas & Methodology</h2>
+              </div>
+              <span className="transition group-open:rotate-180">
+                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24" className="text-gray-500 dark:text-gray-400"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
+            </summary>
+            <div className="p-6 md:p-8 pt-0 border-t border-gray-100 dark:border-gray-700">
+              {explanation && (
+                <div className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 mb-6">
+                  {explanation}
+                </div>
+              )}
+              {meta.sources && meta.sources.length > 0 && (
+                <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+                    <LinkIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    References & Sources
+                  </h3>
+                  <ul className="space-y-3 m-0 p-0 list-none">
+                    {meta.sources.map((source, index) => (
+                      <li key={index}>
+                        <a
+                          href={source.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></div>
+                          {source.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </details>
         </div>
       )}
 
@@ -172,29 +206,6 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{item.question}</h3>
                 <p className="text-gray-600">{item.answer}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {meta.sources && meta.sources.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8 dark:bg-gray-800 dark:border-gray-700">
-          <div className="flex items-center gap-2 mb-6">
-            <LinkIcon className="w-6 h-6 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">References & Sources</h2>
-          </div>
-          <div className="space-y-3">
-            {meta.sources.map((source, index) => (
-              <a
-                key={index}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
-              >
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></div>
-                {source.title}
-              </a>
             ))}
           </div>
         </div>

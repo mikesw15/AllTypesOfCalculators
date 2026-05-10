@@ -6,13 +6,12 @@ import SEO from '../components/SEO';
 
 const getCategoryIcon = (categoryName: string) => {
   switch (categoryName) {
-    case 'Finance & Money': return <DollarSign className="w-8 h-8 text-green-600 mr-3" />;
-    case 'Health & Fitness': return <Heart className="w-8 h-8 text-red-600 mr-3" />;
-    case 'Math & Science': return <FlaskConical className="w-8 h-8 text-purple-600 mr-3" />;
+    case 'Finance': return <DollarSign className="w-8 h-8 text-green-600 mr-3" />;
+    case 'Health': return <Heart className="w-8 h-8 text-red-600 mr-3" />;
+    case 'Math': return <FlaskConical className="w-8 h-8 text-purple-600 mr-3" />;
     case 'Everyday Life': return <Coffee className="w-8 h-8 text-orange-600 mr-3" />;
-    case 'Home Improvement & DIY': return <Hammer className="w-8 h-8 text-amber-600 mr-3" />;
-    case 'Fun / Viral':
-    case 'Fun & Niche':
+    case 'Home Improvement': return <Hammer className="w-8 h-8 text-amber-600 mr-3" />;
+    case 'Fun':
       return <Flame className="w-8 h-8 text-pink-600 mr-3" />;
     default: return <Calculator className="w-8 h-8 text-blue-600 mr-3" />;
   }

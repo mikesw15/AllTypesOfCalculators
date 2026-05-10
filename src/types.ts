@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Category = "Finance & Money" | "Health & Fitness" | "Math & Science" | "Everyday Life" | "Fun & Niche" | "Fun / Viral" | "Home Improvement & DIY";
+export type Category = "Finance" | "Health" | "Math" | "Everyday Life" | "Fun" | "Home Improvement";
 
 export interface CalculatorMeta {
   id: string;

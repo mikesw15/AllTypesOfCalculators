@@ -171,12 +171,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className={`font-semibold ${isDark ? 'text-gray-200' : 'text-gray-900'} mb-4`}>Categories</h3>
               <ul className={`space-y-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                <li><Link to="/categories#finance" className="hover:text-blue-600">Finance & Money</Link></li>
-                <li><Link to="/categories#health" className="hover:text-blue-600">Health & Fitness</Link></li>
-                <li><Link to="/categories#math" className="hover:text-blue-600">Math & Science</Link></li>
+                <li><Link to="/categories#finance" className="hover:text-blue-600">Finance</Link></li>
+                <li><Link to="/categories#health" className="hover:text-blue-600">Health</Link></li>
+                <li><Link to="/categories#math" className="hover:text-blue-600">Math</Link></li>
                 <li><Link to="/categories#everyday" className="hover:text-blue-600">Everyday Life</Link></li>
                 <li><Link to="/categories#home" className="hover:text-blue-600">Home Improvement</Link></li>
-                <li><Link to="/categories#fun" className="hover:text-blue-600">Fun & Niche</Link></li>
+                <li><Link to="/categories#fun" className="hover:text-blue-600">Fun</Link></li>
               </ul>
             </div>
             <div>
