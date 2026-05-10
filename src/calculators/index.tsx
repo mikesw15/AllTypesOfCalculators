@@ -12,6 +12,7 @@ import CompoundInterestCalculator from './CompoundInterestCalculator';
 import SalaryCalculator from './SalaryCalculator';
 import CryptoROICalculator from './CryptoROICalculator';
 import CurrencyConverter from './CurrencyConverter';
+import RuleOf72Calculator from './RuleOf72Calculator';
 
 // Health
 import MacroCalculator from './MacroCalculator';
@@ -22,6 +23,8 @@ import UnitConverter from './UnitConverter';
 import DateTimeCalculator from './DateTimeCalculator';
 import StatisticsCalculator from './StatisticsCalculator';
 import ProbabilityCalculator from './ProbabilityCalculator';
+import PercentageCalculator from './PercentageCalculator';
+import ZScoreCalculator from './ZScoreCalculator';
 
 // Everyday Life
 import FuelCostCalculator from './FuelCostCalculator';
@@ -40,6 +43,9 @@ import PeptideCalculator from './PeptideCalculator';
 import ProteinCalculator from './ProteinCalculator';
 
 // Home Improvement
+import MulchCalculator from './MulchCalculator';
+import RoofingCalculator from './RoofingCalculator';
+import DrywallCalculator from './DrywallCalculator';
 import PaintCalculator from './PaintCalculator';
 import FlooringCalculator from './FlooringCalculator';
 import ConcreteCalculator from './ConcreteCalculator';
@@ -133,6 +139,16 @@ export const calculators: CalculatorMeta[] = [
     sources: [
       { title: 'IRS - Retirement Topics', url: 'https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-benefits-of-saving-now' }
     ]
+  },
+  {
+    id: 'rule-of-72',
+    title: 'Rule of 72 Calculator',
+    description: 'Estimate how long it takes an investment to double or the required interest rate.',
+    category: 'Finance',
+    icon: 'TrendingUp',
+    component: RuleOf72Calculator,
+    seoTitle: 'Rule of 72 Calculator | Investment Doubling Estimator',
+    seoDescription: 'Free Rule of 72 calculator. Quickly estimate how long it takes for your investment to double at a given annual interest rate.'
   },
   {
     id: 'salary-calculator',
@@ -393,6 +409,26 @@ export const calculators: CalculatorMeta[] = [
     seoDescription: 'Calculate the odds and probability of events.'
   },
   {
+    id: 'percentage-calculator',
+    title: 'Percentage Calculator',
+    description: 'Calculate percentages, percent increases/decreases, and what percent one number is of another.',
+    category: 'Math',
+    icon: 'Percent',
+    component: PercentageCalculator,
+    seoTitle: 'Percentage Calculator | Percent Increase & Decrease Tool',
+    seoDescription: 'Free online percentage calculator. Find what X% of Y is, calculate percent increases or decreases, and solve everyday math tasks effortlessly.'
+  },
+  {
+    id: 'z-score-calculator',
+    title: 'Z-Score & Std Dev',
+    description: 'Calculate the Z-Score and Standard Deviation for statistics datasets.',
+    category: 'Math',
+    icon: 'BarChart',
+    component: ZScoreCalculator,
+    seoTitle: 'Z-Score & Standard Deviation Calculator | Statistics Tools',
+    seoDescription: 'Fast, free Z-score and standard deviation calculator for statistics students. Calculate your z-score from a raw value, mean, and standard deviation.'
+  },
+  {
     id: 'fraction-calculator',
     title: 'Fraction Calculator',
     description: 'Add, subtract, multiply, and divide fractions easily.',
@@ -594,6 +630,36 @@ export const calculators: CalculatorMeta[] = [
     component: WallpaperCalculator,
     seoTitle: 'Wallpaper Calculator - Estimate Rolls Needed | AllTypesOfCalculators',
     seoDescription: 'Calculate exactly how many rolls of wallpaper you need for your home improvement project.'
+  },
+  {
+    id: 'mulch-calculator',
+    title: 'Mulch / Landscaping',
+    description: 'Calculates how much soil, mulch, or gravel is needed for a specific yard area.',
+    category: 'Home Improvement',
+    icon: 'Leaf',
+    component: MulchCalculator,
+    seoTitle: 'Mulch & Landscaping Calculator - Estimate Bags and Yards',
+    seoDescription: 'Calculate exactly how much mulch, soil, or gravel you need in cubic yards and bags.'
+  },
+  {
+    id: 'roofing-calculator',
+    title: 'Roofing Calculator',
+    description: 'Estimates the number of roofing squares or shingles needed.',
+    category: 'Home Improvement',
+    icon: 'Home',
+    component: RoofingCalculator,
+    seoTitle: 'Roofing Calculator - Estimate Squares and Shingles',
+    seoDescription: 'Calculate roofing squares and bundles of shingles needed for your roof based on footprint and pitch.'
+  },
+  {
+    id: 'drywall-calculator',
+    title: 'Drywall Calculator',
+    description: 'Estimates how many sheets of drywall are needed for a room.',
+    category: 'Home Improvement',
+    icon: 'Maximize',
+    component: DrywallCalculator,
+    seoTitle: 'Drywall Calculator - Estimate Sheets Needed',
+    seoDescription: 'Calculate how many sheets of drywall you need for a room including deductions for doors and windows.'
   }
 ];
 

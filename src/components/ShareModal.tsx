@@ -7,16 +7,22 @@ interface ShareModalProps {
   onClose: () => void;
   title: string;
   url: string;
+  resultText?: string;
 }
 
-export default function ShareModal({ isOpen, onClose, title, url }: ShareModalProps) {
+export default function ShareModal({ isOpen, onClose, title, url, resultText }: ShareModalProps) {
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
+  const defaultShareText = `Check out this ${title}`;
+  const shareText = resultText ? `${resultText}\n\nCheck it out here: ` : defaultShareText;
+  const encodedText = encodeURIComponent(resultText ? resultText : defaultShareText);
+
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      const copyContent = resultText ? `${resultText}\n\n${url}` : url;
+      await navigator.clipboard.writeText(copyContent);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -25,10 +31,10 @@ export default function ShareModal({ isOpen, onClose, title, url }: ShareModalPr
   };
 
   const shareLinks = {
-    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent('Check out this ' + title)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodedText}`,
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-    email: `mailto:?subject=${encodeURIComponent('Check out this ' + title)}&body=${encodeURIComponent('I thought you might find this useful: ' + url)}`
+    email: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent((resultText ? resultText + '\n\n' : '') + 'I thought you might find this useful: ' + url)}`
   };
 
   return (
