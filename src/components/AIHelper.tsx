@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { Sparkles, X, Loader2 } from 'lucide-react';
+import Markdown from 'react-markdown';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -22,15 +23,19 @@ export default function AIHelper({ calculatorTitle, calculatorDescription }: AIH
     setResponse('');
     
     try {
+      const pageText = document.getElementById('calculator-content')?.innerText || 'No data found on the page.';
       const prompt = `You are a helpful assistant on a calculator website. 
       The user is currently using the "${calculatorTitle}" calculator, which does: ${calculatorDescription}.
+      
+      Here is the current text visible on the calculator page (so you know their inputs and results):
+      ${pageText}
       
       User's question: ${query}
       
       Provide a concise, helpful, and accurate response.`;
 
       const result = await ai.models.generateContent({
-        model: 'gemini-3.1-flash-lite-preview',
+        model: 'gemini-3-flash-preview',
         contents: prompt,
       });
 
@@ -57,19 +62,21 @@ export default function AIHelper({ calculatorTitle, calculatorDescription }: AIH
             </button>
           </div>
           
-          <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
-            {response ? (
-              <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 text-sm text-gray-700 whitespace-pre-wrap">
-                {response}
-              </div>
-            ) : (
-              <div className="text-center text-gray-500 mt-10 text-sm">
-                <Sparkles className="w-8 h-8 mx-auto mb-3 text-blue-300" />
-                <p>Ask me anything about {calculatorTitle} or how to interpret your results!</p>
-              </div>
-            )}
+          <div className="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col">
+            <div className="flex-1">
+              {response ? (
+                <div className="prose prose-sm prose-blue dark:prose-invert max-w-none">
+                  <Markdown>{response}</Markdown>
+                </div>
+              ) : (
+                <div className="text-center text-gray-500 mt-10 text-sm">
+                  <Sparkles className="w-8 h-8 mx-auto mb-3 text-blue-300" />
+                  <p>Ask me anything about {calculatorTitle} or how to interpret your results!</p>
+                </div>
+              )}
+            </div>
             {isLoading && (
-              <div className="flex justify-center mt-4">
+              <div className="flex justify-center mt-4 pb-2">
                 <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
               </div>
             )}

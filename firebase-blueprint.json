@@ -47,9 +47,28 @@
         "createdAt": { "type": "timestamp" }
       },
       "required": ["password", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A user's review and rating for a calculator",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userDisplayName": { "type": "string" },
+        "calculatorId": { "type": "string" },
+        "rating": { "type": "number", "minimum": 1, "maximum": 5 },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "calculatorId", "rating", "createdAt", "updatedAt"]
     }
   },
   "firestore": {
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "User reviews for calculators"
+    },
     "/users/{userId}": {
       "schema": { "$ref": "#/entities/User" },
       "description": "User profiles"

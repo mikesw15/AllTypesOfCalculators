@@ -67,26 +67,31 @@ function AppRoutes() {
 }
 
 import { ThemeProvider } from './contexts/ThemeContext';
-
 import { UnitProvider } from './contexts/UnitContext';
+import { RatingsProvider } from './contexts/RatingsContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <ThemeProvider>
-        <UnitProvider>
-          <AuthProvider>
-            <HistoryProvider>
-              <CurrencyProvider>
-                <ScrollToTop />
-                <Layout>
-                  <AppRoutes />
-                </Layout>
-              </CurrencyProvider>
-            </HistoryProvider>
-          </AuthProvider>
-        </UnitProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <UnitProvider>
+            <AuthProvider>
+              <HistoryProvider>
+                <CurrencyProvider>
+                  <RatingsProvider>
+                    <ScrollToTop />
+                    <Layout>
+                      <AppRoutes />
+                    </Layout>
+                  </RatingsProvider>
+                </CurrencyProvider>
+              </HistoryProvider>
+            </AuthProvider>
+          </UnitProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }

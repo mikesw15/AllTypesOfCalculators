@@ -3,6 +3,7 @@ import { CalculatorMeta } from '../types';
 import { Share2, Star, Info, HelpCircle, Link as LinkIcon, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AIHelper from './AIHelper';
+import ReviewSection from './ReviewSection';
 import { db } from '../firebase';
 import { collection, addDoc, deleteDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
@@ -99,6 +100,37 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
     setIsExporting(false);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if focus is inside an input or textarea
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
+        return;
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.key === 'e') {
+        e.preventDefault();
+        if (!isExporting) handleExportPDF();
+      }
+      
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        toggleFavorite();
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'S') {
+        // usually share or save as, we can use it for share
+        e.preventDefault();
+        setIsShareModalOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isExporting, isFavorite, favoriteId, user]);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative">
       <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
@@ -111,6 +143,7 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
              onClick={handleExportPDF}
              disabled={isExporting}
              className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+             title="Export PDF (⌘E)"
            >
              <Download className="w-4 h-4" />
              {isExporting ? 'Exporting...' : 'Export PDF'}
@@ -125,18 +158,18 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
               {meta.category}
             </span>
           </div>
-          <div className="flex items-center gap-3">
+           <div className="flex items-center gap-3">
             <button 
               onClick={toggleFavorite}
-              className={`transition-colors ${isFavorite ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500 dark:text-gray-500 dark:hover:text-yellow-400'}`} 
-              title={isFavorite ? "Remove from Favorites" : "Save to Favorites"}
+              className={`transition-colors flex items-center gap-1.5 ${isFavorite ? 'text-yellow-500' : 'text-gray-400 hover:text-yellow-500 dark:text-gray-500 dark:hover:text-yellow-400'}`} 
+              title={isFavorite ? "Remove from Favorites (⌘S)" : "Save to Favorites (⌘S)"}
             >
               <Star className="w-5 h-5" fill={isFavorite ? "currentColor" : "none"} />
             </button>
             <button 
               onClick={() => setIsShareModalOpen(true)}
-              className="text-gray-400 hover:text-blue-600 dark:text-gray-500 dark:hover:text-blue-400 transition-colors" 
-              title="Share"
+              className="text-gray-400 hover:text-blue-600 dark:text-gray-500 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5" 
+              title="Share (⌘⇧S)"
             >
               <Share2 className="w-5 h-5" />
             </button>
@@ -231,6 +264,8 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
           </div>
         </div>
       )}
+
+      <ReviewSection calculatorId={meta.id} />
       
       <AIHelper calculatorTitle={meta.title} calculatorDescription={meta.description} />
       

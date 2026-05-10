@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer, Clock, Baby } from 'lucide-react';
 import { calculators } from '../calculators';
 import SEO from '../components/SEO';
+import CalculatorCard from '../components/CalculatorCard';
 import { useRecentCalculators } from '../hooks/useRecentCalculators';
 
 const categories = [
@@ -44,6 +45,7 @@ export default function Home() {
       <SEO 
         title="All Types of Calculators | Fast, Accurate & Free Online Tools"
         description="Free online calculators for finance, health, math, and everyday life. Get instant results with our easy-to-use tools including Mortgage, BMI, and Currency Converter."
+        canonical="https://alltypesofcalculators.com"
         structuredData={schemaData}
       />
       {/* Hero Section */}
@@ -147,47 +149,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {calculators.map(calc => (
-              <Link 
-                key={calc.id} 
-                to={`/calculators/${calc.id}`}
-                className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-200 transition-all group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-                  {calc.icon === 'Home' && <HomeIcon className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Activity' && <Activity className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Image' && <ImageIcon className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Flame' && <Flame className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Droplets' && <Droplets className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'HeartPulse' && <HeartPulse className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Car' && <Car className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'TrendingUp' && <TrendingUp className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Briefcase' && <Briefcase className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Bitcoin' && <Bitcoin className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'PieChart' && <PieChart className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Calculator' && <Calculator className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Scale' && <Scale className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Calendar' && <Calendar className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'BarChart' && <BarChart className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Dices' && <Dices className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Fuel' && <Fuel className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'GraduationCap' && <GraduationCap className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Key' && <Key className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'ChefHat' && <ChefHat className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Heart' && <Heart className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Moon' && <Moon className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Leaf' && <Leaf className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'BookOpen' && <BookOpen className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Syringe' && <Syringe className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Dumbbell' && <Dumbbell className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'PaintRoller' && <PaintRoller className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Grid' && <Grid className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'HardHat' && <HardHat className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'ThermometerSun' && <ThermometerSun className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                  {calc.icon === 'Baby' && <Baby className="w-6 h-6 text-blue-600 group-hover:text-white" />}
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{calc.title}</h3>
-                <p className="text-gray-600 text-sm line-clamp-2">{calc.description}</p>
-              </Link>
+              <CalculatorCard key={calc.id} calc={calc} />
             ))}
           </div>
         </div>

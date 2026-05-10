@@ -97,6 +97,8 @@ export default function CalculatorPage() {
       <SEO 
         title={calculator.seoTitle || calculator.title}
         description={calculator.seoDescription || calculator.description}
+        canonical={`https://alltypesofcalculators.com/calculators/${calculator.id}`}
+        ogType="article"
         structuredData={schemaData}
       />
       <CalculatorLayout 
