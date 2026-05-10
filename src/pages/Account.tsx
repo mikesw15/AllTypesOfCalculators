@@ -87,7 +87,7 @@ export default function Account() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <SEO title="My Account | AllTypesOfCalculators" description="Manage your account, view saved favorites, and access your generated passwords." />
+      <SEO title="My Account | AllTypesOfCalculators" description="Manage your account, view saved favorites, and access your generated passwords." keywords={['my account', 'saved calculators', 'account settings', 'history', 'saved passwords']} />
       <h1 className="text-3xl font-bold text-gray-900 mb-8">My Account</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

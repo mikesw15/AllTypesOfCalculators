@@ -9,6 +9,7 @@ interface SEOProps {
   ogImage?: string;
   twitterHandle?: string;
   structuredData?: object;
+  keywords?: string[];
 }
 
 export default function SEO({
@@ -18,7 +19,8 @@ export default function SEO({
   ogType = 'website',
   ogImage = 'https://picsum.photos/seed/calculator/1200/630',
   twitterHandle = '@calculators',
-  structuredData
+  structuredData,
+  keywords = ['calculator', 'online calculator', 'free calculator tools']
 }: SEOProps) {
   const siteName = 'AllTypesOfCalculators';
   const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
@@ -28,6 +30,9 @@ export default function SEO({
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
+      {keywords && keywords.length > 0 && (
+        <meta name="keywords" content={keywords.join(', ')} />
+      )}
       {canonical && <link rel="canonical" href={canonical} />}
 
       {/* Open Graph / Facebook */}

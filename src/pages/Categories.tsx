@@ -34,6 +34,7 @@ export default function Categories() {
       <SEO 
         title="Calculator Categories | Browse All Tools"
         description="Explore our wide range of free online calculators organized by category: Finance, Health, Math, Science, and more."
+        keywords={['calculator categories', 'list of calculators', 'finance calculators', 'health calculators', 'math calculators', 'online tools', 'free calculators']}
         canonical="https://alltypesofcalculators.com/categories"
         structuredData={schemaData}
       />

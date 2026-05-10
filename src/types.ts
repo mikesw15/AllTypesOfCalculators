@@ -11,6 +11,7 @@ export interface CalculatorMeta {
   component: React.ComponentType<any>;
   seoTitle: string;
   seoDescription: string;
+  keywords?: string[];
   explanation?: React.ReactNode;
   faq?: { question: string; answer: string }[];
   relatedIds?: string[];

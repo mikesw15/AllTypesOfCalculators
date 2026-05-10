@@ -45,6 +45,7 @@ export default function Home() {
       <SEO 
         title="All Types of Calculators | Fast, Accurate & Free Online Tools"
         description="Free online calculators for finance, health, math, and everyday life. Get instant results with our easy-to-use tools including Mortgage, BMI, and Currency Converter."
+        keywords={['all types of calculators', 'free calculators', 'online calculator', 'finance calculator', 'math calculator', 'health calculator', 'tools', 'conversion']}
         canonical="https://alltypesofcalculators.com"
         structuredData={schemaData}
       />

@@ -8,6 +8,7 @@ export default function About() {
       <SEO 
         title="About Us | Meet the Team | AllTypesOfCalculators"
         description="Learn more about the experts behind AllTypesOfCalculators. Our team of certified financial planners, health professionals, and engineers ensures our tools are accurate and reliable."
+        keywords={['about us', 'calculator team', 'authors', 'creators', 'financial planners', 'medical consultants', 'calculator developers']}
       />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">

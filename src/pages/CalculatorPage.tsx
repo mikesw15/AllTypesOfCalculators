@@ -36,13 +36,24 @@ export default function CalculatorPage() {
     ? calculators.filter(c => calculator.relatedIds?.includes(c.id))
     : [];
 
+  const generateKeywords = (title: string, category: string, customKeywords?: string[]) => {
+    const base = ['calculator', 'online calculator', 'free tool', category.toLowerCase()];
+    if (customKeywords && customKeywords.length > 0) {
+      return [...new Set([...base, ...customKeywords])];
+    }
+    const words = title.toLowerCase().split(' ').filter(w => w.length > 3);
+    const combined = `${title.toLowerCase()} calculator`;
+    return [...new Set([...base, ...words, combined])];
+  };
+
   const schemaData: any[] = [
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
+      "@type": "WebApplication",
       "name": calculator.title,
       "description": calculator.seoDescription || calculator.description,
-      "applicationCategory": "BrowserApplication",
+      "applicationCategory": "CalculatorApplication",
+      "genre": calculator.category,
       "operatingSystem": "All",
       "url": `https://alltypesofcalculators.com/calculators/${calculator.id}`,
       "offers": {
@@ -64,7 +75,7 @@ export default function CalculatorPage() {
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Categories",
+          "name": calculator.category,
           "item": "https://alltypesofcalculators.com/categories"
         },
         {
@@ -81,7 +92,7 @@ export default function CalculatorPage() {
     schemaData.push({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": calculator.faq.map(item => ({
+      "mainEntity": calculator.faq.map((item: any) => ({
         "@type": "Question",
         "name": item.question,
         "acceptedAnswer": {
@@ -98,7 +109,8 @@ export default function CalculatorPage() {
         title={calculator.seoTitle || calculator.title}
         description={calculator.seoDescription || calculator.description}
         canonical={`https://alltypesofcalculators.com/calculators/${calculator.id}`}
-        ogType="article"
+        keywords={generateKeywords(calculator.title, calculator.category, calculator.keywords)}
+        ogType="website"
         structuredData={schemaData}
       />
       <CalculatorLayout 
