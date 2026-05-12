@@ -62,9 +62,32 @@
         "updatedAt": { "type": "timestamp" }
       },
       "required": ["userId", "calculatorId", "rating", "createdAt", "updatedAt"]
+    },
+    "Post": {
+      "title": "Blog Post",
+      "description": "A blog post article",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "category": { "type": "string" },
+        "image": { "type": "string" },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["title", "slug", "content", "authorId", "createdAt", "updatedAt"]
     }
   },
   "firestore": {
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Blog posts"
+    },
     "/reviews/{reviewId}": {
       "schema": { "$ref": "#/entities/Review" },
       "description": "User reviews for calculators"

@@ -13,6 +13,9 @@ import Favorites from './pages/Favorites';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import About from './pages/About';
+import Admin from './pages/Admin';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import ScrollToTop from './components/ScrollToTop';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -31,6 +34,16 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const { user, loading, isAdmin } = useAuth();
+  const location = useLocation();
+
+  if (loading) return null;
+  if (!user || !isAdmin) return <Navigate to="/" replace />;
+
+  return <>{children}</>;
+}
+
 function AppRoutes() {
   const location = useLocation();
   
@@ -42,6 +55,16 @@ function AppRoutes() {
         <Route path="/categories" element={<AnimatedPage><Categories /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
         <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
+        <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
+        <Route path="/blog/:slug" element={<AnimatedPage><BlogPost /></AnimatedPage>} />
+        <Route 
+          path="/admin" 
+          element={
+            <AdminRoute>
+              <AnimatedPage><Admin /></AnimatedPage>
+            </AdminRoute>
+          } 
+        />
         <Route 
           path="/favorites" 
           element={

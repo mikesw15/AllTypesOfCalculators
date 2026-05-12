@@ -61,10 +61,28 @@ service cloud.firestore {
     function isValidEmail(email) {
       return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.email == "mikesw15@gmail.com" && request.auth.token.email_verified == true;
+    }
 
     // ===============================================================
     // Domain Validators
-    // ===============================================================
+    // ===================================
+    function isValidPost(data) {
+      return hasOnlyAllowedFields(['title', 'slug', 'content', 'excerpt', 'authorId', 'authorName', 'category', 'image', 'published', 'createdAt', 'updatedAt']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
+             data.slug is string && data.slug.size() > 0 && data.slug.size() < 200 &&
+             data.content is string && data.content.size() > 0 &&
+             data.authorId is string &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp &&
+             (!('excerpt' in data) || (data.excerpt is string && data.excerpt.size() <= 1000)) &&
+             (!('authorName' in data) || (data.authorName is string && data.authorName.size() <= 100)) &&
+             (!('category' in data) || (data.category is string && data.category.size() <= 100)) &&
+             (!('image' in data) || (data.image is string && data.image.size() <= 2000)) &&
+             (!('published' in data) || data.published is bool);
+    }
+
     function isValidUser(data) {
       return hasOnlyAllowedFields(['uid', 'email', 'displayName', 'photoURL', 'createdAt']) &&
              data.uid is string &&
@@ -112,6 +130,13 @@ service cloud.firestore {
     // ===============================================================
     // Rules
     // ===============================================================
+    match /posts/{postId} {
+      allow read: if resource == null || resource.data.published == true || isAdmin();
+      allow create: if isAdmin() && isValidPost(request.resource.data);
+      allow update: if isAdmin() && isValidPost(request.resource.data) && areImmutableFieldsUnchanged(['authorId', 'createdAt']);
+      allow delete: if isAdmin();
+    }
+
     match /reviews/{reviewId} {
       allow read: if true;
       allow create: if isOwner(request.resource.data.userId) && isValidReview(request.resource.data);

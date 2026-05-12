@@ -46,47 +46,66 @@ export default function CalculatorPage() {
     return [...new Set([...base, ...words, combined])];
   };
 
-  const schemaData: any[] = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": calculator.title,
-      "description": calculator.seoDescription || calculator.description,
-      "applicationCategory": "CalculatorApplication",
-      "genre": calculator.category,
-      "operatingSystem": "All",
-      "url": `https://alltypesofcalculators.com/calculators/${calculator.id}`,
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://alltypesofcalculators.com/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": calculator.category,
-          "item": "https://alltypesofcalculators.com/categories"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": calculator.title,
-          "item": `https://alltypesofcalculators.com/calculators/${calculator.id}`
+    const schemaData: any[] = [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": calculator.title,
+        "description": calculator.seoDescription || calculator.description,
+        "applicationCategory": "CalculatorApplication",
+        "genre": calculator.category,
+        "operatingSystem": "All",
+        "url": `https://alltypesofcalculators.com/calculators/${calculator.id}`,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
         }
-      ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://alltypesofcalculators.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": calculator.category,
+            "item": "https://alltypesofcalculators.com/categories"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": calculator.title,
+            "item": `https://alltypesofcalculators.com/calculators/${calculator.id}`
+          }
+        ]
+      }
+    ];
+
+    if (calculator.explanation || calculatorExplanations[calculator.id]) {
+      schemaData.push({
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": `How to use the ${calculator.title}`,
+        "description": calculator.description,
+        "step": [
+          {
+            "@type": "HowToStep",
+            "text": "Enter your inputs into the calculator fields."
+          },
+          {
+            "@type": "HowToStep",
+            "text": "Review the calculated results instantly."
+          }
+        ]
+      });
     }
-  ];
 
   if (calculator.faq && calculator.faq.length > 0) {
     schemaData.push({

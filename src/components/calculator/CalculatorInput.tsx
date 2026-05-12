@@ -30,9 +30,11 @@ export default function CalculatorInput({
   placeholder,
   helpText
 }: CalculatorInputProps) {
+  const inputId = React.useId();
+
   return (
     <div className="w-full">
-      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
+      <label htmlFor={inputId} className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
         {Icon && <Icon className="w-4 h-4 text-blue-500" />}
         {label}
       </label>
@@ -43,6 +45,7 @@ export default function CalculatorInput({
           </div>
         )}
         <input
+          id={inputId}
           type={type}
           value={value}
           onChange={(e) => onChange(type === 'number' ? Number(e.target.value) : e.target.value)}
@@ -50,6 +53,7 @@ export default function CalculatorInput({
           max={max}
           step={step}
           placeholder={placeholder}
+          aria-label={label}
           className={`w-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-xl py-3 px-4 transition-all outline-none
             hover:border-gray-200 dark:hover:border-gray-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 dark:focus:ring-blue-900/50 text-gray-900 dark:text-white font-medium
             ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-12' : ''}`}

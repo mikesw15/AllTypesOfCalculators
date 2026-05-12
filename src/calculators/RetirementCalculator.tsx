@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PiggyBank, TrendingUp, Calendar, DollarSign, Info, Banknote } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { useCurrency } from '../contexts/CurrencyContext';
+import { useHistory } from '../contexts/HistoryContext';
+import SaveProfile from '../components/calculator/SaveProfile';
 
 export default function RetirementCalculator() {
   const { currency, formatCurrency } = useCurrency();
+  const { saveToHistory } = useHistory();
   const [currentAge, setCurrentAge] = useState<number>(30);
   const [retirementAge, setRetirementAge] = useState<number>(65);
   const [currentSavings, setCurrentSavings] = useState<number>(50000);
@@ -36,6 +39,18 @@ export default function RetirementCalculator() {
 
   const finalBalance = chartData[chartData.length - 1].balance;
   const finalAdjusted = chartData[chartData.length - 1].inflationAdjusted;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveToHistory(
+        'retirement',
+        'Retirement Savings',
+        { currentAge, retirementAge, currentSavings, monthlyContribution, annualReturn, inflationRate },
+        { finalBalance, finalAdjusted }
+      );
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [currentAge, retirementAge, currentSavings, monthlyContribution, annualReturn, inflationRate, finalBalance, finalAdjusted, saveToHistory]);
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
@@ -150,6 +165,13 @@ export default function RetirementCalculator() {
               </AreaChart>
             </ResponsiveContainer>
           </div>
+
+          <SaveProfile 
+            calculatorId="retirement"
+            calculatorTitle="Retirement Savings"
+            inputs={{ currentAge, retirementAge, currentSavings, monthlyContribution, annualReturn, inflationRate }}
+            results={{ finalBalance, finalAdjusted }}
+          />
 
           <div className="bg-blue-50 p-6 rounded-2xl border-2 border-blue-100 flex gap-4">
             <Info className="w-6 h-6 text-blue-500 shrink-0" />

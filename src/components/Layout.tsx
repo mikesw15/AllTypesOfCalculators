@@ -16,6 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { theme, setTheme, isDark } = useTheme();
   const { unit, toggleUnit } = useUnit();
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -52,7 +53,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className={`${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} font-medium`}>Home</Link>
               <Link to="/categories" className={`${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} font-medium`}>Categories</Link>
-              <Link to="/favorites" className={`${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} font-medium`}>Favorites</Link>
+              <Link to="/blog" className={`${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-900'} font-medium`}>Blog</Link>
+              {isAdmin && (
+                <Link to="/admin" className="bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-bold animate-pulse hover:animate-none">Admin</Link>
+              )}
               
               <button 
                 onClick={() => setIsSearchOpen(true)}
@@ -139,6 +143,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className={`md:hidden ${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-b px-4 pt-2 pb-4 space-y-1`}>
             <Link to="/" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Home</Link>
             <Link to="/categories" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Categories</Link>
+            <Link to="/blog" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Blog</Link>
+            {isAdmin && (
+              <Link to="/admin" className={`block px-3 py-2 rounded-md text-base font-black text-blue-600 ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-50'}`}>Admin Panel</Link>
+            )}
             <Link to="/favorites" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Favorites</Link>
             {user ? (
               <>
