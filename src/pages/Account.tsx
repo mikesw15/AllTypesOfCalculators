@@ -18,6 +18,7 @@ interface HistoryItem {
   id: string;
   calculatorId: string;
   calculatorTitle: string;
+  profileName?: string;
   results: any;
   timestamp: any;
 }
@@ -197,7 +198,14 @@ export default function Account() {
                   {history.map((item) => (
                     <div key={item.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
                       <div>
-                        <h4 className="font-bold text-gray-900">{item.calculatorTitle}</h4>
+                        <h4 className="font-bold text-gray-900 flex items-center gap-2">
+                          {item.calculatorTitle}
+                          {item.profileName && (
+                            <span className="bg-blue-100 text-blue-800 text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full">
+                              {item.profileName}
+                            </span>
+                          )}
+                        </h4>
                         <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
                           <Clock className="w-3 h-3" />
                           {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleString() : 'Just now'}

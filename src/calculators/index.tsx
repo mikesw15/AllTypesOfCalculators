@@ -13,6 +13,7 @@ import SalaryCalculator from './SalaryCalculator';
 import CryptoROICalculator from './CryptoROICalculator';
 import CurrencyConverter from './CurrencyConverter';
 import RuleOf72Calculator from './RuleOf72Calculator';
+import TaxCalculator from './TaxCalculator';
 
 // Health
 import MacroCalculator from './MacroCalculator';
@@ -38,6 +39,9 @@ import LoveCalculator from './LoveCalculator';
 import SleepCycleCalculator from './SleepCycleCalculator';
 import CarbonFootprintCalculator from './CarbonFootprintCalculator';
 import ReadingTimeCalculator from './ReadingTimeCalculator';
+import PetAgeCalculator from './PetAgeCalculator';
+import SplitBillCalculator from './SplitBillCalculator';
+import ZodiacCalculator from './ZodiacCalculator';
 
 import PeptideCalculator from './PeptideCalculator';
 import ProteinCalculator from './ProteinCalculator';
@@ -149,6 +153,16 @@ export const calculators: CalculatorMeta[] = [
     component: RuleOf72Calculator,
     seoTitle: 'Rule of 72 Calculator | Investment Doubling Estimator',
     seoDescription: 'Free Rule of 72 calculator. Quickly estimate how long it takes for your investment to double at a given annual interest rate.'
+  },
+  {
+    id: 'tax-calculator',
+    title: 'Tax Liability Calculator',
+    description: 'Calculate your estimated tax liability based on brackets, income, and deductions.',
+    category: 'Finance',
+    icon: 'FileText',
+    component: TaxCalculator,
+    seoTitle: 'Tax Liability Calculator - Estimate Your Taxes',
+    seoDescription: 'Estimate your total tax liability, effective tax rate, and marginal tax rate by entering your income and custom tax brackets.'
   },
   {
     id: 'salary-calculator',
@@ -547,6 +561,36 @@ export const calculators: CalculatorMeta[] = [
     component: ImageGenerator,
     seoTitle: 'Free AI Image Generator | AllTypesOfCalculators',
     seoDescription: 'Generate beautiful high-resolution images from text using advanced AI.'
+  },
+  {
+    id: 'pet-age-calculator',
+    title: 'Pet Age Calculator',
+    description: 'Convert your dog or cat years into accurate human years based on size and breed.',
+    category: 'Fun',
+    icon: 'Baby',
+    component: PetAgeCalculator,
+    seoTitle: 'Dog & Cat Age Calculator - Pet Years to Human Years',
+    seoDescription: 'Accurately calculate your dog or cat\'s age in human years based on their size and age.'
+  },
+  {
+    id: 'split-bill-calculator',
+    title: 'Split Bill Calculator',
+    description: 'Split bills proportionally among friends based on exactly what they ordered.',
+    category: 'Fun',
+    icon: 'DollarSign',
+    component: SplitBillCalculator,
+    seoTitle: 'Split Bill Calculator - Divide Receipts Fairly',
+    seoDescription: 'Easily split the check and calculate proportional tax and tip for everyone at the table.'
+  },
+  {
+    id: 'zodiac-calculator',
+    title: 'Astrology / Zodiac',
+    description: 'Calculate your sun, estimated moon, and rising signs based on your birth details.',
+    category: 'Fun',
+    icon: 'Moon',
+    component: ZodiacCalculator,
+    seoTitle: 'Astrology & Zodiac Sign Calculator - Sun, Moon, Rising',
+    seoDescription: 'Calculate your Sun, Moon, and Rising astrology signs and Chinese Zodiac based on your birthday and time.'
   },
   {
     id: 'paint-calculator',

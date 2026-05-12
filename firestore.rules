@@ -29,6 +29,7 @@ service cloud.firestore {
     //   - inputs: map (optional)
     //   - results: map (optional)
     //   - timestamp: timestamp (required, immutable)
+    //   - profileName: string (optional)
     //
     // Collection: users/{userId}/saved_passwords
     // Document ID: {passwordId}
@@ -81,11 +82,12 @@ service cloud.firestore {
     }
 
     function isValidHistory(data) {
-      return hasOnlyAllowedFields(['calculatorId', 'calculatorTitle', 'inputs', 'results', 'timestamp']) &&
+      return hasOnlyAllowedFields(['calculatorId', 'calculatorTitle', 'inputs', 'results', 'timestamp', 'profileName']) &&
              data.calculatorId is string && data.calculatorId.size() > 0 && data.calculatorId.size() < 100 &&
              data.calculatorTitle is string && data.calculatorTitle.size() > 0 && data.calculatorTitle.size() < 200 &&
              (!('inputs' in data) || data.inputs is map) &&
              (!('results' in data) || data.results is map) &&
+             (!('profileName' in data) || (data.profileName is string && data.profileName.size() < 100)) &&
              data.timestamp is timestamp;
     }
 

@@ -3,6 +3,8 @@ import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import { Percent, Clock } from 'lucide-react';
 import { useHistory } from '../contexts/HistoryContext';
+import SaveProfile from '../components/calculator/SaveProfile';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function RuleOf72Calculator() {
   const { saveToHistory } = useHistory();
@@ -23,6 +25,27 @@ export default function RuleOf72Calculator() {
     if (targetYears === 0) return 0;
     return 72 / targetYears;
   }, [targetYears]);
+
+  const chartData = useMemo(() => {
+    const rate = calcMode === 'years' ? interestRate : requiredRate;
+    const years = calcMode === 'years' ? Math.ceil(yearsToDouble) : targetYears;
+    
+    // Fallback if numbers are wild
+    if (years > 100 || isNaN(years)) return [];
+
+    let data = [];
+    let currentAmount = 10000; // Starting assumption $10k
+    
+    for (let yr = 0; yr <= years + Math.max(2, Math.ceil(years * 0.2)); yr++) {
+      data.push({
+        year: `Year ${yr}`,
+        value: Math.round(currentAmount),
+      });
+      currentAmount *= (1 + rate / 100);
+    }
+    
+    return data;
+  }, [calcMode, interestRate, requiredRate, yearsToDouble, targetYears]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -105,7 +128,51 @@ export default function RuleOf72Calculator() {
             color="blue"
           />
         )}
+
+        {chartData.length > 0 && (
+          <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm h-72">
+            <h3 className="font-bold text-gray-900 mb-4">Growth of $10,000</h3>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB"/>
+                <XAxis 
+                  dataKey="year" 
+                  tick={{ fontSize: 12, fill: '#6B7280' }}
+                  tickLine={false}
+                  axisLine={false}
+                  minTickGap={20}
+                />
+                <YAxis 
+                  tickFormatter={(val) => `$${(val / 1000).toFixed(0)}k`}
+                  tick={{ fontSize: 12, fill: '#6B7280' }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <Tooltip 
+                  formatter={(value: number) => [`$${value.toLocaleString()}`, 'Balance']}
+                  labelStyle={{ color: '#111827', fontWeight: 'bold', marginBottom: '4px' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="value" 
+                  stroke="#3b82f6" 
+                  strokeWidth={3}
+                  dot={false}
+                  activeDot={{ r: 6, fill: '#3b82f6', stroke: 'white', strokeWidth: 2 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
         
+        <SaveProfile 
+          calculatorId="rule-of-72"
+          calculatorTitle="Rule of 72"
+          inputs={calcMode === 'years' ? { mode: 'years', interestRate } : { mode: 'rate', targetYears }}
+          results={calcMode === 'years' ? { yearsToDouble } : { requiredRate }}
+        />
+
         <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 mt-4">
           <h4 className="font-bold text-blue-900 mb-2">What is the Rule of 72?</h4>
           <p className="text-sm text-blue-800 leading-relaxed">
