@@ -36,7 +36,7 @@ export default function Admin() {
   const slugCheckTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const checkSlugAvailability = async (slug: string) => {
-    if (!slug || slug === currentPost?.slug && currentPost.id) {
+    if (!slug) {
       setSlugStatus('idle');
       return;
     }
@@ -50,11 +50,11 @@ export default function Admin() {
         where('slug', '==', slug)
       );
       const querySnapshot = await getDocs(q);
-      const exists = querySnapshot.docs.some(d => d.id !== currentPost?.id);
+      const duplicatePost = querySnapshot.docs.find(d => d.id !== currentPost?.id);
       
-      if (exists) {
+      if (duplicatePost) {
         setSlugStatus('unavailable');
-        setValidationErrors(prev => ({ ...prev, slug: 'This slug is already in use' }));
+        setValidationErrors(prev => ({ ...prev, slug: 'This slug is already in use by another post' }));
       } else {
         setSlugStatus('available');
         setValidationErrors(prev => {
@@ -65,6 +65,7 @@ export default function Admin() {
       }
     } catch (error) {
       console.error('Error checking slug:', error);
+      setSlugStatus('idle');
     } finally {
       setIsCheckingSlug(false);
     }
@@ -143,6 +144,7 @@ export default function Admin() {
     if (!currentPost?.slug?.trim()) errors.slug = 'Slug is required';
     if (!currentPost?.content?.trim()) errors.content = 'Content is required';
     if (!currentPost?.excerpt?.trim()) errors.excerpt = 'Excerpt is required';
+    if (!currentPost?.image?.trim()) errors.image = 'Featured image is required';
 
     // Check for duplicate slug
     if (currentPost?.slug) {
@@ -178,6 +180,11 @@ export default function Admin() {
       await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(storageRef);
       setCurrentPost({ ...currentPost, image: downloadURL });
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.image;
+        return newErrors;
+      });
     } catch (error) {
       console.error('Error uploading image:', error);
       setUploadError('Failed to upload image. Please try again.');
@@ -365,51 +372,66 @@ export default function Admin() {
                 <div>
                   <label className="block text-sm font-black text-gray-700 uppercase tracking-wider mb-2">Featured Image</label>
                   <div className="space-y-4">
-                    {currentPost?.image && (
-                      <div className="relative w-full h-40 rounded-xl overflow-hidden group">
+                    {currentPost?.image ? (
+                      <div className="relative w-full h-48 rounded-2xl overflow-hidden group border-4 border-gray-100 shadow-inner">
                         <img src={currentPost.image} alt="Preview" className="w-full h-full object-cover" />
-                        <button
-                          type="button"
-                          onClick={() => setCurrentPost({ ...currentPost, image: '' })}
-                          className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="p-3 bg-white text-blue-600 rounded-xl hover:bg-blue-50 transition-colors font-bold flex items-center gap-2"
+                          >
+                            <Upload className="w-4 h-4" />
+                            Change
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCurrentPost({ ...currentPost, image: '' })}
+                            className="p-3 bg-white text-red-600 rounded-xl hover:bg-red-50 transition-colors font-bold flex items-center gap-2"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                            Remove
+                          </button>
+                        </div>
                       </div>
-                    )}
-                    <div className="flex gap-2">
+                    ) : (
                       <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isUploading}
-                        className="flex-1 bg-blue-50 border-2 border-dashed border-blue-200 rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:bg-blue-100 transition-all text-blue-600 disabled:opacity-50"
+                        className={`w-full h-48 bg-gray-50 border-4 border-dashed rounded-3xl flex flex-col items-center justify-center gap-4 hover:bg-blue-50 hover:border-blue-200 transition-all text-gray-400 hover:text-blue-600 ${validationErrors.image ? 'border-red-200 bg-red-50' : 'border-gray-100'}`}
                       >
                         {isUploading ? (
-                          <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                            <span className="text-sm font-black uppercase tracking-wider text-blue-600">Uploading...</span>
+                          </div>
                         ) : (
                           <>
-                            <Upload className="w-6 h-6" />
-                            <span className="text-xs font-black uppercase tracking-wider">Upload Image</span>
+                            <div className="p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+                              <Upload className="w-8 h-8" />
+                            </div>
+                            <div className="text-center">
+                              <span className="block text-sm font-black uppercase tracking-wider mb-1">Click to Upload Image</span>
+                              <span className="text-xs font-medium text-gray-400">PNG, JPG or WEBP (max. 5MB)</span>
+                            </div>
                           </>
                         )}
                       </button>
-                      <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
-                        accept="image/*"
-                        className="hidden"
-                      />
-                      <div className="flex-[2]">
-                        <input
-                          type="url"
-                          value={currentPost?.image || ''}
-                          onChange={(e) => setCurrentPost({ ...currentPost, image: e.target.value })}
-                          className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl px-4 py-3 font-medium focus:border-blue-500 focus:bg-white outline-none transition-all h-full"
-                          placeholder="Or paste URL..."
-                        />
-                      </div>
-                    </div>
+                    )}
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleImageUpload}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    {validationErrors.image && (
+                      <p className="text-red-500 text-xs font-bold flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {validationErrors.image}
+                      </p>
+                    )}
                     {uploadError && (
                       <p className="text-red-500 text-xs font-bold flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" />
