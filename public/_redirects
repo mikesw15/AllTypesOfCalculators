@@ -1,1 +1,6 @@
-/*    /index.html   200
+/sitemap.xml /sitemap.xml 200
+/sitemap-calculators.xml /sitemap-calculators.xml 200
+/sitemap-blog.xml /sitemap-blog.xml 200
+/sitemap-categories.xml /sitemap-categories.xml 200
+/robots.txt /robots.txt 200
+/* /index.html 200

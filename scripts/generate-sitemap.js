@@ -43,5 +43,21 @@ calculatorIds.forEach(id => {
 sitemap += `
 </urlset>`;
 
-fs.writeFileSync(path.join(process.cwd(), 'public', 'sitemap.xml'), sitemap);
-console.log('Sitemap generated successfully!');
+fs.writeFileSync(path.join(process.cwd(), 'public', 'sitemap-calculators.xml'), sitemap);
+
+// Generate Sitemap Index
+const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-calculators.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-blog.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>${SITE_URL}/sitemap-categories.xml</loc>
+  </sitemap>
+</sitemapindex>`;
+
+fs.writeFileSync(path.join(process.cwd(), 'public', 'sitemap.xml'), sitemapIndex);
+console.log('Sitemap files generated successfully!');

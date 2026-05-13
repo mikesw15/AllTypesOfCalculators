@@ -116,6 +116,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://alltypesofcalculators.com/calculators/stamp-duty-calculator-uk</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://alltypesofcalculators.com/calculators/budget-planner</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -152,6 +157,16 @@
   </url>
   <url>
     <loc>https://alltypesofcalculators.com/calculators/mortgage-repayment-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alltypesofcalculators.com/calculators/mortgage-interest-only-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alltypesofcalculators.com/calculators/mortgage-affordability-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -237,6 +252,11 @@
   </url>
   <url>
     <loc>https://alltypesofcalculators.com/calculators/muscle-gain-protein-calculator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alltypesofcalculators.com/calculators/weight-loss-protein-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
