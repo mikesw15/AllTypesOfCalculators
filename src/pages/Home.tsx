@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Home as HomeIcon, Activity, Calculator, Zap, DollarSign, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer, Clock, Baby } from 'lucide-react';
+import { Search, Home as HomeIcon, Activity, Calculator, Zap, PoundSterling, Heart, FlaskConical, Coffee, ArrowRight, Image as ImageIcon, Flame, Droplets, HeartPulse, Car, TrendingUp, Briefcase, Bitcoin, PieChart, Scale, Calendar, BarChart, Dices, Fuel, GraduationCap, Key, ChefHat, Moon, Leaf, BookOpen, Syringe, Dumbbell, PaintRoller, Grid, HardHat, ThermometerSun, Hammer, Clock, Baby } from 'lucide-react';
 import { calculators } from '../calculators';
 import SEO from '../components/SEO';
 import CalculatorCard from '../components/CalculatorCard';
 import { useRecentCalculators } from '../hooks/useRecentCalculators';
 
 const categories = [
-  { name: 'Finance & Money', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
+  { name: 'Finance & Money', icon: PoundSterling, color: 'text-green-600', bg: 'bg-green-100' },
   { name: 'Health & Fitness', icon: Heart, color: 'text-red-600', bg: 'bg-red-100' },
   { name: 'Math & Science', icon: FlaskConical, color: 'text-purple-600', bg: 'bg-purple-100' },
   { name: 'Everyday Life', icon: Coffee, color: 'text-orange-600', bg: 'bg-orange-100' },

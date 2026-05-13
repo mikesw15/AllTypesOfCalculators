@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCalculatorsByCategory } from '../calculators';
-import { DollarSign, Heart, FlaskConical, Coffee, Hammer, Flame, Calculator } from 'lucide-react';
+import { PoundSterling, Heart, FlaskConical, Coffee, Hammer, Flame, Calculator } from 'lucide-react';
 import SEO from '../components/SEO';
 import CalculatorCard from '../components/CalculatorCard';
 
 const getCategoryIcon = (categoryName: string) => {
   switch (categoryName) {
-    case 'Finance': return <DollarSign className="w-8 h-8 text-green-600 mr-3" />;
+    case 'Finance': return <PoundSterling className="w-8 h-8 text-green-600 mr-3" />;
     case 'Health': return <Heart className="w-8 h-8 text-red-600 mr-3" />;
     case 'Math': return <FlaskConical className="w-8 h-8 text-purple-600 mr-3" />;
     case 'Everyday Life': return <Coffee className="w-8 h-8 text-orange-600 mr-3" />;

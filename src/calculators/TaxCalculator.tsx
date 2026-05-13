@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
-import { DollarSign, FileText, Percent, Trash2 } from 'lucide-react';
+import { PoundSterling, FileText, Percent, Trash2 } from 'lucide-react';
 import { useHistory } from '../contexts/HistoryContext';
+import { useCurrency } from '../contexts/CurrencyContext';
 import SaveProfile from '../components/calculator/SaveProfile';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
@@ -14,6 +15,7 @@ interface TaxBracket {
 
 export default function TaxCalculator() {
   const { saveToHistory } = useHistory();
+  const { currency, formatCurrency } = useCurrency();
   const [income, setIncome] = useState<number>(75000);
   const [deductions, setDeductions] = useState<number>(14600);
   
@@ -83,8 +85,8 @@ export default function TaxCalculator() {
           taxedAmount: amountInBracket,
           tax: taxInBracket,
           rangeStr: currentLimit === Infinity 
-            ? `$${previousLimit.toLocaleString()} +`
-            : `$${previousLimit.toLocaleString()} - $${currentLimit.toLocaleString()}`
+            ? `${currency.symbol}${previousLimit.toLocaleString()} +`
+            : `${currency.symbol}${previousLimit.toLocaleString()} - ${currency.symbol}${currentLimit.toLocaleString()}`
         });
       }
 
@@ -108,7 +110,7 @@ export default function TaxCalculator() {
         { name: 'Total Tax', value: totalTax }
       ]
     };
-  }, [income, deductions, brackets]);
+  }, [income, deductions, brackets, currency.symbol]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -126,8 +128,8 @@ export default function TaxCalculator() {
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CalculatorInput label="Gross Income ($)" value={income} onChange={setIncome} icon={DollarSign} min={0} />
-          <CalculatorInput label="Total Deductions ($)" value={deductions} onChange={setDeductions} icon={DollarSign} min={0} />
+          <CalculatorInput label={`Gross Income (${currency.symbol})`} value={income} onChange={setIncome} icon={PoundSterling} min={0} />
+          <CalculatorInput label={`Total Deductions (${currency.symbol})`} value={deductions} onChange={setDeductions} icon={PoundSterling} min={0} />
         </div>
 
         <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
@@ -147,7 +149,7 @@ export default function TaxCalculator() {
                 <span className="text-sm font-medium text-gray-500 w-6">{index + 1}.</span>
                 <div className="relative flex-1">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-gray-500 font-medium">Up to $</span>
+                    <span className="text-gray-500 font-medium">Up to {currency.symbol}</span>
                   </div>
                   <input
                     type="number"
@@ -195,12 +197,12 @@ export default function TaxCalculator() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CalculatorResult
             label="Total Tax Liability"
-            value={`$${results.totalTax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            value={formatCurrency(results.totalTax)}
             color="red"
           />
           <CalculatorResult
             label="Net Income"
-            value={`$${results.netIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            value={formatCurrency(results.netIncome)}
             color="green"
           />
         </div>
@@ -208,7 +210,7 @@ export default function TaxCalculator() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center">
             <div className="text-xs font-bold text-gray-500 uppercase mb-1">Taxable Income</div>
-            <div className="text-lg font-black text-gray-900">${results.taxableIncome.toLocaleString()}</div>
+            <div className="text-lg font-black text-gray-900">{formatCurrency(results.taxableIncome)}</div>
           </div>
           <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center">
             <div className="text-xs font-bold text-gray-500 uppercase mb-1">Marginal Rate</div>
@@ -236,7 +238,7 @@ export default function TaxCalculator() {
                 <Cell fill="#10b981" /> {/* green for Net Income */}
                 <Cell fill="#ef4444" /> {/* red for Tax */}
               </Pie>
-              <Tooltip formatter={(value: number) => `$${value.toLocaleString()}`} />
+              <Tooltip formatter={(value: number) => formatCurrency(value)} />
               <Legend verticalAlign="bottom" height={36}/>
             </PieChart>
           </ResponsiveContainer>
@@ -250,10 +252,10 @@ export default function TaxCalculator() {
                 <div key={i} className="flex flex-col border-b border-gray-100 pb-2 last:border-0 last:pb-0">
                   <div className="flex justify-between items-center text-sm mb-1">
                     <span className="font-medium text-gray-700">{b.rangeStr} <span className="text-gray-400">({b.rate}%)</span></span>
-                    <span className="font-bold text-gray-900">${b.tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className="font-bold text-gray-900">{formatCurrency(b.tax)}</span>
                   </div>
                   <div className="text-xs text-gray-500">
-                    Tax on ${b.taxedAmount.toLocaleString()} at {b.rate}%
+                    Tax on {formatCurrency(b.taxedAmount)} at {b.rate}%
                   </div>
                 </div>
               ))}

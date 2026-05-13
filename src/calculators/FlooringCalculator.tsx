@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Grid, Info } from 'lucide-react';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function FlooringCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [length, setLength] = useState<number>(15);
   const [width, setWidth] = useState<number>(12);
   const [wasteFactor, setWasteFactor] = useState<number>(10);
@@ -73,7 +75,7 @@ export default function FlooringCalculator() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Price per sq ft ($)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Price per sq ft ({currency.symbol})</label>
               <input
                 type="number"
                 value={pricePerSqFt}
@@ -108,7 +110,7 @@ export default function FlooringCalculator() {
             </div>
             <div>
               <span className="block text-gray-500">Est. Cost</span>
-              <span className="font-bold text-gray-900">${totalCost.toFixed(2)}</span>
+              <span className="font-bold text-gray-900">{formatCurrency(totalCost)}</span>
             </div>
           </div>
         </div>

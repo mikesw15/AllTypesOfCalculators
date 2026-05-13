@@ -36,14 +36,23 @@ export default function CalculatorPage() {
     ? calculators.filter(c => calculator.relatedIds?.includes(c.id))
     : [];
 
-  const generateKeywords = (title: string, category: string, customKeywords?: string[]) => {
+  const generateKeywords = (title: string, category: string, description: string, customKeywords?: string[]) => {
     const base = ['calculator', 'online calculator', 'free tool', category.toLowerCase()];
-    if (customKeywords && customKeywords.length > 0) {
-      return [...new Set([...base, ...customKeywords])];
-    }
-    const words = title.toLowerCase().split(' ').filter(w => w.length > 3);
+    
+    // Extract meaningful words from title and description
+    const titleWords = title.toLowerCase().split(/[^a-z0-9]/).filter(w => w.length >= 4);
+    const descWords = description.toLowerCase().split(/[^a-z0-9]/).filter(w => w.length >= 5);
+    
     const combined = `${title.toLowerCase()} calculator`;
-    return [...new Set([...base, ...words, combined])];
+    const keywords = [...base, ...titleWords, ...descWords, combined];
+    
+    if (customKeywords && customKeywords.length > 0) {
+      keywords.push(...customKeywords);
+    }
+    
+    // Remove duplicates and common stop words (simplified)
+    const stopWords = ['this', 'that', 'with', 'from', 'your', 'help', 'calculate', 'helps', 'using', 'numbers', 'provide'];
+    return [...new Set(keywords)].filter(k => !stopWords.includes(k)).slice(0, 15);
   };
 
     const schemaData: any[] = [
@@ -59,7 +68,7 @@ export default function CalculatorPage() {
         "offers": {
           "@type": "Offer",
           "price": "0",
-          "priceCurrency": "USD"
+          "priceCurrency": "GBP"
         }
       },
       {
@@ -128,7 +137,7 @@ export default function CalculatorPage() {
         title={calculator.seoTitle || calculator.title}
         description={calculator.seoDescription || calculator.description}
         canonical={`https://alltypesofcalculators.com/calculators/${calculator.id}`}
-        keywords={generateKeywords(calculator.title, calculator.category, calculator.keywords)}
+        keywords={generateKeywords(calculator.title, calculator.category, calculator.description, calculator.keywords)}
         ogType="website"
         structuredData={schemaData}
       />

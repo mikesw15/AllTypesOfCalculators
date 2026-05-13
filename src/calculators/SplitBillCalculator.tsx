@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
-import { DollarSign, Users, Receipt, Percent } from 'lucide-react';
+import { PoundSterling, Users, Receipt, Percent } from 'lucide-react';
 import { useHistory } from '../contexts/HistoryContext';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 interface Friend {
   id: string;
@@ -12,6 +13,7 @@ interface Friend {
 
 export default function SplitBillCalculator() {
   const { saveToHistory } = useHistory();
+  const { currency, formatCurrency } = useCurrency();
   const [subtotal, setSubtotal] = useState<number>(100);
   const [taxPercent, setTaxPercent] = useState<number>(8.5);
   const [tipPercent, setTipPercent] = useState<number>(20);
@@ -86,7 +88,7 @@ export default function SplitBillCalculator() {
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <CalculatorInput label="Subtotal ($)" value={subtotal} onChange={setSubtotal} icon={Receipt} min={0} />
+          <CalculatorInput label={`Subtotal (${currency.symbol})`} value={subtotal} onChange={setSubtotal} icon={Receipt} min={0} />
           <CalculatorInput label="Tax (%)" value={taxPercent} onChange={setTaxPercent} icon={Percent} min={0} />
           <CalculatorInput label="Tip (%)" value={tipPercent} onChange={setTipPercent} icon={Percent} min={0} />
         </div>
@@ -114,7 +116,7 @@ export default function SplitBillCalculator() {
                 />
                 <div className="relative w-32">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span className="text-gray-500 font-medium">$</span>
+                    <span className="text-gray-500 font-medium">{currency.symbol}</span>
                   </div>
                   <input
                     type="number"
@@ -141,7 +143,7 @@ export default function SplitBillCalculator() {
           <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
             <span className="text-sm font-medium text-gray-500">Unassigned / Discrepancy:</span>
             <span className={`font-bold ${Math.abs(subtotal - results.totalAssigned) > 0.01 ? 'text-red-500' : 'text-green-500'}`}>
-              ${(subtotal - results.totalAssigned).toFixed(2)}
+              {currency.symbol}{(subtotal - results.totalAssigned).toFixed(2)}
             </span>
           </div>
         </div>
@@ -151,12 +153,12 @@ export default function SplitBillCalculator() {
         <div className="grid grid-cols-2 gap-4">
           <CalculatorResult
             label="Total Bill"
-            value={`$${results.totalBill.toFixed(2)}`}
+            value={formatCurrency(results.totalBill)}
             color="blue"
           />
           <CalculatorResult
             label="Total Tip"
-            value={`$${results.tipAmount.toFixed(2)}`}
+            value={formatCurrency(results.tipAmount)}
             color="green"
           />
         </div>
@@ -168,11 +170,11 @@ export default function SplitBillCalculator() {
               <div key={split.id} className="flex flex-col border-b border-gray-200 pb-3 last:border-0 last:pb-0">
                 <div className="flex justify-between items-center mb-1">
                   <span className="font-bold text-gray-900">{split.name}</span>
-                  <span className="font-black text-gray-900 text-lg">${split.friendTotal.toFixed(2)}</span>
+                  <span className="font-black text-gray-900 text-lg">{formatCurrency(split.friendTotal)}</span>
                 </div>
                 <div className="flex justify-between text-xs text-gray-500">
-                  <span>Items: ${split.amount.toFixed(2)}</span>
-                  <span>Tax: ${split.friendTax.toFixed(2)} | Tip: ${split.friendTip.toFixed(2)}</span>
+                  <span>Items: {formatCurrency(split.amount)}</span>
+                  <span>Tax: {formatCurrency(split.friendTax)} | Tip: {formatCurrency(split.friendTip)}</span>
                 </div>
               </div>
             ))}

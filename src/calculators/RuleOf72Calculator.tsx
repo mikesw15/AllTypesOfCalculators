@@ -3,11 +3,13 @@ import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import { Percent, Clock } from 'lucide-react';
 import { useHistory } from '../contexts/HistoryContext';
+import { useCurrency } from '../contexts/CurrencyContext';
 import SaveProfile from '../components/calculator/SaveProfile';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function RuleOf72Calculator() {
   const { saveToHistory } = useHistory();
+  const { formatCurrency } = useCurrency();
   const [calcMode, setCalcMode] = useState<'years' | 'rate'>('years');
   
   // Calculate Years Mode
@@ -131,7 +133,7 @@ export default function RuleOf72Calculator() {
 
         {chartData.length > 0 && (
           <div className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm h-72">
-            <h3 className="font-bold text-gray-900 mb-4">Growth of $10,000</h3>
+            <h3 className="font-bold text-gray-900 mb-4 text-center">Growth Visualization</h3>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB"/>
@@ -143,13 +145,13 @@ export default function RuleOf72Calculator() {
                   minTickGap={20}
                 />
                 <YAxis 
-                  tickFormatter={(val) => `$${(val / 1000).toFixed(0)}k`}
-                  tick={{ fontSize: 12, fill: '#6B7280' }}
+                  tickFormatter={(val) => formatCurrency(val).replace(/\.00$/, '')}
+                  tick={{ fontSize: 10, fill: '#6B7280' }}
                   tickLine={false}
                   axisLine={false}
                 />
                 <Tooltip 
-                  formatter={(value: number) => [`$${value.toLocaleString()}`, 'Balance']}
+                  formatter={(value: number) => [formatCurrency(value), 'Balance']}
                   labelStyle={{ color: '#111827', fontWeight: 'bold', marginBottom: '4px' }}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)' }}
                 />

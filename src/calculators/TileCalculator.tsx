@@ -3,8 +3,10 @@ import { Grid, Ruler, Box, Info, AlertTriangle } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export default function TileCalculator() {
+  const { currency, formatCurrency } = useCurrency();
   const [roomLength, setRoomLength] = useState<number>(12);
   const [roomWidth, setRoomWidth] = useState<number>(10);
   const [tileLength, setTileLength] = useState<number>(12);
@@ -112,7 +114,7 @@ export default function TileCalculator() {
                 label="Price per Tile"
                 value={pricePerTile}
                 onChange={setPricePerTile}
-                prefix="$"
+                prefix={currency.symbol}
                 min={0}
                 step={0.01}
               />
@@ -147,9 +149,9 @@ export default function TileCalculator() {
           {totalCost > 0 && (
             <div className="bg-blue-600 p-8 rounded-3xl text-white shadow-lg shadow-blue-200">
               <p className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Estimated Material Cost</p>
-              <p className="text-5xl font-black">${totalCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+              <p className="text-5xl font-black">{formatCurrency(totalCost)}</p>
               <p className="mt-4 text-sm opacity-80 leading-relaxed">
-                Based on {tilesWithWaste} tiles at ${pricePerTile.toFixed(2)} each.
+                Based on {tilesWithWaste} tiles at {formatCurrency(pricePerTile)} each.
               </p>
             </div>
           )}

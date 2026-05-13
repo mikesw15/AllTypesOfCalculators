@@ -14,6 +14,8 @@ import CryptoROICalculator from './CryptoROICalculator';
 import CurrencyConverter from './CurrencyConverter';
 import RuleOf72Calculator from './RuleOf72Calculator';
 import TaxCalculator from './TaxCalculator';
+import StampDutyCalculator from './StampDutyCalculator';
+import BudgetPlannerCalculator from './BudgetPlannerCalculator';
 
 // Health
 import MacroCalculator from './MacroCalculator';
@@ -185,11 +187,31 @@ export const calculators: CalculatorMeta[] = [
     seoDescription: 'Calculate your cryptocurrency return on investment (ROI), total profit, and loss for Bitcoin, Ethereum, and other altcoins instantly.'
   },
   {
+    id: 'stamp-duty-uk',
+    title: 'Stamp Duty (UK)',
+    description: 'Calculate Stamp Duty Land Tax (SDLT) for property purchases in England and Northern Ireland.',
+    category: 'Finance',
+    icon: 'PoundSterling',
+    component: StampDutyCalculator,
+    seoTitle: 'UK Stamp Duty Calculator | SDLT Property Tax Estimator',
+    seoDescription: 'Calculate the Stamp Duty (SDLT) you\'ll pay on a property in England or NI. Simple estimator for first-time buyers, home movers, and second homes.'
+  },
+  {
+    id: 'budget-planner',
+    title: 'Budget Planner',
+    description: 'Track your monthly income and expenses to balance your budget and increase savings.',
+    category: 'Finance',
+    icon: 'Wallet',
+    component: BudgetPlannerCalculator,
+    seoTitle: 'Monthly Budget Planner | Track Income, Expenses & Savings',
+    seoDescription: 'Manage your finances with our free budget planner. Track monthly income and expenses across categories to see where your money goes.'
+  },
+  {
     id: 'currency-converter',
     title: 'Currency Converter',
     description: 'Convert between all global currencies with real-time exchange rates.',
     category: 'Finance',
-    icon: 'DollarSign',
+    icon: 'PoundSterling',
     component: CurrencyConverter,
     seoTitle: 'Currency Converter | Real-Time Exchange Rates',
     seoDescription: 'Free currency converter. Convert between USD, EUR, GBP, JPY, and all other global currencies using live exchange rates.',
@@ -577,7 +599,7 @@ export const calculators: CalculatorMeta[] = [
     title: 'Split Bill Calculator',
     description: 'Split bills proportionally among friends based on exactly what they ordered.',
     category: 'Fun',
-    icon: 'DollarSign',
+    icon: 'PoundSterling',
     component: SplitBillCalculator,
     seoTitle: 'Split Bill Calculator - Divide Receipts Fairly',
     seoDescription: 'Easily split the check and calculate proportional tax and tip for everyone at the table.'
