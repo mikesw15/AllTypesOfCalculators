@@ -83,6 +83,7 @@ function AppRoutes() {
           } 
         />
         <Route path="/:id-calculator" element={<AnimatedPage><CalculatorPage /></AnimatedPage>} />
+        <Route path="/:id" element={<AnimatedPage><CalculatorPage /></AnimatedPage>} />
         <Route 
           path="/calculators/:id" 
           element={

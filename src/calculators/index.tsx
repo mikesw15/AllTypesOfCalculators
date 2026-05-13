@@ -137,6 +137,38 @@ export const calculators: CalculatorMeta[] = [
     relatedIds: ['retirement-savings', 'rule-of-72', 'roi-calculator', 'budget-planner'],
     sources: [
       { title: 'SEC - Fast Answers: Compound Interest', url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/compound-interest' }
+    ],
+    variations: [
+      {
+        id: 'compound-interest-calculator-monthly',
+        title: 'Monthly Compound Interest Calculator',
+        seoTitle: 'Monthly Compound Interest Calculator | Monthly Savings Growth',
+        seoDescription: 'Calculate how your savings grow with monthly compounding interest. Plan your monthly contributions and see the long-term wealth impact.'
+      },
+      {
+        id: 'yearly-compound-interest-calculator',
+        title: 'Yearly Compound Interest Calculator',
+        seoTitle: 'Yearly Compound Interest Calculator | Annual Investment Growth',
+        seoDescription: 'Use our yearly compound interest calculator to predict long-term investment performance based on annual compounding and contributions.'
+      },
+      {
+        id: 'daily-interest-calculator',
+        title: 'Daily Compound Interest Calculator',
+        seoTitle: 'Daily Compound Interest Calculator | High Frequency Compounding',
+        seoDescription: 'See the impact of daily compounding on your savings. Perfect for high-interest savings accounts that compound interest every day.'
+      },
+      {
+        id: 'savings-growth-calculator',
+        title: 'Savings Growth Calculator',
+        seoTitle: 'Savings Growth Calculator | Predict Your Future Balance',
+        seoDescription: 'Estimate your future bank balance with our savings growth tool. Account for initial deposits, monthly savings, and compound interest.'
+      },
+      {
+        id: 'investment-growth-calculator',
+        title: 'Investment Growth Calculator',
+        seoTitle: 'Investment Growth Calculator | Future Value Projection',
+        seoDescription: 'Project the future value of your stock or bond portfolio. Factor in expected returns and compounding to see your wealth grow.'
+      }
     ]
   },
   {
@@ -206,7 +238,21 @@ export const calculators: CalculatorMeta[] = [
     component: ROICalculator,
     seoTitle: 'ROI Calculator | Return on Investment & Profit Estimator',
     seoDescription: 'Calculate your Return on Investment (ROI) easily. Supports total profit, percentage return, and annualized ROI for stocks, property, or business.',
-    relatedIds: ['compound-interest', 'retirement-savings', 'crypto-roi']
+    relatedIds: ['compound-interest', 'retirement-savings', 'crypto-roi'],
+    variations: [
+      {
+        id: 'stock-profit-calculator',
+        title: 'Stock Profit Calculator',
+        seoTitle: 'Stock Profit Calculator | Calculate Buy & Sell Returns',
+        seoDescription: 'Calculate your total profit and ROI from stock trades. Factor in buy price, sell price, and investment duration.'
+      },
+      {
+        id: 'real-estate-roi-calculator',
+        title: 'Real Estate ROI Calculator',
+        seoTitle: 'Real Estate ROI Calculator | Property Investment Returns',
+        seoDescription: 'Estimate the return on investment for your rental or flip property. See your annualized ROI and total capital gains.'
+      }
+    ]
   },
   {
     id: 'stamp-duty-uk',
@@ -426,6 +472,27 @@ export const calculators: CalculatorMeta[] = [
     component: MortgageCalculator,
     seoTitle: 'Free Mortgage Calculator with Taxes, Insurance & Amortization',
     seoDescription: 'Accurately calculate your monthly mortgage payments, including property taxes, home insurance, and PMI. Generate instant amortization schedules and see total interest.',
+    relatedIds: ['car-loan', 'retirement-savings', 'compound-interest', 'salary-calculator'],
+    variations: [
+      {
+        id: 'home-loan-repayment-calculator',
+        title: 'Home Loan Repayment Calculator',
+        seoTitle: 'Home Loan Repayment Calculator | Monthly Payment Estimator',
+        seoDescription: 'Calculate your exact monthly home loan repayments. See how interest rates affect your principal and interest split.'
+      },
+      {
+        id: 'mortgage-interest-calculator',
+        title: 'Mortgage Interest Calculator',
+        seoTitle: 'Mortgage Interest Calculator | Total Interest Paid Over Time',
+        seoDescription: 'Find out exactly how much interest you will pay the bank over the life of your mortgage. See the cost of borrowing.'
+      },
+      {
+        id: 'pmi-calculator',
+        title: 'PMI Calculator',
+        seoTitle: 'PMI Calculator | Private Mortgage Insurance Estimator',
+        seoDescription: 'Calculate your Private Mortgage Insurance (PMI) based on your down payment percentage and loan amount.'
+      }
+    ],
     formulaMarkup: (
       <>
         M = P [ i(1 + i)^n ] / [ (1 + i)^n - 1 ]
@@ -540,6 +607,26 @@ export const calculators: CalculatorMeta[] = [
     seoTitle: 'Body Mass Index (BMI) Calculator | Check Your Healthy Weight',
     seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range for adult men and women based on height and weight.',
     relatedIds: ['body-fat-calculator', 'bmr-tdee', 'macro-calculator', 'protein-calculator'],
+    variations: [
+      {
+        id: 'bmi-calculator-for-men',
+        title: 'BMI Calculator for Men',
+        seoTitle: 'BMI Calculator for Men | Healthy weight for Men',
+        seoDescription: 'Calculate BMI for men. Find the healthy weight range and body mass index specific to adult males.'
+      },
+      {
+        id: 'bmi-calculator-for-women',
+        title: 'BMI Calculator for Women',
+        seoTitle: 'BMI Calculator for Women | Healthy weight for Women',
+        seoDescription: 'Calculate BMI for women. Understand body mass index categories and healthy weight ranges for adult females.'
+      },
+      {
+        id: 'body-mass-index-tool',
+        title: 'Body Mass Index (BMI) Tool',
+        seoTitle: 'Body Mass Index Tool | Calculate Your BMI Online',
+        seoDescription: 'Use our universal body mass index tool to check your BMI category and weight health instantly.'
+      }
+    ],
     sources: [
       { title: 'CDC - About Adult BMI', url: 'https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html' },
       { title: 'WHO - Body Mass Index', url: 'https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index' }
@@ -555,6 +642,20 @@ export const calculators: CalculatorMeta[] = [
     seoTitle: 'BMR & TDEE Calculator | Calculate Daily Calorie & Energy Needs',
     seoDescription: 'Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE). Discover your exact daily calorie needs for weight loss, maintenance, or muscle gain.',
     relatedIds: ['macro-calculator', 'protein-calculator', 'bmi'],
+    variations: [
+      {
+        id: 'tdee-calculator',
+        title: 'TDEE Calculator',
+        seoTitle: 'TDEE Calculator | Total Daily Energy Expenditure',
+        seoDescription: 'Calculate your TDEE (Total Daily Energy Expenditure). Know exactly how many calories you burn per day.'
+      },
+      {
+        id: 'calorie-calculator',
+        title: 'Calorie Calculator',
+        seoTitle: 'Daily Calorie Calculator | Weight Loss & Gain',
+        seoDescription: 'Free calorie calculator to estimate the number of calories you need to eat each day to maintain, lose, or gain weight.'
+      }
+    ],
     sources: [
       { title: 'National Library of Medicine - Mifflin St Jeor Equation', url: 'https://pubmed.ncbi.nlm.nih.gov/2305711/' }
     ]
@@ -748,7 +849,27 @@ export const calculators: CalculatorMeta[] = [
     component: PercentageCalculator,
     seoTitle: 'Percentage Calculator | Percent Increase & Decrease Tool',
     seoDescription: 'Free online percentage calculator. Find what X% of Y is, calculate percent increases or decreases, and solve everyday math tasks effortlessly.',
-    relatedIds: ['fraction-calculator', 'scientific-calculator', 'tip-calculator']
+    relatedIds: ['fraction-calculator', 'scientific-calculator', 'tip-calculator'],
+    variations: [
+      {
+        id: 'percentage-increase-calculator',
+        title: 'Percentage Increase Calculator',
+        seoTitle: 'Percentage Increase Calculator | Percent Growth Tool',
+        seoDescription: 'Calculate the percentage increase between two values. Perfect for calculating growth, inflation, or price hikes.'
+      },
+      {
+        id: 'percentage-decrease-calculator',
+        title: 'Percentage Decrease Calculator',
+        seoTitle: 'Percentage Decrease Calculator | Percent Drop Tool',
+        seoDescription: 'Calculate the percentage decrease or discount between two numbers. Ideal for sales and price drops.'
+      },
+      {
+        id: 'percent-of-number-calculator',
+        title: 'Percent of Number Calculator',
+        seoTitle: 'Percent of Number Calculator | Online Math Tool',
+        seoDescription: 'Quickly find what X percent of Y is. Simple, fast online percentage of calculations.'
+      }
+    ]
   },
   {
     id: 'z-score-calculator',

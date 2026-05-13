@@ -11,7 +11,21 @@ export default function CalculatorPage() {
   const navigate = useNavigate();
   const { addRecent } = useRecentCalculators();
   
-  const calculator = id ? getCalculatorById(id) : undefined;
+  // Find calculator by primary ID or variation ID
+  let calculator = id ? getCalculatorById(id) : undefined;
+  let variation = null;
+
+  if (!calculator && id) {
+    // Try to find by variation ID
+    for (const currentCalc of calculators) {
+      const currentVariation = currentCalc.variations?.find(v => v.id === id || v.id === `${id}-calculator`);
+      if (currentVariation) {
+        calculator = currentCalc;
+        variation = currentVariation;
+        break;
+      }
+    }
+  }
 
   React.useEffect(() => {
     if (!calculator) {
@@ -22,6 +36,11 @@ export default function CalculatorPage() {
   }, [calculator, navigate]);
 
   if (!calculator) return null;
+
+  const displayTitle = variation?.title || calculator.title;
+  const seoTitle = variation?.seoTitle || calculator.seoTitle || calculator.title;
+  const seoDescription = variation?.seoDescription || calculator.seoDescription || calculator.description;
+  const canonicalUrl = `https://alltypesofcalculators.com/${id}-calculator`; // Use 'id' from params which is the slug used to reach this page
 
   const Component = calculator.component;
 
@@ -57,12 +76,12 @@ export default function CalculatorPage() {
       {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": calculator.title,
-        "description": calculator.seoDescription || calculator.description,
+        "name": displayTitle,
+        "description": seoDescription,
         "applicationCategory": "CalculatorApplication",
         "genre": calculator.category,
         "operatingSystem": "All",
-        "url": `https://alltypesofcalculators.com/${calculator.id}-calculator`,
+        "url": canonicalUrl,
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -92,8 +111,8 @@ export default function CalculatorPage() {
           {
             "@type": "ListItem",
             "position": 3,
-            "name": calculator.title,
-            "item": `https://alltypesofcalculators.com/${calculator.id}-calculator`
+            "name": displayTitle,
+            "item": canonicalUrl
           }
         ]
       }
@@ -104,8 +123,8 @@ export default function CalculatorPage() {
       schemaData.push({
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": calculator.seoTitle || calculator.title,
-        "description": calculator.seoDescription || calculator.description,
+        "headline": seoTitle,
+        "description": seoDescription,
         "author": {
           "@type": "Organization",
           "name": "All Types of Calculators"
@@ -116,7 +135,7 @@ export default function CalculatorPage() {
         },
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `https://alltypesofcalculators.com/${calculator.id}-calculator`
+          "@id": canonicalUrl
         }
       });
     }
@@ -165,15 +184,15 @@ export default function CalculatorPage() {
   return (
     <>
       <SEO 
-        title={calculator.seoTitle || calculator.title}
-        description={calculator.seoDescription || calculator.description}
-        canonical={`https://alltypesofcalculators.com/${calculator.id}-calculator`}
-        keywords={generateKeywords(calculator.title, calculator.category, calculator.description, calculator.keywords)}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={canonicalUrl}
+        keywords={generateKeywords(displayTitle, calculator.category, seoDescription, variation?.keywords || calculator.keywords)}
         ogType="website"
         structuredData={schemaData}
       />
       <CalculatorLayout 
-        meta={calculator} 
+        meta={{...calculator, title: displayTitle}} 
         explanation={calculator.explanation || calculatorExplanations[calculator.id] || defaultExplanation}
         faq={calculator.faq}
         relatedCalculators={relatedCalculators}

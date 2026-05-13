@@ -3,34 +3,30 @@
   <url>
     <loc>https://alltypesofcalculators.com/</loc>
     <lastmod>2024-05-13</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://alltypesofcalculators.com/categories</loc>
     <lastmod>2024-05-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://alltypesofcalculators.com/about</loc>
-    <lastmod>2024-05-13</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://alltypesofcalculators.com/blog</loc>
-    <lastmod>2024-05-13</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
-  <!-- Calculators -->
+  <!-- Primary Calculators -->
   <url><loc>https://alltypesofcalculators.com/conception-calculator</loc><priority>0.9</priority></url>
   <url><loc>https://alltypesofcalculators.com/ovulation-calculator</loc><priority>0.9</priority></url>
   <url><loc>https://alltypesofcalculators.com/pregnancy-weight-calculator</loc><priority>0.8</priority></url>
   <url><loc>https://alltypesofcalculators.com/car-loan-calculator</loc><priority>0.9</priority></url>
-  <url><loc>https://alltypesofcalculators.com/compound-interest-calculator</loc><priority>0.9</priority></url>
+  <url><loc>https://alltypesofcalculators.com/compound-interest-calculator</loc><priority>1.0</priority></url>
   <url><loc>https://alltypesofcalculators.com/retirement-savings-calculator</loc><priority>0.9</priority></url>
   <url><loc>https://alltypesofcalculators.com/rule-of-72-calculator</loc><priority>0.8</priority></url>
   <url><loc>https://alltypesofcalculators.com/tax-calculator-calculator</loc><priority>0.8</priority></url>
@@ -80,4 +76,24 @@
   <url><loc>https://alltypesofcalculators.com/mulch-calculator-calculator</loc><priority>0.8</priority></url>
   <url><loc>https://alltypesofcalculators.com/roofing-calculator-calculator</loc><priority>0.8</priority></url>
   <url><loc>https://alltypesofcalculators.com/drywall-calculator-calculator</loc><priority>0.8</priority></url>
+
+  <!-- pSEO Variations -->
+  <url><loc>https://alltypesofcalculators.com/compound-interest-calculator-monthly</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/yearly-compound-interest-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/daily-interest-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/savings-growth-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/investment-growth-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/stock-profit-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/real-estate-roi-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/home-loan-repayment-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/mortgage-interest-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/pmi-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/bmi-calculator-for-men</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/bmi-calculator-for-women</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/body-mass-index-tool</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/tdee-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/calorie-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/percentage-increase-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/percentage-decrease-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://alltypesofcalculators.com/percent-of-number-calculator</loc><priority>0.7</priority></url>
 </urlset>

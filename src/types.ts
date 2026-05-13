@@ -1,6 +1,22 @@
 import React from 'react';
 
-export type Category = "Finance" | "Health" | "Math" | "Everyday Life" | "Fun" | "Home Improvement";
+export type Category = 
+  | "Finance" 
+  | "Health" 
+  | "Maths" 
+  | "Conversions" 
+  | "Business" 
+  | "Construction" 
+  | "AI & SEO" 
+  | "Everyday life";
+
+export interface SEOVariation {
+  id: string; // The URL slug (e.g., 'savings-growth-calculator')
+  title: string;
+  seoTitle: string;
+  seoDescription: string;
+  keywords?: string[];
+}
 
 export interface CalculatorMeta {
   id: string;
@@ -19,4 +35,5 @@ export interface CalculatorMeta {
   faq?: { question: string; answer: string }[];
   relatedIds?: string[];
   sources?: { title: string; url: string }[];
+  variations?: SEOVariation[];
 }
