@@ -4,6 +4,7 @@ import CalculatorResult from '../components/calculator/CalculatorResult';
 import { Scale, Ruler } from 'lucide-react';
 import { useHistory } from '../contexts/HistoryContext';
 import { useUnit } from '../contexts/UnitContext';
+import SaveProfile from '../components/calculator/SaveProfile';
 
 export default function BMICalculator() {
   const { saveToHistory } = useHistory();
@@ -99,6 +100,13 @@ export default function BMICalculator() {
             category.label === 'Underweight' ? 'blue' :
             category.label === 'Overweight' ? 'yellow' : 'red'
           }
+        />
+
+        <SaveProfile 
+          calculatorId="bmi"
+          calculatorTitle="BMI Calculator"
+          inputs={{ weight, system, heightFt, heightIn, heightCm }}
+          results={{ bmi: bmi.toFixed(1), category: category.label }}
         />
 
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">

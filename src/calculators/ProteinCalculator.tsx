@@ -215,6 +215,7 @@ export default function ProteinCalculator() {
               src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800&h=400" 
               alt="Healthy protein rich food" 
               className="w-full h-48 object-cover rounded-2xl shadow-sm"
+              loading="lazy"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -224,6 +225,7 @@ export default function ProteinCalculator() {
               src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&q=80&w=400&h=400" 
               alt="Protein shake" 
               className="w-32 h-32 object-cover rounded-full mb-6 shadow-md"
+              loading="lazy"
               referrerPolicy="no-referrer"
             />
             <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to optimize your diet?</h3>

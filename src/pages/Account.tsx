@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { collection, query, getDocs, limit } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
-import { User, Mail, Calendar as CalendarIcon, LogOut, Star, Settings, Shield, ChevronRight, Calculator, Key, Copy, History, Clock } from 'lucide-react';
+import { User, Mail, Calendar as CalendarIcon, LogOut, Star, Settings, Shield, ChevronRight, Calculator, Key, Copy, History, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -19,6 +19,7 @@ interface HistoryItem {
   calculatorId: string;
   calculatorTitle: string;
   profileName?: string;
+  inputs?: any;
   results: any;
   timestamp: any;
 }
@@ -29,8 +30,19 @@ export default function Account() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const toggleExpand = (id: string) => {
+    setExpandedItemId(expandedItemId === id ? null : id);
+  };
+
+  const formatValue = (val: any) => {
+    if (typeof val === 'number') return val.toLocaleString();
+    if (typeof val === 'object') return JSON.stringify(val);
+    return String(val);
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -196,27 +208,65 @@ export default function Account() {
               ) : history.length > 0 ? (
                 <div className="space-y-4">
                   {history.map((item) => (
-                    <div key={item.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
-                      <div>
-                        <h4 className="font-bold text-gray-900 flex items-center gap-2">
-                          {item.calculatorTitle}
-                          {item.profileName && (
-                            <span className="bg-blue-100 text-blue-800 text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full">
-                              {item.profileName}
-                            </span>
-                          )}
-                        </h4>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
-                          <Clock className="w-3 h-3" />
-                          {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleString() : 'Just now'}
+                    <div key={item.id} className="bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
+                      <div 
+                        className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-100 transition-colors"
+                        onClick={() => toggleExpand(item.id)}
+                      >
+                        <div className="flex-1">
+                          <h4 className="font-bold text-gray-900 flex items-center gap-2">
+                            {item.calculatorTitle}
+                            {item.profileName && (
+                              <span className="bg-blue-100 text-blue-800 text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full">
+                                {item.profileName}
+                              </span>
+                            )}
+                          </h4>
+                          <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+                            <Clock className="w-3 h-3" />
+                            {item.timestamp?.toDate ? item.timestamp.toDate().toLocaleString() : 'Just now'}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <Link 
+                            to={`/${item.calculatorId}-calculator`}
+                            className="text-sm font-bold text-blue-600 hover:text-blue-700"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Reuse
+                          </Link>
+                          {expandedItemId === item.id ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
                         </div>
                       </div>
-                      <Link 
-                        to={`/${item.calculatorId}-calculator`}
-                        className="text-sm font-bold text-blue-600 hover:text-blue-700"
-                      >
-                        Reuse
-                      </Link>
+                      
+                      {expandedItemId === item.id && (
+                        <div className="p-4 bg-white border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-widest">Saved Results</p>
+                            <div className="space-y-1">
+                              {Object.entries(item.results).map(([key, val]) => (
+                                <div key={key} className="flex justify-between text-sm">
+                                  <span className="text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                                  <span className="font-bold text-gray-900">{formatValue(val)}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          {item.inputs && (
+                            <div>
+                              <p className="text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-widest">Inputs Used</p>
+                              <div className="space-y-1">
+                                {Object.entries(item.inputs).map(([key, val]) => (
+                                  <div key={key} className="flex justify-between text-xs">
+                                    <span className="text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                                    <span className="font-medium text-gray-700">{formatValue(val)}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

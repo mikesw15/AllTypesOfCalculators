@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CalculatorMeta } from '../types';
-import { Share2, Star, Info, HelpCircle, Link as LinkIcon, Download } from 'lucide-react';
+import { Share2, Star, Info, HelpCircle, Link as LinkIcon, Download, Scale, Printer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AIHelper from './AIHelper';
 import ReviewSection from './ReviewSection';
@@ -11,6 +11,7 @@ import { exportToPDF } from '../utils/exportPdf';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrors';
 
 import ShareModal from './ShareModal';
+import Breadcrumbs from './Breadcrumbs';
 
 interface CalculatorLayoutProps {
   meta: CalculatorMeta;
@@ -18,9 +19,13 @@ interface CalculatorLayoutProps {
   explanation?: React.ReactNode;
   faq?: { question: string; answer: string }[];
   relatedCalculators?: CalculatorMeta[];
+  comparison?: {
+    title: string;
+    points: { title: string; content: string }[];
+  };
 }
 
-export default function CalculatorLayout({ meta, children, explanation, faq, relatedCalculators }: CalculatorLayoutProps) {
+export default function CalculatorLayout({ meta, children, explanation, faq, relatedCalculators, comparison }: CalculatorLayoutProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteId, setFavoriteId] = useState<string | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -133,12 +138,21 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative">
+      <Breadcrumbs />
       <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 dark:text-white">{meta.title}</h1>
           <p className="text-lg text-gray-600 max-w-3xl dark:text-gray-400">{meta.description}</p>
         </div>
         <div className="flex gap-3 shrink-0 mb-2 md:mb-0">
+           <button 
+             onClick={() => window.print()}
+             className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+             title="Print Page (⌘P)"
+           >
+             <Printer className="w-4 h-4" />
+             <span className="hidden sm:inline">Print</span>
+           </button>
            <button 
              onClick={handleExportPDF}
              disabled={isExporting}
@@ -249,6 +263,30 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
           <article className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:leading-relaxed">
             {meta.longContent}
           </article>
+        </div>
+      )}
+
+      {comparison && (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 overflow-hidden">
+          <div className="p-6 md:p-8">
+            <div className="flex items-center gap-2 mb-8">
+              <Scale className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight">{comparison.title}</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {comparison.points.map((point, index) => (
+                <div key={index} className="bg-gray-50 dark:bg-gray-900/50 p-8 rounded-[2rem] border border-gray-100 dark:border-gray-800">
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white mb-4 flex items-center gap-3">
+                    <div className="w-2 h-8 bg-blue-600 rounded-full" />
+                    {point.title}
+                  </h3>
+                  <div className="prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
+                    {point.content}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 

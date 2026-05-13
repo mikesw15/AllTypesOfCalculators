@@ -6,6 +6,7 @@ import { TrendingUp, Wallet, PlusCircle, Calendar, Percent } from 'lucide-react'
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import { useCalculatorState } from '../hooks/useCalculatorState';
+import SaveProfile from '../components/calculator/SaveProfile';
 
 export default function CompoundInterestCalculator() {
   const { currency, formatCurrency } = useCurrency();
@@ -60,6 +61,8 @@ export default function CompoundInterestCalculator() {
           icon={TrendingUp}
           prefix={currency.symbol}
           min={0}
+          max={1000000}
+          step={1000}
         />
         <CalculatorInput
           label="Monthly Contribution"
@@ -68,6 +71,8 @@ export default function CompoundInterestCalculator() {
           icon={PlusCircle}
           prefix={currency.symbol}
           min={0}
+          max={10000}
+          step={50}
         />
         <div className="grid grid-cols-2 gap-6">
           <CalculatorInput
@@ -77,7 +82,7 @@ export default function CompoundInterestCalculator() {
             icon={Calendar}
             suffix="yrs"
             min={1}
-            max={100}
+            max={50}
           />
           <CalculatorInput
             label="Annual Interest Rate"
@@ -87,6 +92,7 @@ export default function CompoundInterestCalculator() {
             suffix="%"
             step={0.1}
             min={0}
+            max={20}
           />
         </div>
       </div>
@@ -96,6 +102,13 @@ export default function CompoundInterestCalculator() {
           label="Future Value"
           value={formatCurrency(futureValue)}
           color="green"
+        />
+
+        <SaveProfile 
+          calculatorId="compound-interest"
+          calculatorTitle="Compound Interest Calculator"
+          inputs={{ principal, monthlyContribution, years, rate }}
+          results={{ futureValue, totalInterest }}
         />
         
         <div className="bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-100 dark:border-gray-700 p-8 shadow-sm">

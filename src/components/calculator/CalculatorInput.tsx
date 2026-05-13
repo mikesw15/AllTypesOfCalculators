@@ -31,14 +31,22 @@ export default function CalculatorInput({
   helpText
 }: CalculatorInputProps) {
   const inputId = React.useId();
+  const showSlider = min !== undefined && max !== undefined && type === 'number';
 
   return (
     <div className="w-full">
-      <label htmlFor={inputId} className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
-        {Icon && <Icon className="w-4 h-4 text-blue-500" />}
-        {label}
-      </label>
-      <div className="relative group">
+      <div className="flex justify-between items-center mb-2">
+        <label htmlFor={inputId} className="block text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+          {Icon && <Icon className="w-4 h-4 text-blue-500" />}
+          {label}
+        </label>
+        {showSlider && (
+          <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 rounded-lg">
+            {value}{suffix}
+          </span>
+        )}
+      </div>
+      <div className="relative group mb-3">
         {prefix && (
           <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 font-medium pointer-events-none group-focus-within:text-blue-500 transition-colors">
             {prefix}
@@ -64,6 +72,25 @@ export default function CalculatorInput({
           </div>
         )}
       </div>
+      
+      {showSlider && (
+        <div className="px-1">
+          <input
+            type="range"
+            min={min}
+            max={max}
+            step={step || 1}
+            value={value as number}
+            onChange={(e) => onChange(Number(e.target.value))}
+            className="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-all"
+          />
+          <div className="flex justify-between text-[10px] text-gray-400 dark:text-gray-500 font-bold mt-1 uppercase tracking-tighter">
+            <span>{min}{suffix}</span>
+            <span>{max}{suffix}</span>
+          </div>
+        </div>
+      )}
+
       {helpText && <p className="mt-2 text-xs text-gray-400 dark:text-gray-500 font-medium">{helpText}</p>}
     </div>
   );

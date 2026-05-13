@@ -1,71 +1,73 @@
+import React, { lazy } from 'react';
 import { CalculatorMeta } from '../types';
-import MortgageCalculator from './MortgageCalculator';
-import BMICalculator from './BMICalculator';
-import ImageGenerator from './ImageGenerator';
-import BMRCalculator from './BMRCalculator';
-import WaterIntakeCalculator from './WaterIntakeCalculator';
-import HeartRateCalculator from './HeartRateCalculator';
 
 // Finance
-import CarLoanCalculator from './CarLoanCalculator';
-import CompoundInterestCalculator from './CompoundInterestCalculator';
-import SalaryCalculator from './SalaryCalculator';
-import CryptoROICalculator from './CryptoROICalculator';
-import ROICalculator from './ROICalculator';
-import CurrencyConverter from './CurrencyConverter';
-import RuleOf72Calculator from './RuleOf72Calculator';
-import TaxCalculator from './TaxCalculator';
-import StampDutyCalculator from './StampDutyCalculator';
-import BudgetPlannerCalculator from './BudgetPlannerCalculator';
+const MortgageCalculator = lazy(() => import('./MortgageCalculator'));
+const CarLoanCalculator = lazy(() => import('./CarLoanCalculator'));
+const CompoundInterestCalculator = lazy(() => import('./CompoundInterestCalculator'));
+const RetirementCalculator = lazy(() => import('./RetirementCalculator'));
+const RuleOf72Calculator = lazy(() => import('./RuleOf72Calculator'));
+const TaxCalculator = lazy(() => import('./TaxCalculator'));
+const StampDutyCalculator = lazy(() => import('./StampDutyCalculator'));
+const BudgetPlannerCalculator = lazy(() => import('./BudgetPlannerCalculator'));
+const ROICalculator = lazy(() => import('./ROICalculator'));
+const CryptoROICalculator = lazy(() => import('./CryptoROICalculator'));
+
+// Business & Conversions
+const SalaryCalculator = lazy(() => import('./SalaryCalculator'));
+const CurrencyConverter = lazy(() => import('./CurrencyConverter'));
+const UnitConverter = lazy(() => import('./UnitConverter'));
+const DateTimeCalculator = lazy(() => import('./DateTimeCalculator'));
 
 // Health
-import MacroCalculator from './MacroCalculator';
+const BMICalculator = lazy(() => import('./BMICalculator'));
+const BMRCalculator = lazy(() => import('./BMRCalculator'));
+const WaterIntakeCalculator = lazy(() => import('./WaterIntakeCalculator'));
+const HeartRateCalculator = lazy(() => import('./HeartRateCalculator'));
+const BodyFatCalculator = lazy(() => import('./BodyFatCalculator'));
+const PeptideCalculator = lazy(() => import('./PeptideCalculator'));
+const ProteinCalculator = lazy(() => import('./ProteinCalculator'));
+const MacroCalculator = lazy(() => import('./MacroCalculator'));
+const ConceptionCalculator = lazy(() => import('./ConceptionCalculator'));
+const OvulationCalculator = lazy(() => import('./OvulationCalculator'));
+const PregnancyWeightCalculator = lazy(() => import('./PregnancyWeightCalculator'));
 
 // Maths
-import ScientificCalculator from './ScientificCalculator';
-import UnitConverter from './UnitConverter';
-import DateTimeCalculator from './DateTimeCalculator';
-import StatisticsCalculator from './StatisticsCalculator';
-import ProbabilityCalculator from './ProbabilityCalculator';
-import PercentageCalculator from './PercentageCalculator';
-import ZScoreCalculator from './ZScoreCalculator';
+const ScientificCalculator = lazy(() => import('./ScientificCalculator'));
+const StatisticsCalculator = lazy(() => import('./StatisticsCalculator'));
+const ProbabilityCalculator = lazy(() => import('./ProbabilityCalculator'));
+const PercentageCalculator = lazy(() => import('./PercentageCalculator'));
+const ZScoreCalculator = lazy(() => import('./ZScoreCalculator'));
+const FractionCalculator = lazy(() => import('./FractionCalculator'));
 
 // Everyday Life
-import FuelCostCalculator from './FuelCostCalculator';
-import RentVsBuyCalculator from './RentVsBuyCalculator';
-import GPACalculator from './GPACalculator';
-import PasswordGenerator from './PasswordGenerator';
-import RecipeScaler from './RecipeScaler';
+const FuelCostCalculator = lazy(() => import('./FuelCostCalculator'));
+const RentVsBuyCalculator = lazy(() => import('./RentVsBuyCalculator'));
+const GPACalculator = lazy(() => import('./GPACalculator'));
+const PasswordGenerator = lazy(() => import('./PasswordGenerator'));
+const RecipeScaler = lazy(() => import('./RecipeScaler'));
+const TipCalculator = lazy(() => import('./TipCalculator'));
+const SplitBillCalculator = lazy(() => import('./SplitBillCalculator'));
+const LoveCalculator = lazy(() => import('./LoveCalculator'));
+const SleepCycleCalculator = lazy(() => import('./SleepCycleCalculator'));
+const CarbonFootprintCalculator = lazy(() => import('./CarbonFootprintCalculator'));
+const ReadingTimeCalculator = lazy(() => import('./ReadingTimeCalculator'));
+const PetAgeCalculator = lazy(() => import('./PetAgeCalculator'));
+const ZodiacCalculator = lazy(() => import('./ZodiacCalculator'));
 
-// Fun & AI
-import LoveCalculator from './LoveCalculator';
-import SleepCycleCalculator from './SleepCycleCalculator';
-import CarbonFootprintCalculator from './CarbonFootprintCalculator';
-import ReadingTimeCalculator from './ReadingTimeCalculator';
-import PetAgeCalculator from './PetAgeCalculator';
-import SplitBillCalculator from './SplitBillCalculator';
-import ZodiacCalculator from './ZodiacCalculator';
-
-import PeptideCalculator from './PeptideCalculator';
-import ProteinCalculator from './ProteinCalculator';
+// AI & SEO
+const ImageGenerator = lazy(() => import('./ImageGenerator'));
 
 // Construction & Home Improvement
-import MulchCalculator from './MulchCalculator';
-import RoofingCalculator from './RoofingCalculator';
-import DrywallCalculator from './DrywallCalculator';
-import PaintCalculator from './PaintCalculator';
-import FlooringCalculator from './FlooringCalculator';
-import ConcreteCalculator from './ConcreteCalculator';
-import HVACCalculator from './HVACCalculator';
-import TileCalculator from './TileCalculator';
-import RetirementCalculator from './RetirementCalculator';
-import BodyFatCalculator from './BodyFatCalculator';
-import TipCalculator from './TipCalculator';
-import WallpaperCalculator from './WallpaperCalculator';
-import FractionCalculator from './FractionCalculator';
-import ConceptionCalculator from './ConceptionCalculator';
-import OvulationCalculator from './OvulationCalculator';
-import PregnancyWeightCalculator from './PregnancyWeightCalculator';
+const PaintCalculator = lazy(() => import('./PaintCalculator'));
+const FlooringCalculator = lazy(() => import('./FlooringCalculator'));
+const ConcreteCalculator = lazy(() => import('./ConcreteCalculator'));
+const HVACCalculator = lazy(() => import('./HVACCalculator'));
+const TileCalculator = lazy(() => import('./TileCalculator'));
+const WallpaperCalculator = lazy(() => import('./WallpaperCalculator'));
+const MulchCalculator = lazy(() => import('./MulchCalculator'));
+const RoofingCalculator = lazy(() => import('./RoofingCalculator'));
+const DrywallCalculator = lazy(() => import('./DrywallCalculator'));
 
 export const calculators: CalculatorMeta[] = [
   {
@@ -75,7 +77,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Baby',
     component: ConceptionCalculator,
-    seoTitle: 'Conception Calculator | Reverse Calculate Conception Date',
+    seoTitle: 'Conception Calculator – Reverse Calculate Your Conception Date Online',
     seoDescription: 'Calculate the exact date of conception based on your due date or last period. Discover your intercourse window and pregnancy milestones.',
     relatedIds: ['ovulation', 'pregnancy-weight', 'bmi'],
     sources: [
@@ -89,7 +91,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Calendar',
     component: OvulationCalculator,
-    seoTitle: 'Ovulation Calculator | Predict Your Fertile Window',
+    seoTitle: 'Ovulation Calculator – Predict Your Fertile Window & Ovulation Day',
     seoDescription: 'Accurately predict your ovulation day and fertile window for the next several months based on your cycle.',
     relatedIds: ['conception', 'pregnancy-weight', 'bmi'],
     sources: [
@@ -103,7 +105,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Baby',
     component: PregnancyWeightCalculator,
-    seoTitle: 'Pregnancy Weight Gain Calculator | IOM Guidelines',
+    seoTitle: 'Pregnancy Weight Gain Calculator – Track Healthy Weight Gain During Pregnancy',
     seoDescription: 'Calculate the recommended healthy weight gain range during your pregnancy based on IOM guidelines.',
     relatedIds: ['conception', 'ovulation', 'bmi'],
     sources: [
@@ -118,7 +120,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'Car',
     component: CarLoanCalculator,
-    seoTitle: 'Auto Loan & Car Loan Calculator | Estimate Monthly Payments',
+    seoTitle: 'Car Loan Calculator – Estimate Your Monthly Auto Loan Payments Online',
     seoDescription: 'Free car loan calculator to estimate your monthly auto loan payments, total interest paid, and the total cost of your vehicle over time.',
     relatedIds: ['mortgage', 'compound-interest', 'salary-calculator'],
     sources: [
@@ -132,41 +134,59 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'TrendingUp',
     component: CompoundInterestCalculator,
-    seoTitle: 'Compound Interest Calculator | Predict Your Investment Growth',
+    seoTitle: 'Compound Interest Calculator – Predict Your Investment Growth Instantly',
     seoDescription: 'Free compound interest calculator. Discover how your investments, savings, and returns will grow over time with the power of compounding.',
     relatedIds: ['retirement-savings', 'rule-of-72', 'roi-calculator', 'budget-planner'],
     sources: [
       { title: 'SEC - Fast Answers: Compound Interest', url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/compound-interest' }
     ],
+    faq: [
+      {
+        question: "How do you calculate compound interest manually?",
+        answer: "To calculate compound interest manually, use the formula A = P(1 + r/n)^(nt). Where A is the future value, P is the principal, r is the annual interest rate, n is the compounding frequency, and t is the time in years."
+      },
+      {
+        question: "What is the difference between daily and monthly compounding?",
+        answer: "The more frequent the compounding, the more interest you earn. Daily compounding adds interest to your balance every day, so you earn interest on that interest the very next day. Monthly compounding only does this once a month. Over many years, daily compounding results in a higher final balance."
+      },
+      {
+        question: "Why is compound interest called 'the eighth wonder of the world'?",
+        answer: "Often attributed to Albert Einstein, this quote highlights the power of compounding. Over long periods, the exponential growth of interest-on-interest can turn small, regular savings into significant wealth."
+      },
+      {
+        question: "How does the 'Rule of 72' relate to compound interest?",
+        answer: "The Rule of 72 is a quick way to estimate how long it will take for your money to double with compound interest. Simply divide 72 by your annual interest rate (e.g., 72 / 6% = 12 years)."
+      }
+    ],
     variations: [
       {
         id: 'compound-interest-calculator-monthly',
         title: 'Monthly Compound Interest Calculator',
-        seoTitle: 'Monthly Compound Interest Calculator | Monthly Savings Growth',
+        seoTitle: 'Monthly Compound Interest Calculator – Predict Monthly Savings Growth',
         seoDescription: 'Calculate how your savings grow with monthly compounding interest. Plan your monthly contributions and see the long-term wealth impact.'
       },
       {
         id: 'yearly-compound-interest-calculator',
         title: 'Yearly Compound Interest Calculator',
-        seoTitle: 'Yearly Compound Interest Calculator | Annual Investment Growth',
+        seoTitle: 'Yearly Compound Interest Calculator – Annual Investment Performance',
         seoDescription: 'Use our yearly compound interest calculator to predict long-term investment performance based on annual compounding and contributions.'
       },
       {
         id: 'daily-interest-calculator',
         title: 'Daily Compound Interest Calculator',
-        seoTitle: 'Daily Compound Interest Calculator | High Frequency Compounding',
+        seoTitle: 'Daily Compound Interest Calculator – High Frequency Compounding Tool',
         seoDescription: 'See the impact of daily compounding on your savings. Perfect for high-interest savings accounts that compound interest every day.'
       },
       {
         id: 'savings-growth-calculator',
         title: 'Savings Growth Calculator',
-        seoTitle: 'Savings Growth Calculator | Predict Your Future Balance',
+        seoTitle: 'Savings Growth Calculator – Project Your Future Bank Balance Online',
         seoDescription: 'Estimate your future bank balance with our savings growth tool. Account for initial deposits, monthly savings, and compound interest.'
       },
       {
         id: 'investment-growth-calculator',
         title: 'Investment Growth Calculator',
-        seoTitle: 'Investment Growth Calculator | Future Value Projection',
+        seoTitle: 'Investment Growth Calculator – Future Value Portfolio Projection',
         seoDescription: 'Project the future value of your stock or bond portfolio. Factor in expected returns and compounding to see your wealth grow.'
       }
     ]
@@ -178,7 +198,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'PiggyBank',
     component: RetirementCalculator,
-    seoTitle: 'Retirement Savings Calculator | Plan Your Financial Future',
+    seoTitle: 'Retirement Savings Calculator – Plan Your Financial Future & Nest Egg',
     seoDescription: 'Calculate your retirement savings with our free retirement calculator. Estimate your future nest egg, returns, and see if your goals are on track.',
     relatedIds: ['compound-interest', 'rule-of-72', 'roi-calculator'],
     sources: [
@@ -192,7 +212,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'TrendingUp',
     component: RuleOf72Calculator,
-    seoTitle: 'Rule of 72 Calculator | Investment Doubling Estimator',
+    seoTitle: 'Rule of 72 Calculator – Estimate Your Investment Doubling Time',
     seoDescription: 'Free Rule of 72 calculator. Quickly estimate how long it takes for your investment to double at a given annual interest rate.',
     relatedIds: ['compound-interest', 'retirement-savings', 'roi-calculator']
   },
@@ -203,7 +223,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'FileText',
     component: TaxCalculator,
-    seoTitle: 'Tax Liability Calculator - Estimate Your Taxes',
+    seoTitle: 'Tax Liability Calculator – Estimate Your Taxes & Income Tax Brackets',
     seoDescription: 'Estimate your total tax liability, effective tax rate, and marginal tax rate by entering your income and custom tax brackets.',
     relatedIds: ['salary-calculator', 'stamp-duty-uk', 'budget-planner']
   },
@@ -214,8 +234,22 @@ export const calculators: CalculatorMeta[] = [
     category: 'Business',
     icon: 'Briefcase',
     component: SalaryCalculator,
-    seoTitle: 'Salary Calculator & Hourly Pay Converter | Calculate Take-Home Pay',
+    seoTitle: 'Salary Calculator – Convert Hourly Pay to Annual Salary Online',
     seoDescription: 'Free salary calculator to seamlessly convert your wage between hourly, daily, weekly, monthly, and annual yearly income.',
+    variations: [
+      {
+        id: 'salary-calculator-uk',
+        title: 'Salary Calculator UK',
+        seoTitle: 'Salary Calculator UK – Take-Home Pay & Tax Estimator 2024/25',
+        seoDescription: 'Calculate your UK take-home pay for the 2024/25 tax year. Factor in Income Tax, National Insurance, and pension contributions.'
+      },
+      {
+        id: 'hourly-to-salary-calculator',
+        title: 'Hourly to Salary Calculator',
+        seoTitle: 'Hourly to Salary Calculator – Convert Your Hourly Wage to Yearly',
+        seoDescription: 'Instantly convert your hourly pay rate into a full-time annual salary. Account for holidays and working hours per week.'
+      }
+    ],
     relatedIds: ['budget-planner', 'tax-calculator', 'mortgage']
   },
   {
@@ -225,7 +259,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'Bitcoin',
     component: CryptoROICalculator,
-    seoTitle: 'Crypto ROI Calculator | Cryptocurrency Profit & Loss Estimator',
+    seoTitle: 'Crypto ROI Calculator – Calculate Cryptocurrency Profit & Loss Instantly',
     seoDescription: 'Calculate your cryptocurrency return on investment (ROI), total profit, and loss for Bitcoin, Ethereum, and other altcoins instantly.',
     relatedIds: ['roi-calculator', 'compound-interest', 'currency-converter']
   },
@@ -236,20 +270,20 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'TrendingUp',
     component: ROICalculator,
-    seoTitle: 'ROI Calculator | Return on Investment & Profit Estimator',
+    seoTitle: 'ROI Calculator – Return on Investment & Profit Estimator Online',
     seoDescription: 'Calculate your Return on Investment (ROI) easily. Supports total profit, percentage return, and annualized ROI for stocks, property, or business.',
     relatedIds: ['compound-interest', 'retirement-savings', 'crypto-roi'],
     variations: [
       {
         id: 'stock-profit-calculator',
         title: 'Stock Profit Calculator',
-        seoTitle: 'Stock Profit Calculator | Calculate Buy & Sell Returns',
+        seoTitle: 'Stock Profit Calculator – Calculate Trade Returns & ROI Instantly',
         seoDescription: 'Calculate your total profit and ROI from stock trades. Factor in buy price, sell price, and investment duration.'
       },
       {
         id: 'real-estate-roi-calculator',
         title: 'Real Estate ROI Calculator',
-        seoTitle: 'Real Estate ROI Calculator | Property Investment Returns',
+        seoTitle: 'Real Estate ROI Calculator – Estimate Property Investment Returns',
         seoDescription: 'Estimate the return on investment for your rental or flip property. See your annualized ROI and total capital gains.'
       }
     ]
@@ -261,8 +295,16 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'PoundSterling',
     component: StampDutyCalculator,
-    seoTitle: 'UK Stamp Duty Calculator | SDLT Property Tax Estimator & Guide',
+    seoTitle: 'UK Stamp Duty Calculator – SDLT Property Tax Estimator (2024/25)',
     seoDescription: 'Accurately calculate the Stamp Duty (SDLT) you\'ll pay on a property in England or NI. Latest 2024-2025 rates for first-time buyers, home movers, and buy-to-let.',
+    variations: [
+      {
+        id: 'stamp-duty-calculator-uk',
+        title: 'Stamp Duty Calculator UK',
+        seoTitle: 'Stamp Duty Calculator UK – Free Property Tax Estimator',
+        seoDescription: 'Calculate your UK Stamp Duty Land Tax (SDLT) instantly. Latest rates for 2024/25 for all buyer types.'
+      }
+    ],
     formulaMarkup: (
       <>
         SDLT = Σ (Amount in Bracket × Bracket Rate)
@@ -365,7 +407,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'Wallet',
     component: BudgetPlannerCalculator,
-    seoTitle: 'Monthly Budget Planner | Track Income, Expenses & Savings',
+    seoTitle: 'Monthly Budget Planner – Track Income, Expenses & Savings Online',
     seoDescription: 'Manage your finances with our free budget planner. Track monthly income and expenses across categories to see where your money goes.',
     formulaMarkup: (
       <>
@@ -443,7 +485,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Business',
     icon: 'PoundSterling',
     component: CurrencyConverter,
-    seoTitle: 'Currency Converter | Real-Time Exchange Rates',
+    seoTitle: 'Currency Converter – Live Exchange Rates & Global Conversions',
     seoDescription: 'Free currency converter. Convert between USD, EUR, GBP, JPY, and all other global currencies using live exchange rates.',
     explanation: (
       <>
@@ -470,128 +512,53 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'Home',
     component: MortgageCalculator,
-    seoTitle: 'Free Mortgage Calculator with Taxes, Insurance & Amortization',
+    seoTitle: 'Mortgage Calculator UK – Estimate Monthly Payments, Taxes & PMI',
     seoDescription: 'Accurately calculate your monthly mortgage payments, including property taxes, home insurance, and PMI. Generate instant amortization schedules and see total interest.',
-    relatedIds: ['car-loan', 'retirement-savings', 'compound-interest', 'salary-calculator'],
+    relatedIds: ['car-loan', 'retirement-savings', 'compound-interest', 'salary-calculator', 'stamp-duty-uk', 'rent-vs-buy'],
     variations: [
       {
         id: 'home-loan-repayment-calculator',
         title: 'Home Loan Repayment Calculator',
-        seoTitle: 'Home Loan Repayment Calculator | Monthly Payment Estimator',
+        seoTitle: 'Home Loan Repayment Calculator – Estimate Monthly Mortgage Payments',
         seoDescription: 'Calculate your exact monthly home loan repayments. See how interest rates affect your principal and interest split.'
       },
       {
-        id: 'mortgage-interest-calculator',
-        title: 'Mortgage Interest Calculator',
-        seoTitle: 'Mortgage Interest Calculator | Total Interest Paid Over Time',
-        seoDescription: 'Find out exactly how much interest you will pay the bank over the life of your mortgage. See the cost of borrowing.'
+        id: 'mortgage-calculator-uk',
+        title: 'Mortgage Calculator UK',
+        seoTitle: 'Mortgage Calculator UK – Estimate Monthly Payments & Stamp Duty',
+        seoDescription: 'Mortgage calculator specifically for the UK market. Estimate your monthly repayments, interest rates, and see related costs like UK Stamp Duty.'
       },
       {
-        id: 'pmi-calculator',
-        title: 'PMI Calculator',
-        seoTitle: 'PMI Calculator | Private Mortgage Insurance Estimator',
-        seoDescription: 'Calculate your Private Mortgage Insurance (PMI) based on your down payment percentage and loan amount.'
-      }
-    ],
-    formulaMarkup: (
-      <>
-        M = P [ i(1 + i)^n ] / [ (1 + i)^n - 1 ]
-        Where:
-        - M = Monthly Payment
-        - P = Principal Loan Amount
-        - i = Monthly Interest Rate (Annual Rate / 12)
-        - n = Total Number of Months (Term in Years × 12)
-      </>
-    ),
-    explanation: (
-      <>
-        <p>A mortgage calculator is essential for anyone looking to buy a home or refinance an existing mortgage. It takes the guesswork out of your monthly budgeting by calculating your Principal and Interest (P&I) based on the loan amount, interest rate, and term.</p>
-        <p>However, your actual monthly payment is often higher because it includes "Escrow" items: property taxes and homeowners insurance. Our calculator allows you to include these figures for a more realistic estimate of your total cost of ownership.</p>
-      </>
-    ),
-    workedExamples: [
-      {
-        title: "Standard 30-Year Fixed Mortgage",
-        content: (
-          <p>Buying a £300,000 home with a 20% down payment (£60,000):
-          <br/>• <strong>Loan Amount:</strong> £240,000
-          <br/>• <strong>Interest Rate:</strong> 6%
-          <br/>• <strong>Term:</strong> 30 Years
-          <br/><strong>Monthly P&I: £1,439</strong>
-          <br/>Total Interest Paid over 30 years: £277,987.</p>
-        )
+        id: 'mortgage-overpayment-calculator',
+        title: 'Mortgage Overpayment Calculator',
+        seoTitle: 'Mortgage Overpayment Calculator – See How Much You Can Save',
+        seoDescription: 'Calculate how much interest you can save and how much earlier you can pay off your mortgage by making regular or lump sum overpayments.'
       },
       {
-        title: "15-Year vs 30-Year Comparison",
-        content: (
-          <p>With a 15-year term, your monthly payments are higher, but you save significantly on interest:
-          <br/>• <strong>15y @ 5.5%:</strong> £1,960/mo (Total Interest: £112,800)
-          <br/>• <strong>30y @ 6.0%:</strong> £1,439/mo (Total Interest: £277,987)
-          <br/>Saving: £165,187 in interest by choosing the shorter term.</p>
-        )
-      }
-    ],
-    faq: [
-      {
-        question: "What is PMI (Private Mortgage Insurance)?",
-        answer: "If your down payment is less than 20% of the home's value, lenders usually require PMI to protect themselves in case you default. It typically costs between 0.5% and 1.5% of the loan amount annually."
+        id: 'buy-to-let-mortgage-calculator',
+        title: 'Buy to Let Mortgage Calculator',
+        seoTitle: 'Buy to Let Mortgage Calculator – Estimate Rental Yields & Returns',
+        seoDescription: 'Calculate monthly payments and rental yield for buy-to-let properties. Ideal for UK property investors and landlords.'
       },
       {
-        question: "How does my interest rate affect my total cost?",
-        answer: "Even a 1% difference in interest rate can cost you tens of thousands of pounds over 30 years. For example, on a £250k loan, a 7% rate costs ~£60k more in interest than a 6% rate."
+        id: 'mortgage-repayment-calculator',
+        title: 'Mortgage Repayment Calculator',
+        seoTitle: 'Mortgage Repayment Calculator – Detailed Payment Breakdowns',
+        seoDescription: 'Get a detailed breakdown of your mortgage repayments, including principal and interest projections over the life of the loan.'
+      },
+      {
+        id: 'mortgage-interest-only-calculator',
+        title: 'Interest-Only Mortgage Calculator',
+        seoTitle: 'Interest-Only Mortgage Calculator – Monthly Payment Estimator',
+        seoDescription: 'Calculate the monthly payments for an interest-only mortgage. See the difference between interest-only and repayment structures.'
+      },
+      {
+        id: 'mortgage-affordability-calculator',
+        title: 'Mortgage Affordability Calculator',
+        seoTitle: 'Mortgage Affordability Calculator – How Much Can I Borrow?',
+        seoDescription: 'Estimate how much you can afford to borrow for a mortgage based on your income and expenses.'
       }
     ],
-    longContent: (
-      <>
-        <h2>The Complete Guide to Mortgage Planning and Affordability</h2>
-        <p>For most people, a mortgage is the largest debt they will ever take on. Understanding the mechanics of how interest, principal, and terms interact is vital for long-term financial health. This guide will walk you through everything you need to know about calculating your mortgage and planning for homeownership.</p>
-
-        <h3>How a Mortgage Works: Principal vs. Interest</h3>
-        <p>In the early years of your mortgage, the majority of your monthly payment goes toward paying off the **interest**. As the loan progresses, a larger portion is applied to the **principal** (the actual amount you borrowed). This process is known as **Amortization**. Our tool generates an amortization schedule so you can see exactly how your balance decreases month by month.</p>
-
-        <h3>Fixed-Rate vs. Adjustable-Rate Mortgages (ARMs)</h3>
-        <ul>
-          <li><strong>Fixed-Rate:</strong> The interest rate stays the same for the entire life of the loan. This provides stability and makes it easier to budget long-term.</li>
-          <li><strong>Adjustable-Rate (ARM):</strong> The rate is fixed for an initial period (e.g., 5 years) and then adjusts periodically based on market indices. These often start with lower rates but carry the risk of significant increases later.</li>
-        </ul>
-
-        <h3>What Determines Your Interest Rate?</h3>
-        <p>Lenders look at several factors when deciding what rate to offer you:</p>
-        <ol>
-          <li><strong>Credit Score:</strong> Higher scores typically unlock lower interest rates.</li>
-          <li><strong>Down Payment:</strong> Putting down 20% or more shows the lender you have "skin in the game" and reduces their risk.</li>
-          <li><strong>Loan Term:</strong> Shorter terms (10-15 years) usually have lower rates than 30-year terms.</li>
-          <li><strong>Loan Type:</strong> Conventional, FHA, VA, and USDA loans all have different rate structures.</li>
-        </ol>
-
-        <h3>Budgeting for the "True Cost" of a Home</h3>
-        <p>The mortgage payment is just one piece of the puzzle. When using our mortgage calculator, don't forget to account for:</p>
-        <ul>
-          <li><strong>Property Taxes:</strong> Usually around 1-1.5% of the home's value per year, though this varies widely by location.</li>
-          <li><strong>Homeowners Insurance:</strong> Essential for protecting your investment and required by lenders.</li>
-          <li><strong>Maintenance (The 1% Rule):</strong> You should set aside ~1% of your home's value every year for repairs and maintenance.</li>
-          <li><strong>HOA Fees:</strong> If you're buying a condo or in a managed community, monthly Homeowners Association fees can add hundreds to your monthly cost.</li>
-        </ul>
-
-        <h3>How to Save Money on Your Mortgage</h3>
-        <ol>
-          <li><strong>Make Extra Payments:</strong> Even one extra payment a year can shave years off your mortgage and save thousands in interest.</li>
-          <li><strong>Refinance:</strong> If interest rates drop significantly, you can replace your high-rate loan with a lower-rate one.</li>
-          <li><strong>Recasting:</strong> If you come into a large sum of money, you can pay a lump sum toward the principal and ask the bank to "recast" (recalculate) your remaining payments.</li>
-        </ol>
-
-        <h3>Practical Steps for Potential Buyers</h3>
-        <p>Before you start house hunting, we recommend you:</p>
-        <ol>
-          <li>Check your credit report and fix any errors.</li>
-          <li>Save for a down payment (aim for 20% to avoid PMI).</li>
-          <li>Get "Pre-Approved" so sellers take your offers seriously.</li>
-          <li>Use our <strong>Stamp Duty Calculator</strong> to calculate the upfront tax costs.</li>
-          <li>Use our <strong>Rent vs Buy Calculator</strong> to ensure homeownership makes sense in your current stage of life.</li>
-        </ol>
-      </>
-    ),
-    relatedIds: ['stamp-duty-uk', 'rent-vs-buy', 'compound-interest'],
     sources: [
       { title: 'CFPB - Home Loan Toolkit', url: 'https://files.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf' },
       { title: 'Investopedia - Mortgage Basics', url: 'https://www.investopedia.com/terms/m/mortgage.asp' }
@@ -604,27 +571,47 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Activity',
     component: BMICalculator,
-    seoTitle: 'Body Mass Index (BMI) Calculator | Check Your Healthy Weight',
+    seoTitle: 'BMI Calculator UK – Check Your Body Mass Index Instantly',
     seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range for adult men and women based on height and weight.',
     relatedIds: ['body-fat-calculator', 'bmr-tdee', 'macro-calculator', 'protein-calculator'],
     variations: [
       {
         id: 'bmi-calculator-for-men',
         title: 'BMI Calculator for Men',
-        seoTitle: 'BMI Calculator for Men | Healthy weight for Men',
+        seoTitle: 'BMI Calculator for Men – Check Healthy Weight Range for Males',
         seoDescription: 'Calculate BMI for men. Find the healthy weight range and body mass index specific to adult males.'
       },
       {
         id: 'bmi-calculator-for-women',
         title: 'BMI Calculator for Women',
-        seoTitle: 'BMI Calculator for Women | Healthy weight for Women',
+        seoTitle: 'BMI Calculator for Women – Healthy Weight Range for Females',
         seoDescription: 'Calculate BMI for women. Understand body mass index categories and healthy weight ranges for adult females.'
+      },
+      {
+        id: 'bmi-by-age-calculator',
+        title: 'BMI by Age Calculator',
+        seoTitle: 'BMI by Age Calculator – Compare Your BMI to Your Age Group',
+        seoDescription: 'Calculate your BMI and see how it compares to standard healthy ranges for your specific age group. Professional BMI tracking tool.'
       },
       {
         id: 'body-mass-index-tool',
         title: 'Body Mass Index (BMI) Tool',
-        seoTitle: 'Body Mass Index Tool | Calculate Your BMI Online',
+        seoTitle: 'Body Mass Index (BMI) Tool – Check Your Weight Health Instantly',
         seoDescription: 'Use our universal body mass index tool to check your BMI category and weight health instantly.'
+      }
+    ],
+    faq: [
+      {
+        question: "What is a healthy BMI for adults?",
+        answer: "For most adults, a healthy BMI is between 18.5 and 24.9. A BMI of 25 to 29.9 is considered overweight, and 30 or above is considered obese."
+      },
+      {
+        question: "How accurate is the BMI calculation?",
+        answer: "BMI is a reliable indicator of body fatness for most people. However, it does not measure body fat directly and can be less accurate for athletes with high muscle mass or older adults with low muscle mass."
+      },
+      {
+        question: "Is BMI the same for men and women?",
+        answer: "The formula for BMI is the same for both men and women. However, men and women tend to have different body compositions, and the interpretation can sometimes be adjusted based on clinical factors."
       }
     ],
     sources: [
@@ -639,21 +626,33 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Flame',
     component: BMRCalculator,
-    seoTitle: 'BMR & TDEE Calculator | Calculate Daily Calorie & Energy Needs',
+    seoTitle: 'TDEE & BMR Calculator – Calculate Your Daily Maintenance Calories',
     seoDescription: 'Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE). Discover your exact daily calorie needs for weight loss, maintenance, or muscle gain.',
     relatedIds: ['macro-calculator', 'protein-calculator', 'bmi'],
     variations: [
       {
         id: 'tdee-calculator',
         title: 'TDEE Calculator',
-        seoTitle: 'TDEE Calculator | Total Daily Energy Expenditure',
+        seoTitle: 'TDEE Calculator – Calculate Total Daily Energy Expenditure Online',
         seoDescription: 'Calculate your TDEE (Total Daily Energy Expenditure). Know exactly how many calories you burn per day.'
       },
       {
         id: 'calorie-calculator',
         title: 'Calorie Calculator',
-        seoTitle: 'Daily Calorie Calculator | Weight Loss & Gain',
+        seoTitle: 'Daily Calorie Calculator – Weight Loss, Gain & Maintenance Tool',
         seoDescription: 'Free calorie calculator to estimate the number of calories you need to eat each day to maintain, lose, or gain weight.'
+      },
+      {
+        id: 'calorie-deficit-calculator',
+        title: 'Calorie Deficit Calculator',
+        seoTitle: 'Calorie Deficit Calculator – Calculate Calories for Weight Loss',
+        seoDescription: 'Find your ideal calorie deficit for sustainable weight loss. Calculate how many calories to eat daily to reach your goal weight.'
+      },
+      {
+        id: 'weight-loss-calorie-calculator',
+        title: 'Weight Loss Calorie Calculator',
+        seoTitle: 'Weight Loss Calorie Calculator – Track Your Metabolism & Goals',
+        seoDescription: 'Estimate the calories required to lose weight safely. Factor in your BMR and activity level for accurate results.'
       }
     ],
     sources: [
@@ -667,7 +666,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Droplets',
     component: WaterIntakeCalculator,
-    seoTitle: 'Water Intake Calculator | How Much Water Should I Drink?',
+    seoTitle: 'Water Intake Calculator – How Much Water Should You Drink Daily?',
     seoDescription: 'Calculate daily water intake. Find out exactly how many ounces or liters of water you should drink per day to stay hydrated based on weight and activity.',
     relatedIds: ['bmi', 'bmr-tdee', 'heart-rate-zones'],
     sources: [
@@ -681,7 +680,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'HeartPulse',
     component: HeartRateCalculator,
-    seoTitle: 'Target Heart Rate Zone Calculator | Fat Burning & Cardio',
+    seoTitle: 'Heart Rate Zone Calculator – Fat Burning & Cardio Training Zones',
     seoDescription: 'Calculate your target heart rate zones for maximum fat burning, cardio capacity, and optimal athletic training.',
     relatedIds: ['bmr-tdee', 'bmi', 'water-intake'],
     sources: [
@@ -695,7 +694,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Percent',
     component: BodyFatCalculator,
-    seoTitle: 'Body Fat Calculator - US Navy Method | Estimate Body Fat %',
+    seoTitle: 'Body Fat Calculator – US Navy Method Body Fat Percentage Estimator',
     seoDescription: 'Determine your body fat percentage, lean body mass, and fat mass using the highly accurate US Navy method. Free online body fat estimator.',
     relatedIds: ['bmi', 'bmr-tdee', 'macro-calculator'],
     sources: [
@@ -709,7 +708,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Syringe',
     component: PeptideCalculator,
-    seoTitle: 'Peptide Reconstitution & Dosage Calculator | AllTypesOfCalculators',
+    seoTitle: 'Peptide Calculator – Reconstitution & Dosage Scaling Tool',
     seoDescription: 'Free peptide calculator to determine how much bacteriostatic water to add and how many units to pull on an insulin syringe.',
     explanation: (
       <>
@@ -746,8 +745,28 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Dumbbell',
     component: ProteinCalculator,
-    seoTitle: 'Protein Calculator | Daily Protein Intake Recommendation',
+    seoTitle: 'Protein Calculator – Daily Protein Intake Needs for Muscle & Health',
     seoDescription: 'Free protein calculator to determine your minimum, recommended, and maximum daily protein intake based on your fitness goals.',
+    variations: [
+      {
+        id: 'protein-intake-calculator',
+        title: 'Protein Intake Calculator',
+        seoTitle: 'Protein Intake Calculator – Daily Muscle Growth Recommendations',
+        seoDescription: 'Calculate your ideal daily protein intake for muscle building, recovery, and overall health based on your body weight and activity.'
+      },
+      {
+        id: 'muscle-gain-protein-calculator',
+        title: 'Muscle Gain Protein Calculator',
+        seoTitle: 'Muscle Gain Protein Calculator – Optimize Your Bodybuilding Diet',
+        seoDescription: 'Determine exactly how much protein you need per day to maximize muscle hypertrophy and strength gains.'
+      },
+      {
+        id: 'weight-loss-protein-calculator',
+        title: 'Weight Loss Protein Calculator',
+        seoTitle: 'Protein Intake for Weight Loss – Maintain Muscle While Cutting',
+        seoDescription: 'Calculate the optimal protein intake to protect your muscle mass while losing fat in a calorie deficit.'
+      }
+    ],
     explanation: (
       <>
         <p>Protein is an essential macronutrient needed for building and repairing tissues, making enzymes and hormones, and supporting overall health.</p>
@@ -778,7 +797,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'PieChart',
     component: MacroCalculator,
-    seoTitle: 'Macro Calculator | Fast Track Your Diet & Nutrition',
+    seoTitle: 'Macro Calculator – Determine Your Ideal Macro Split for Weight Loss',
     seoDescription: 'Determine your ideal daily macronutrient split—protein, carbs, and fat—for weight loss, muscle gain, or maintenance. Free macro diet planner.',
     relatedIds: ['protein-calculator', 'bmr-tdee', 'bmi'],
     sources: [
@@ -792,7 +811,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Maths',
     icon: 'Calculator',
     component: ScientificCalculator,
-    seoTitle: 'Online Scientific Calculator | Advanced Math Functions',
+    seoTitle: 'Scientific Calculator – Free Online Advanced Math Functions Tool',
     seoDescription: 'Free online scientific calculator. Perform advanced mathematical operations, trigonometry, logarithms, fractions, and exponential algebra easily.',
     relatedIds: ['fraction-calculator', 'percentage-calculator', 'statistics-calculator']
   },
@@ -803,7 +822,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Conversions',
     icon: 'Scale',
     component: UnitConverter,
-    seoTitle: 'Universal Unit Converter | Length, Weight, Volume & More',
+    seoTitle: 'Unit Converter – Fast & Free Measurement Conversion Tool',
     seoDescription: 'Fast, free universal unit converter. Instantly convert measurements for length, weight, volume, temperature, and area.',
     relatedIds: ['date-time', 'scientific-calculator', 'recipe-scaler']
   },
@@ -814,7 +833,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Conversions',
     icon: 'Calendar',
     component: DateTimeCalculator,
-    seoTitle: 'Date & Time Calculator | Add/Subtract Days & Find Duration',
+    seoTitle: 'Date & Time Calculator – Calculate Duration Between Two Dates',
     seoDescription: 'Easily calculate the duration between two dates, find business days, or add/subtract days, weeks, and months to a calendar date.',
     relatedIds: ['unit-converter', 'pet-age-calculator', 'zodiac-calculator']
   },
@@ -825,7 +844,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Maths',
     icon: 'BarChart',
     component: StatisticsCalculator,
-    seoTitle: 'Statistics Calculator | Mean, Median, Mode & Standard Deviation',
+    seoTitle: 'Statistics Calculator – Mean, Median, Mode & Standard Deviation Tool',
     seoDescription: 'Free statistics calculator to compute the mean, median, mode, variance, range, and standard deviation for any data set.',
     relatedIds: ['z-score-calculator', 'probability-calculator', 'scientific-calculator']
   },
@@ -836,7 +855,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Maths',
     icon: 'Dices',
     component: ProbabilityCalculator,
-    seoTitle: 'Probability Calculator | AllTypesOfCalculators',
+    seoTitle: 'Probability Calculator – Calculate Odds & Event Probabilities',
     seoDescription: 'Calculate the odds and probability of events.',
     relatedIds: ['statistics-calculator', 'z-score-calculator', 'scientific-calculator']
   },
@@ -847,26 +866,26 @@ export const calculators: CalculatorMeta[] = [
     category: 'Maths',
     icon: 'Percent',
     component: PercentageCalculator,
-    seoTitle: 'Percentage Calculator | Percent Increase & Decrease Tool',
+    seoTitle: 'Percentage Calculator – Percentage Increase, Decrease & Percent of X',
     seoDescription: 'Free online percentage calculator. Find what X% of Y is, calculate percent increases or decreases, and solve everyday math tasks effortlessly.',
     relatedIds: ['fraction-calculator', 'scientific-calculator', 'tip-calculator'],
     variations: [
       {
         id: 'percentage-increase-calculator',
         title: 'Percentage Increase Calculator',
-        seoTitle: 'Percentage Increase Calculator | Percent Growth Tool',
+        seoTitle: 'Percentage Increase Calculator – Calculate Growth & Inflation Rate',
         seoDescription: 'Calculate the percentage increase between two values. Perfect for calculating growth, inflation, or price hikes.'
       },
       {
         id: 'percentage-decrease-calculator',
         title: 'Percentage Decrease Calculator',
-        seoTitle: 'Percentage Decrease Calculator | Percent Drop Tool',
+        seoTitle: 'Percentage Decrease Calculator – Calculate Discounts & Price Drops',
         seoDescription: 'Calculate the percentage decrease or discount between two numbers. Ideal for sales and price drops.'
       },
       {
         id: 'percent-of-number-calculator',
         title: 'Percent of Number Calculator',
-        seoTitle: 'Percent of Number Calculator | Online Math Tool',
+        seoTitle: 'Percent of Number Calculator – Simple Online Math Tool',
         seoDescription: 'Quickly find what X percent of Y is. Simple, fast online percentage of calculations.'
       }
     ]
@@ -878,7 +897,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Maths',
     icon: 'BarChart',
     component: ZScoreCalculator,
-    seoTitle: 'Z-Score & Standard Deviation Calculator | Statistics Tools',
+    seoTitle: 'Z-Score Calculator – Standard Deviation & Normal Distribution Tool',
     seoDescription: 'Fast, free Z-score and standard deviation calculator for statistics students. Calculate your z-score from a raw value, mean, and standard deviation.',
     relatedIds: ['statistics-calculator', 'probability-calculator', 'scientific-calculator']
   },
@@ -889,7 +908,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Maths',
     icon: 'Divide',
     component: FractionCalculator,
-    seoTitle: 'Fraction Calculator - Simplify & Calculate Fractions | AllTypesOfCalculators',
+    seoTitle: 'Fraction Calculator – Add, Subtract, Multiply & Divide Fractions',
     seoDescription: 'Free online fraction calculator to add, subtract, multiply, and divide fractions.',
     relatedIds: ['percentage-calculator', 'scientific-calculator', 'recipe-scaler']
   },
@@ -900,7 +919,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Fuel',
     component: FuelCostCalculator,
-    seoTitle: 'Fuel Cost \& Gas Trip Calculator | Plan Your Road Trip Expenses',
+    seoTitle: 'Fuel Cost Calculator – Plan Your Road Trip & Gas Expenses',
     seoDescription: 'Accurately estimate the total gas cost for your next road trip, commute, or travel plan based on vehicle MPG and current fuel prices.',
     relatedIds: ['car-loan', 'rent-vs-buy', 'budget-planner']
   },
@@ -911,7 +930,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Home',
     component: RentVsBuyCalculator,
-    seoTitle: 'Rent vs Buy Calculator | Real Estate & Housing Decision Model',
+    seoTitle: 'Rent vs Buy Calculator – Financial Decision Tool for Homeowners',
     seoDescription: 'Unsure whether to rent or buy a home? Compare the long-term financial impact, ROI, mortgage costs, and rent appreciation to find the best choice.',
     relatedIds: ['mortgage', 'stamp-duty-uk', 'budget-planner']
   },
@@ -922,7 +941,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'GraduationCap',
     component: GPACalculator,
-    seoTitle: 'GPA Calculator | High School & College Grade Planner',
+    seoTitle: 'GPA Calculator – High School & College Grade Point Average Tool',
     seoDescription: 'Calculate your semester and cumulative Grade Point Average (GPA). A free tool for high school and college students to track academic progress.',
     relatedIds: ['reading-time', 'statistics-calculator', 'fraction-calculator']
   },
@@ -933,7 +952,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Key',
     component: PasswordGenerator,
-    seoTitle: 'Secure Password Generator | AllTypesOfCalculators',
+    seoTitle: 'Secure Password Generator – Create Strong Random Passwords',
     seoDescription: 'Create strong, random passwords instantly.',
     relatedIds: ['ai-image-generator', 'reading-time', 'pet-age-calculator']
   },
@@ -944,7 +963,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'ChefHat',
     component: RecipeScaler,
-    seoTitle: 'Recipe Ingredient Scaler | AllTypesOfCalculators',
+    seoTitle: 'Recipe Scaler – Scale Ingredient Measurements for Any Serving Size',
     seoDescription: 'Scale your recipes for any number of servings.',
     relatedIds: ['unit-converter', 'fraction-calculator', 'tip-calculator']
   },
@@ -955,7 +974,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Users',
     component: TipCalculator,
-    seoTitle: 'Tip Calculator & Bill Splitter | AllTypesOfCalculators',
+    seoTitle: 'Tip Calculator – Split Bill & Calculate Restaurant Gratuity',
     seoDescription: 'Easily calculate tips and split restaurant bills among multiple people.',
     relatedIds: ['split-bill-calculator', 'percentage-calculator', 'fuel-cost']
   },
@@ -966,7 +985,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Heart',
     component: LoveCalculator,
-    seoTitle: 'Love Calculator & Compatibility Test | AllTypesOfCalculators',
+    seoTitle: 'Love Calculator – Test Your Name Compatibility (For Fun!)',
     seoDescription: 'Test your love compatibility with our fun name calculator.',
     relatedIds: ['zodiac-calculator', 'sleep-cycle', 'pet-age-calculator']
   },
@@ -977,7 +996,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Moon',
     component: SleepCycleCalculator,
-    seoTitle: 'Sleep Cycle Calculator | Wake Up Refreshed & Energized',
+    seoTitle: 'Sleep Cycle Calculator – Wake Up Feeling Refreshed & Energized',
     seoDescription: 'Find your perfect bedtime and wake-up time based on 90-minute REM sleep cycles. Stop waking up groggy with our free sleep cycle planner.',
     relatedIds: ['heart-rate-zones', 'water-intake', 'carbon-footprint']
   },
@@ -988,7 +1007,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Leaf',
     component: CarbonFootprintCalculator,
-    seoTitle: 'Carbon Footprint Calculator | AllTypesOfCalculators',
+    seoTitle: 'Carbon Footprint Calculator – Estimate Your Personal CO2 Emissions',
     seoDescription: 'Calculate your personal carbon footprint.',
     relatedIds: ['fuel-cost', 'water-intake', 'bmr-tdee']
   },
@@ -999,7 +1018,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'BookOpen',
     component: ReadingTimeCalculator,
-    seoTitle: 'Reading Time Calculator | AllTypesOfCalculators',
+    seoTitle: 'Reading Time Calculator – Find Out How Long It Takes To Read Any Text',
     seoDescription: 'Find out how long it takes to read any text.',
     relatedIds: ['gpa-calculator', 'password-generator', 'zodiac-calculator']
   },
@@ -1010,7 +1029,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'AI & SEO',
     icon: 'Image',
     component: ImageGenerator,
-    seoTitle: 'Free AI Image Generator | AllTypesOfCalculators',
+    seoTitle: 'Free AI Image Generator – Create 4K Images from Text Prompts',
     seoDescription: 'Generate beautiful high-resolution images from text using advanced AI.',
     relatedIds: ['password-generator', 'reading-time', 'zodiac-calculator']
   },
@@ -1021,7 +1040,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Baby',
     component: PetAgeCalculator,
-    seoTitle: 'Dog & Cat Age Calculator - Pet Years to Human Years',
+    seoTitle: 'Pet Age Calculator – Convert Dog & Cat Years to Human Years',
     seoDescription: 'Accurately calculate your dog or cat\'s age in human years based on their size and age.',
     relatedIds: ['love-calculator', 'zodiac-calculator', 'reading-time']
   },
@@ -1032,7 +1051,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'PoundSterling',
     component: SplitBillCalculator,
-    seoTitle: 'Split Bill Calculator - Divide Receipts Fairly',
+    seoTitle: 'Split Bill Calculator – Divide Shared Expenses & Receipts Fairly',
     seoDescription: 'Easily split the check and calculate proportional tax and tip for everyone at the table.',
     relatedIds: ['tip-calculator', 'percentage-calculator']
   },
@@ -1043,7 +1062,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Everyday life',
     icon: 'Moon',
     component: ZodiacCalculator,
-    seoTitle: 'Astrology & Zodiac Sign Calculator - Sun, Moon, Rising',
+    seoTitle: 'Zodiac Sign Calculator – Find Your Sun, Moon & Rising Signs',
     seoDescription: 'Calculate your Sun, Moon, and Rising astrology signs and Chinese Zodiac based on your birthday and time.',
     relatedIds: ['love-calculator', 'pet-age-calculator', 'date-time']
   },
@@ -1054,7 +1073,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'PaintRoller',
     component: PaintCalculator,
-    seoTitle: 'Paint Calculator - Estimate Paint Gallons Needed | AllTypesOfCalculators',
+    seoTitle: 'Paint Calculator – Estimate Gallons of Paint Needed for Your Room',
     seoDescription: 'Free paint calculator to estimate how many gallons of paint you need for your walls and rooms.',
     relatedIds: ['wallpaper-calculator', 'flooring-calculator', 'tile-calculator']
   },
@@ -1065,7 +1084,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'Grid',
     component: FlooringCalculator,
-    seoTitle: 'Flooring Calculator - Estimate Tile, Laminate & Carpet | AllTypesOfCalculators',
+    seoTitle: 'Flooring Calculator – Estimate Square Footage, Tile & Laminate',
     seoDescription: 'Calculate the square footage and number of boxes needed for your flooring project.',
     relatedIds: ['tile-calculator', 'paint-calculator', 'concrete-calculator']
   },
@@ -1076,7 +1095,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'HardHat',
     component: ConcreteCalculator,
-    seoTitle: 'Concrete Calculator - Yards & Bags Estimator | AllTypesOfCalculators',
+    seoTitle: 'Concrete Calculator – Cubic Yards & Bags Estimator for Slabs',
     seoDescription: 'Calculate how many cubic yards or bags of concrete you need for your construction project.',
     relatedIds: ['mulch-calculator', 'flooring-calculator', 'tile-calculator']
   },
@@ -1087,7 +1106,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'ThermometerSun',
     component: HVACCalculator,
-    seoTitle: 'HVAC BTU Calculator - AC & Heater Sizing | AllTypesOfCalculators',
+    seoTitle: 'HVAC BTU Calculator – Air Conditioner & Heater Sizing Estimator',
     seoDescription: 'Calculate the required BTUs and AC tonnage needed to cool or heat your room.',
     relatedIds: ['roofing-calculator', 'drywall-calculator', 'concrete-calculator']
   },
@@ -1098,7 +1117,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'Grid',
     component: TileCalculator,
-    seoTitle: 'Tile Calculator - Estimate Tiles & Grout | AllTypesOfCalculators',
+    seoTitle: 'Tile Calculator – Estimate Tiles, Boxes & Grout for Any Area',
     seoDescription: 'Calculate exactly how many tiles, boxes, and grout you need for your tiling project.',
     explanation: (
       <>
@@ -1131,7 +1150,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'Layers',
     component: WallpaperCalculator,
-    seoTitle: 'Wallpaper Calculator - Estimate Rolls Needed | AllTypesOfCalculators',
+    seoTitle: 'Wallpaper Calculator – Estimate Rolls Needed for Your Walls',
     seoDescription: 'Calculate exactly how many rolls of wallpaper you need for your home improvement project.',
     relatedIds: ['paint-calculator', 'tile-calculator', 'flooring-calculator']
   },
@@ -1142,7 +1161,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'Leaf',
     component: MulchCalculator,
-    seoTitle: 'Mulch & Landscaping Calculator - Estimate Bags and Yards',
+    seoTitle: 'Mulch & Landscaping Calculator – Estimate Bags & Yards for Your Yard',
     seoDescription: 'Calculate exactly how much mulch, soil, or gravel you need in cubic yards and bags.',
     relatedIds: ['concrete-calculator', 'roofing-calculator', 'paint-calculator']
   },
@@ -1153,7 +1172,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'Home',
     component: RoofingCalculator,
-    seoTitle: 'Roofing Calculator - Estimate Squares and Shingles',
+    seoTitle: 'Roofing Calculator – Estimate Roof Squares & Shingles Needed',
     seoDescription: 'Calculate roofing squares and bundles of shingles needed for your roof based on footprint and pitch.',
     relatedIds: ['drywall-calculator', 'concrete-calculator', 'hvac-btu-calculator']
   },
@@ -1164,7 +1183,7 @@ export const calculators: CalculatorMeta[] = [
     category: 'Construction',
     icon: 'Maximize',
     component: DrywallCalculator,
-    seoTitle: 'Drywall Calculator - Estimate Sheets Needed',
+    seoTitle: 'Drywall Calculator – Calculate Sheets Needed for Walls & Ceilings',
     seoDescription: 'Calculate how many sheets of drywall you need for a room including deductions for doors and windows.',
     relatedIds: ['flooring-calculator', 'tile-calculator', 'paint-calculator']
   }

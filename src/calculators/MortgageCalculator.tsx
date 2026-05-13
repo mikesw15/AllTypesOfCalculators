@@ -8,6 +8,7 @@ import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
 import { useCalculatorState } from '../hooks/useCalculatorState';
+import SaveProfile from '../components/calculator/SaveProfile';
 
 export default function MortgageCalculator() {
   const { saveToHistory } = useHistory();
@@ -116,7 +117,9 @@ export default function MortgageCalculator() {
           onChange={setHomePrice}
           icon={Home}
           prefix={currency.symbol}
-          min={0}
+          min={50000}
+          max={2000000}
+          step={1000}
         />
         
         <div className="grid grid-cols-2 gap-6">
@@ -128,6 +131,7 @@ export default function MortgageCalculator() {
             prefix={currency.symbol}
             min={0}
             max={homePrice}
+            step={1000}
           />
           <CalculatorInput
             label="Down Payment (%)"
@@ -161,7 +165,8 @@ export default function MortgageCalculator() {
             icon={Percent}
             suffix="%"
             step={0.1}
-            min={0}
+            min={0.1}
+            max={15}
           />
         </div>
 
@@ -262,6 +267,13 @@ export default function MortgageCalculator() {
             />
           )}
         </div>
+
+        <SaveProfile 
+          calculatorId="mortgage"
+          calculatorTitle="Mortgage Calculator"
+          inputs={{ homePrice, downPayment, loanTerm, interestRate, isARM, armInitialPeriod, armExpectedRate }}
+          results={{ monthlyPayment: results.totalMonthlyPayment }}
+        />
 
         <div className="bg-white rounded-2xl border-2 border-gray-100 p-8 shadow-sm">
           <div className="flex items-center justify-between mb-8">

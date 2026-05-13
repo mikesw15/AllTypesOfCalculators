@@ -104,7 +104,7 @@ export default function BlogPost() {
 
         {post.image && (
           <div className="rounded-3xl overflow-hidden mb-12 shadow-2xl shadow-blue-100">
-            <img src={post.image} alt={post.title} className="w-full h-auto" />
+            <img src={post.image} alt={post.title} className="w-full h-auto" loading="lazy" />
           </div>
         )}
 

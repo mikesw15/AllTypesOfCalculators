@@ -16,6 +16,9 @@ import About from './pages/About';
 import Admin from './pages/Admin';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import SearchPage from './pages/SearchPage';
+import HistoryPage from './pages/HistoryPage';
+import ComparisonsPage from './pages/ComparisonsPage';
 import ScrollToTop from './components/ScrollToTop';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -58,6 +61,9 @@ function AppRoutes() {
         <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
         <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
         <Route path="/blog/:slug" element={<AnimatedPage><BlogPost /></AnimatedPage>} />
+        <Route path="/search" element={<AnimatedPage><SearchPage /></AnimatedPage>} />
+        <Route path="/history" element={<AnimatedPage><HistoryPage /></AnimatedPage>} />
+        <Route path="/comparisons" element={<AnimatedPage><ComparisonsPage /></AnimatedPage>} />
         <Route 
           path="/admin" 
           element={

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, Zap } from 'lucide-react';
+import { Search, X, Zap, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { calculators } from '../calculators';
 
@@ -78,32 +78,48 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         <div className="max-h-[60vh] overflow-y-auto">
           {query ? (
             filteredCalculators.length > 0 ? (
-              <ul className="py-2">
-                {filteredCalculators.map((calc, index) => (
-                  <li key={calc.id}>
+              <div className="py-2">
+                <ul className="mb-2">
+                  {filteredCalculators.slice(0, 8).map((calc, index) => (
+                    <li key={calc.id}>
+                      <button
+                        className={`w-full text-left px-6 py-3 flex items-center gap-4 ${
+                          index === selectedIndex ? 'bg-blue-50' : 'hover:bg-gray-50'
+                        }`}
+                        onMouseEnter={() => setSelectedIndex(index)}
+                        onClick={() => {
+                          navigate(`/${calc.id}-calculator`);
+                          onClose();
+                        }}
+                      >
+                        <div className={`p-2 rounded-lg ${index === selectedIndex ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                          <Zap className={`w-5 h-5 ${index === selectedIndex ? 'text-blue-600' : 'text-gray-500'}`} />
+                        </div>
+                        <div>
+                          <div className={`font-semibold ${index === selectedIndex ? 'text-blue-900' : 'text-gray-900'}`}>
+                            {calc.title}
+                          </div>
+                          <div className="text-sm text-gray-500 line-clamp-1">{calc.description}</div>
+                        </div>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                {filteredCalculators.length > 8 && (
+                  <div className="px-6 pb-4">
                     <button
-                      className={`w-full text-left px-6 py-3 flex items-center gap-4 ${
-                        index === selectedIndex ? 'bg-blue-50' : 'hover:bg-gray-50'
-                      }`}
-                      onMouseEnter={() => setSelectedIndex(index)}
                       onClick={() => {
-                        navigate(`/${calc.id}-calculator`);
+                        navigate(`/search?q=${encodeURIComponent(query)}`);
                         onClose();
                       }}
+                      className="w-full py-3 bg-gray-50 text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
                     >
-                      <div className={`p-2 rounded-lg ${index === selectedIndex ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                        <Zap className={`w-5 h-5 ${index === selectedIndex ? 'text-blue-600' : 'text-gray-500'}`} />
-                      </div>
-                      <div>
-                        <div className={`font-semibold ${index === selectedIndex ? 'text-blue-900' : 'text-gray-900'}`}>
-                          {calc.title}
-                        </div>
-                        <div className="text-sm text-gray-500 line-clamp-1">{calc.description}</div>
-                      </div>
+                      See all {filteredCalculators.length} results
+                      <ArrowRight className="w-4 h-4" />
                     </button>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="px-6 py-12 text-center text-gray-500">
                 No calculators found for "{query}"

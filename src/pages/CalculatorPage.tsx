@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCalculatorById, calculators } from '../calculators';
-import { calculatorExplanations } from '../calculators/explanations';
+import { calculatorExplanations, calculatorComparisons } from '../calculators/explanations';
 import CalculatorLayout from '../components/CalculatorLayout';
 import SEO from '../components/SEO';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { useRecentCalculators } from '../hooks/useRecentCalculators';
 
 export default function CalculatorPage() {
@@ -40,7 +41,9 @@ export default function CalculatorPage() {
   const displayTitle = variation?.title || calculator.title;
   const seoTitle = variation?.seoTitle || calculator.seoTitle || calculator.title;
   const seoDescription = variation?.seoDescription || calculator.seoDescription || calculator.description;
-  const canonicalUrl = `https://alltypesofcalculators.com/${id}-calculator`; // Use 'id' from params which is the slug used to reach this page
+  const canonicalUrl = id?.endsWith('-calculator') 
+    ? `https://alltypesofcalculators.com/${id}`
+    : `https://alltypesofcalculators.com/${id}-calculator`;
 
   const Component = calculator.component;
 
@@ -196,8 +199,16 @@ export default function CalculatorPage() {
         explanation={calculator.explanation || calculatorExplanations[calculator.id] || defaultExplanation}
         faq={calculator.faq}
         relatedCalculators={relatedCalculators}
+        comparison={calculatorComparisons[calculator.id]}
       >
-        <Component />
+        <Suspense fallback={
+          <div className="bg-gray-50 dark:bg-gray-900 p-12 rounded-2xl flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-200 dark:border-gray-700">
+            <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4" />
+            <p className="text-gray-500 font-medium">Loading your calculator...</p>
+          </div>
+        }>
+          <Component />
+        </Suspense>
       </CalculatorLayout>
     </>
   );

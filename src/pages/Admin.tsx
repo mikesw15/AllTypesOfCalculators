@@ -153,7 +153,7 @@ export default function Admin() {
       const querySnapshot = await getDocs(q);
       const duplicate = querySnapshot.docs.find(d => d.id !== currentPost.id);
       if (duplicate) {
-        errors.slug = 'This slug is already in use';
+        errors.slug = 'This slug is already being used by another post. Please choose a unique slug.';
       }
     }
 
@@ -188,7 +188,7 @@ export default function Admin() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!currentPost || !user) return;
+    if (!currentPost || !user || isCheckingSlug || slugStatus === 'unavailable') return;
 
     const isValid = await validateForm();
     if (!isValid) return;
@@ -488,10 +488,11 @@ export default function Admin() {
             <div className="flex gap-4 pt-4 border-t-2 border-gray-50">
               <button
                 type="submit"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-200"
+                disabled={loading || isCheckingSlug || slugStatus === 'unavailable' || Object.keys(validationErrors).length > 0}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:shadow-none text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-200"
               >
                 <Save className="w-5 h-5" />
-                Save Post
+                {loading ? 'Saving...' : 'Save Post'}
               </button>
               <button
                 type="button"

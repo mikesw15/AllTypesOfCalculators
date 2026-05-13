@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCalculatorsByCategory } from '../calculators';
-import { PoundSterling, Heart, FlaskConical, Coffee, Hammer, Flame, Calculator } from 'lucide-react';
+import { PoundSterling, Heart, FlaskConical, Coffee, Hammer, Flame, Calculator, ArrowRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import CalculatorCard from '../components/CalculatorCard';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { CategorySEO } from '../data/categorySeo';
+import { Category } from '../types';
 
 const getCategoryIcon = (categoryName: string) => {
   switch (categoryName) {
@@ -61,39 +64,55 @@ export default function Categories() {
         structuredData={schemaData}
       />
       
-      <div className="flex items-center justify-between mb-12">
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+      <Breadcrumbs />
+
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-black text-gray-900 mb-4">
             {activeCategory ? `${activeCategory} Calculators` : 'All Categories'}
           </h1>
-          <p className="text-xl text-gray-600">
-            {activeCategory 
-              ? `Specialized tools for your ${activeCategory.toLowerCase()} calculations.` 
-              : 'Browse our complete collection of calculators.'
-            }
+          <p className="text-xl text-gray-600 leading-relaxed">
+            {activeCategory && CategorySEO[activeCategory as Category] 
+              ? CategorySEO[activeCategory as Category].description
+              : "Discover our comprehensive range of free online tools. From high-level finance to daily wellness, we have the right calculator for every problem."}
           </p>
         </div>
         {categorySlug && (
-          <Link to="/categories" className="text-blue-600 font-medium hover:underline">
-            &larr; Back to all categories
+          <Link to="/categories" className="text-blue-600 font-bold hover:text-blue-700 whitespace-nowrap flex items-center gap-1">
+            &larr; All categories
           </Link>
         )}
       </div>
 
-      <div className="space-y-16">
+      <div className="space-y-20">
         {filteredGroups.length > 0 ? (
           filteredGroups.map(([category, calcs]) => (
-            <div key={category} id={category.toLowerCase().split(' ')[0]}>
-              <div className="flex items-center mb-6 pb-2 border-b border-gray-200">
-                {getCategoryIcon(category)}
-                <h2 className="text-2xl font-bold text-gray-900">{category}</h2>
+            <section key={category} id={category.toLowerCase().split(' ')[0]} className="scroll-mt-24">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 pb-6 border-b border-gray-100">
+                <div className="max-w-2xl">
+                  <div className="flex items-center mb-3">
+                    {getCategoryIcon(category)}
+                    <h2 className="text-3xl font-extrabold text-gray-900">{category}</h2>
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">
+                    {CategorySEO[category as Category]?.longDescription}
+                  </p>
+                </div>
+                {!categorySlug && (
+                  <Link 
+                    to={`/categories/${category.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="text-blue-600 font-bold hover:text-blue-700 flex items-center gap-1 group transition-colors"
+                  >
+                    View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                )}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {calcs.map(calc => (
                   <CalculatorCard key={calc.id} calc={calc} />
                 ))}
               </div>
-            </div>
+            </section>
           ))
         ) : (
           <div className="text-center py-20 bg-gray-50 rounded-2xl border border-gray-200">

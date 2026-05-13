@@ -100,7 +100,7 @@ export default function Home() {
     <div>
       <SEO 
         title="All Types of Calculators | Fast, Accurate & Free Online Tools"
-        description="Free online calculators for finance, health, math, and everyday life. Get instant results for Mortgage, BMI, Currency, and more with our 50+ free online tools."
+        description="Free online calculators for finance, health, maths, mortgages, investments, BMI, loans and more. Fast, accurate and easy to use."
         keywords={['all types of calculators', 'free calculators', 'online calculator', 'finance calculator', 'math calculator', 'health calculator', 'tools', 'conversion']}
         canonical="https://alltypesofcalculators.com"
         structuredData={schemaData}

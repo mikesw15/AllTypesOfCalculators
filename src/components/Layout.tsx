@@ -93,7 +93,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex items-center gap-4">
                   <Link to="/account" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     {user.photoURL ? (
-                      <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full" referrerPolicy="no-referrer" />
+                      <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full" referrerPolicy="no-referrer" loading="lazy" />
                     ) : (
                       <User className={`w-5 h-5 ${isDark ? 'text-gray-400' : 'text-gray-600'}`} />
                     )}
@@ -144,6 +144,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Link to="/" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Home</Link>
             <Link to="/categories" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Categories</Link>
             <Link to="/blog" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>Blog</Link>
+            <Link to="/history" className={`block px-3 py-2 rounded-md text-base font-medium ${isDark ? 'text-gray-300 hover:text-white hover:bg-gray-800' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'}`}>History</Link>
             {isAdmin && (
               <Link to="/admin" className={`block px-3 py-2 rounded-md text-base font-black text-blue-600 ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-50'}`}>Admin Panel</Link>
             )}
@@ -166,7 +167,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <footer className={`${isDark ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-t mt-auto`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div className="col-span-1 md:col-span-2">
               <Link to="/" className="flex items-center gap-2 mb-4">
                 <Calculator className="h-6 w-6 text-blue-600" />
@@ -188,8 +189,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </ul>
             </div>
             <div>
+              <h3 className={`font-semibold ${isDark ? 'text-gray-200' : 'text-gray-900'} mb-4`}>Resources</h3>
+              <ul className={`space-y-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <li><Link to="/blog" className="hover:text-blue-600">Blog</Link></li>
+                <li><Link to="/comparisons" className="hover:text-blue-600">Comparisons</Link></li>
+                <li><Link to="/search" className="hover:text-blue-600">Search</Link></li>
+              </ul>
+            </div>
+            <div>
               <h3 className={`font-semibold ${isDark ? 'text-gray-200' : 'text-gray-900'} mb-4`}>Legal</h3>
               <ul className={`space-y-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <li><Link to="/history" className="hover:text-blue-600">History</Link></li>
                 <li><Link to="/about" className="hover:text-blue-600">About Us</Link></li>
                 <li><Link to="/privacy" className="hover:text-blue-600">Privacy Policy</Link></li>
                 <li><Link to="/terms" className="hover:text-blue-600">Terms of Service</Link></li>

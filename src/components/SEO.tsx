@@ -14,7 +14,7 @@ interface SEOProps {
 
 export default function SEO({
   title = 'All Types of Calculators | Fast, Accurate & Free Online Tools',
-  description = 'Your comprehensive toolkit of 50+ free online calculators for Finance, Health, Math, Home Improvement, and Everyday Life. Get instant, accurate results for Mortgage, BMI, Taxes, Loans, and much more.',
+  description = 'Free online calculators for finance, health, maths, mortgages, investments, BMI, loans and more. Fast, accurate and easy to use.',
   canonical,
   ogType = 'website',
   ogImage = 'https://picsum.photos/seed/calculator/1200/630',
@@ -37,6 +37,7 @@ export default function SEO({
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
+      <meta property="og:url" content={canonical || window.location.href} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
@@ -44,10 +45,12 @@ export default function SEO({
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={canonical || window.location.href} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
       {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
+      {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
 
       {/* Structured Data */}
       {structuredData && (

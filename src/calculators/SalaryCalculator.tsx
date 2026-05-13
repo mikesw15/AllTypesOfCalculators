@@ -5,6 +5,7 @@ import { Banknote, Clock, Calendar, Wallet } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorResult from '../components/calculator/CalculatorResult';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
+import SaveProfile from '../components/calculator/SaveProfile';
 
 export default function SalaryCalculator() {
   const { currency, formatCurrency } = useCurrency();
@@ -63,18 +64,20 @@ export default function SalaryCalculator() {
           icon={Banknote}
           prefix={currency.symbol}
           min={0}
+          max={frequency === 'hourly' ? 500 : 500000}
+          step={frequency === 'hourly' ? 1 : 1000}
         />
         
         <div className="grid grid-cols-2 gap-6">
           <div className="w-full">
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
               <Calendar className="w-4 h-4 text-blue-500" />
               Frequency
             </label>
             <select 
               value={frequency} 
               onChange={(e) => setFrequency(e.target.value as any)}
-              className="w-full bg-white border-2 border-gray-100 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 font-medium"
+              className="w-full bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-xl py-3 px-4 transition-all outline-none hover:border-gray-200 dark:hover:border-gray-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 text-gray-900 dark:text-white font-medium"
             >
               <option value="hourly">Hourly</option>
               <option value="weekly">Weekly</option>
@@ -89,26 +92,33 @@ export default function SalaryCalculator() {
             icon={Clock}
             suffix="hrs"
             min={1}
-            max={168}
+            max={80}
           />
         </div>
 
-        <div className="bg-blue-50 rounded-2xl p-8 border-2 border-blue-100">
+        <SaveProfile 
+          calculatorId="salary"
+          calculatorTitle="Salary Calculator"
+          inputs={{ amount, frequency, hoursPerWeek }}
+          results={{ yearly: results.yearly, takeHome: results.takeHome }}
+        />
+
+        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-8 border-2 border-blue-100 dark:border-blue-800">
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-blue-100 rounded-xl">
-              <Wallet className="w-6 h-6 text-blue-600" />
+            <div className="p-3 bg-blue-100 dark:bg-blue-800 rounded-xl">
+              <Wallet className="w-6 h-6 text-blue-600 dark:text-blue-300" />
             </div>
             <div>
-              <h4 className="font-bold text-blue-900 mb-2">Take-Home Estimate</h4>
-              <p className="text-sm text-blue-700 mb-4">Rough estimation based on standard tax brackets.</p>
+              <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-2">Take-Home Estimate</h4>
+              <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">Rough estimation based on standard tax brackets.</p>
               <div className="grid grid-cols-2 gap-x-12 gap-y-4 text-sm">
                 <div>
-                  <p className="text-blue-600 font-medium mb-1">Yearly Take-Home</p>
-                  <p className="text-xl font-bold text-blue-900">{formatCurrency(results.takeHome)}</p>
+                  <p className="text-blue-600 dark:text-blue-400 font-medium mb-1">Yearly Take-Home</p>
+                  <p className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(results.takeHome)}</p>
                 </div>
                 <div>
-                  <p className="text-blue-600 font-medium mb-1">Estimated Taxes</p>
-                  <p className="text-xl font-bold text-red-600">{formatCurrency(results.estimatedTaxes)}</p>
+                  <p className="text-blue-600 dark:text-blue-400 font-medium mb-1">Estimated Taxes</p>
+                  <p className="text-xl font-bold text-red-600 dark:text-red-400">{formatCurrency(results.estimatedTaxes)}</p>
                 </div>
               </div>
             </div>

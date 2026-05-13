@@ -86,6 +86,7 @@ export default function Blog() {
                   <img 
                     src={post.image} 
                     alt={post.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (

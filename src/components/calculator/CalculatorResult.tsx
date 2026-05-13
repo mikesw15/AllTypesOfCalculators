@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Share2 } from 'lucide-react';
+import { Share2, Copy, Check } from 'lucide-react';
 import ShareModal from '../ShareModal';
 
 interface CalculatorResultProps {
@@ -21,6 +21,7 @@ export default function CalculatorResult({
   icon
 }: CalculatorResultProps) {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const colorClasses = {
     blue: 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-500/20',
@@ -48,6 +49,16 @@ export default function CalculatorResult({
 
   const resultText = `I calculated my ${label}: ${value} ${subValue || ''}${description ? `\n\n${description}` : ''}`;
   
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(`${value}${subValue ? ` ${subValue}` : ''}`);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   // Use document.title or fallback
   const pageTitle = document.title.split(' | ')[0] || 'Calculator Result';
 
@@ -58,13 +69,22 @@ export default function CalculatorResult({
         animate={{ opacity: 1, y: 0 }}
         className={`p-8 rounded-2xl border flex flex-col items-center justify-center text-center relative max-w-full ${colorClasses[color]}`}
       >
-        <button 
-          onClick={() => setIsShareModalOpen(true)}
-          className={`absolute top-4 right-4 p-2 rounded-full transition-colors flex items-center justify-center ${btnColorClasses[color]}`}
-          title="Share Result"
-        >
-          <Share2 className="w-4 h-4" />
-        </button>
+        <div className="absolute top-4 right-4 flex gap-2">
+          <button 
+            onClick={handleCopy}
+            className={`p-2 rounded-full transition-colors flex items-center justify-center ${btnColorClasses[color]}`}
+            title="Copy Result"
+          >
+            {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          </button>
+          <button 
+            onClick={() => setIsShareModalOpen(true)}
+            className={`p-2 rounded-full transition-colors flex items-center justify-center ${btnColorClasses[color]}`}
+            title="Share Result"
+          >
+            <Share2 className="w-4 h-4" />
+          </button>
+        </div>
 
         <p className="text-xs font-bold uppercase tracking-widest mb-4 opacity-70">{label}</p>
         
