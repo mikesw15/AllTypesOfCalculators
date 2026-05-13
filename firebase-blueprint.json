@@ -81,6 +81,24 @@
         "updatedAt": { "type": "timestamp" }
       },
       "required": ["title", "slug", "content", "authorId", "createdAt", "updatedAt"]
+    },
+    "PeptideProtocol": {
+      "title": "Peptide Protocol",
+      "description": "A saved peptide reconstitution and dosage protocol",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "peptideName": { "type": "string" },
+        "peptideAmount": { "type": "number" },
+        "waterAdded": { "type": "number" },
+        "desiredDose": { "type": "number" },
+        "syringeType": { "type": "string" },
+        "mode": { "type": "string" },
+        "results": { "type": "object" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["userId", "name", "peptideName", "peptideAmount", "createdAt"]
     }
   },
   "firestore": {
@@ -107,6 +125,10 @@
     "/users/{userId}/saved_passwords/{passwordId}": {
       "schema": { "$ref": "#/entities/SavedPassword" },
       "description": "User's saved passwords"
+    },
+    "/users/{userId}/peptide_protocols/{protocolId}": {
+      "schema": { "$ref": "#/entities/PeptideProtocol" },
+      "description": "User's saved peptide protocols"
     }
   }
 }

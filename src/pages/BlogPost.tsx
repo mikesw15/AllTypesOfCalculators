@@ -113,6 +113,28 @@ export default function BlogPost() {
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
+        {/* Author Bio Section */}
+        <section className="mt-16 p-8 bg-gray-50 rounded-3xl border border-gray-100">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+              <User className="w-10 h-10" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">About the Author: {post.authorName}</h3>
+              <p className="text-gray-600 leading-relaxed italic">
+                {post.authorName === 'Sarah Jenkins' && "Sarah Jenkins is a Certified Financial Planner (CFP®) with over 12 years of experience in wealth management and financial education. She specializes in making complex financial concepts accessible to everyone."}
+                {post.authorName === 'Dr. Marcus Chen' && "Dr. Marcus Chen, M.D., is a public health consultant and medical researcher. He reviews our health and wellness content to ensure it aligns with current clinical guidelines and scientific data."}
+                {post.authorName === 'Alex Rivera' && "Alex Rivera is the Lead Software Engineer at AllTypesOfCalculators. He has a passion for building high-performance algorithms and ensuring that every calculation on our platform is technically flawless."}
+                {!['Sarah Jenkins', 'Dr. Marcus Chen', 'Alex Rivera'].includes(post.authorName) && `Expert contributor at AllTypesOfCalculators, specializing in building accurate tools and educational content for our users.`}
+              </p>
+              <div className="mt-4 flex gap-4">
+                <Link to="/about" className="text-blue-600 font-bold text-sm hover:underline">View Editorial Team</Link>
+                <Link to="/testing-methodology" className="text-blue-600 font-bold text-sm hover:underline">Our Review Process</Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <footer className="mt-16 pt-12 border-t-2 border-gray-50 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex gap-4">
              <button className="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-2xl font-bold transition-all">

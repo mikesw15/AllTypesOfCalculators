@@ -1,5 +1,6 @@
 import React from 'react';
-import { Shield, Calculator, Heart, Code } from 'lucide-react';
+import { Shield, Calculator, Heart, Code, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
 export default function About() {
@@ -70,9 +71,16 @@ export default function About() {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Commitment to Accuracy</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
                 We know that making decisions about your money, health, and home requires trust. That's why every calculator we publish undergoes rigorous testing. We cite official sources where applicable, display the formulas we use under the "How it works" tabs, and constantly update our logic based on new guidelines and tax laws.
               </p>
+              <Link 
+                to="/testing-methodology" 
+                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:underline"
+              >
+                Learn more about our review process
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>

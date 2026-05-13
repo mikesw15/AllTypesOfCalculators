@@ -11,427 +11,442 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/conception</loc>
+    <loc>https://alltypesofcalculators.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://alltypesofcalculators.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://alltypesofcalculators.com/testing-methodology</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://alltypesofcalculators.com/conception-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/ovulation</loc>
+    <loc>https://alltypesofcalculators.com/ovulation-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/pregnancy-weight</loc>
+    <loc>https://alltypesofcalculators.com/pregnancy-weight-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/car-loan</loc>
+    <loc>https://alltypesofcalculators.com/car-loan-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/compound-interest</loc>
+    <loc>https://alltypesofcalculators.com/compound-interest-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/compound-interest-calculator-monthly</loc>
+    <loc>https://alltypesofcalculators.com/compound-interest-calculator-monthly</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/yearly-compound-interest-calculator</loc>
+    <loc>https://alltypesofcalculators.com/yearly-compound-interest-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/daily-interest-calculator</loc>
+    <loc>https://alltypesofcalculators.com/daily-interest-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/savings-growth-calculator</loc>
+    <loc>https://alltypesofcalculators.com/savings-growth-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/investment-growth-calculator</loc>
+    <loc>https://alltypesofcalculators.com/investment-growth-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/retirement-savings</loc>
+    <loc>https://alltypesofcalculators.com/retirement-savings-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/rule-of-72</loc>
+    <loc>https://alltypesofcalculators.com/rule-of-72-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/tax-calculator</loc>
+    <loc>https://alltypesofcalculators.com/tax-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/salary-calculator</loc>
+    <loc>https://alltypesofcalculators.com/salary-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/salary-calculator-uk</loc>
+    <loc>https://alltypesofcalculators.com/salary-calculator-uk</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/hourly-to-salary-calculator</loc>
+    <loc>https://alltypesofcalculators.com/hourly-to-salary-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/crypto-roi</loc>
+    <loc>https://alltypesofcalculators.com/crypto-roi-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/roi-calculator</loc>
+    <loc>https://alltypesofcalculators.com/roi-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/stock-profit-calculator</loc>
+    <loc>https://alltypesofcalculators.com/stock-profit-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/real-estate-roi-calculator</loc>
+    <loc>https://alltypesofcalculators.com/real-estate-roi-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/stamp-duty-uk</loc>
+    <loc>https://alltypesofcalculators.com/stamp-duty-uk-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/stamp-duty-calculator-uk</loc>
+    <loc>https://alltypesofcalculators.com/stamp-duty-calculator-uk</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/budget-planner</loc>
+    <loc>https://alltypesofcalculators.com/budget-planner-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/currency-converter</loc>
+    <loc>https://alltypesofcalculators.com/currency-converter-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mortgage</loc>
+    <loc>https://alltypesofcalculators.com/mortgage-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/home-loan-repayment-calculator</loc>
+    <loc>https://alltypesofcalculators.com/home-loan-repayment-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mortgage-calculator-uk</loc>
+    <loc>https://alltypesofcalculators.com/mortgage-calculator-uk</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mortgage-overpayment-calculator</loc>
+    <loc>https://alltypesofcalculators.com/mortgage-overpayment-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/buy-to-let-mortgage-calculator</loc>
+    <loc>https://alltypesofcalculators.com/buy-to-let-mortgage-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mortgage-repayment-calculator</loc>
+    <loc>https://alltypesofcalculators.com/mortgage-repayment-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mortgage-interest-only-calculator</loc>
+    <loc>https://alltypesofcalculators.com/mortgage-interest-only-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mortgage-affordability-calculator</loc>
+    <loc>https://alltypesofcalculators.com/mortgage-affordability-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/bmi</loc>
+    <loc>https://alltypesofcalculators.com/bmi-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/bmi-calculator-for-men</loc>
+    <loc>https://alltypesofcalculators.com/bmi-calculator-for-men</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/bmi-calculator-for-women</loc>
+    <loc>https://alltypesofcalculators.com/bmi-calculator-for-women</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/bmi-by-age-calculator</loc>
+    <loc>https://alltypesofcalculators.com/bmi-by-age-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/body-mass-index-tool</loc>
+    <loc>https://alltypesofcalculators.com/body-mass-index-tool-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/bmr-tdee</loc>
+    <loc>https://alltypesofcalculators.com/bmr-tdee-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/tdee-calculator</loc>
+    <loc>https://alltypesofcalculators.com/tdee-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/calorie-calculator</loc>
+    <loc>https://alltypesofcalculators.com/calorie-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/calorie-deficit-calculator</loc>
+    <loc>https://alltypesofcalculators.com/calorie-deficit-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/weight-loss-calorie-calculator</loc>
+    <loc>https://alltypesofcalculators.com/weight-loss-calorie-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/water-intake</loc>
+    <loc>https://alltypesofcalculators.com/water-intake-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/heart-rate-zones</loc>
+    <loc>https://alltypesofcalculators.com/heart-rate-zones-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/body-fat-calculator</loc>
+    <loc>https://alltypesofcalculators.com/body-fat-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/peptide-calculator</loc>
+    <loc>https://alltypesofcalculators.com/peptide-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/protein-calculator</loc>
+    <loc>https://alltypesofcalculators.com/protein-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/protein-intake-calculator</loc>
+    <loc>https://alltypesofcalculators.com/protein-intake-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/muscle-gain-protein-calculator</loc>
+    <loc>https://alltypesofcalculators.com/muscle-gain-protein-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/weight-loss-protein-calculator</loc>
+    <loc>https://alltypesofcalculators.com/weight-loss-protein-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/macro-calculator</loc>
+    <loc>https://alltypesofcalculators.com/macro-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/scientific-calculator</loc>
+    <loc>https://alltypesofcalculators.com/scientific-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/unit-converter</loc>
+    <loc>https://alltypesofcalculators.com/unit-converter-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/date-time</loc>
+    <loc>https://alltypesofcalculators.com/date-time-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/statistics-calculator</loc>
+    <loc>https://alltypesofcalculators.com/statistics-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/probability-calculator</loc>
+    <loc>https://alltypesofcalculators.com/probability-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/percentage-calculator</loc>
+    <loc>https://alltypesofcalculators.com/percentage-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/percentage-increase-calculator</loc>
+    <loc>https://alltypesofcalculators.com/percentage-increase-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/percentage-decrease-calculator</loc>
+    <loc>https://alltypesofcalculators.com/percentage-decrease-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/percent-of-number-calculator</loc>
+    <loc>https://alltypesofcalculators.com/percent-of-number-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/z-score-calculator</loc>
+    <loc>https://alltypesofcalculators.com/z-score-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/fraction-calculator</loc>
+    <loc>https://alltypesofcalculators.com/fraction-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/fuel-cost</loc>
+    <loc>https://alltypesofcalculators.com/fuel-cost-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/rent-vs-buy</loc>
+    <loc>https://alltypesofcalculators.com/rent-vs-buy-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/gpa-calculator</loc>
+    <loc>https://alltypesofcalculators.com/gpa-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/password-generator</loc>
+    <loc>https://alltypesofcalculators.com/password-generator-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/recipe-scaler</loc>
+    <loc>https://alltypesofcalculators.com/recipe-scaler-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/tip-calculator</loc>
+    <loc>https://alltypesofcalculators.com/tip-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/love-calculator</loc>
+    <loc>https://alltypesofcalculators.com/love-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/sleep-cycle</loc>
+    <loc>https://alltypesofcalculators.com/sleep-cycle-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/carbon-footprint</loc>
+    <loc>https://alltypesofcalculators.com/carbon-footprint-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/reading-time</loc>
+    <loc>https://alltypesofcalculators.com/reading-time-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/ai-image-generator</loc>
+    <loc>https://alltypesofcalculators.com/ai-image-generator-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/pet-age-calculator</loc>
+    <loc>https://alltypesofcalculators.com/pet-age-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/split-bill-calculator</loc>
+    <loc>https://alltypesofcalculators.com/split-bill-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/zodiac-calculator</loc>
+    <loc>https://alltypesofcalculators.com/zodiac-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/paint-calculator</loc>
+    <loc>https://alltypesofcalculators.com/paint-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/flooring-calculator</loc>
+    <loc>https://alltypesofcalculators.com/flooring-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/concrete-calculator</loc>
+    <loc>https://alltypesofcalculators.com/concrete-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/hvac-btu-calculator</loc>
+    <loc>https://alltypesofcalculators.com/hvac-btu-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/tile-calculator</loc>
+    <loc>https://alltypesofcalculators.com/tile-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/wallpaper-calculator</loc>
+    <loc>https://alltypesofcalculators.com/wallpaper-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/mulch-calculator</loc>
+    <loc>https://alltypesofcalculators.com/mulch-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/roofing-calculator</loc>
+    <loc>https://alltypesofcalculators.com/roofing-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://alltypesofcalculators.com/calculators/drywall-calculator</loc>
+    <loc>https://alltypesofcalculators.com/drywall-calculator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

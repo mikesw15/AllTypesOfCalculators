@@ -38,6 +38,8 @@ export default function Categories() {
     ? `${baseUrl}/categories/${categorySlug}`
     : `${baseUrl}/categories`;
 
+  const hasParams = window.location.search.length > 0;
+
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -62,6 +64,7 @@ export default function Categories() {
         }
         canonical={canonical}
         structuredData={schemaData}
+        noindex={hasParams}
       />
       
       <Breadcrumbs />

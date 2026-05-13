@@ -66,6 +66,7 @@ export default function Login() {
       <SEO 
         title={isLogin ? "Sign In | AllTypesOfCalculators" : "Create Account | AllTypesOfCalculators"} 
         description="Sign in to your account to sync your favorites and calculation history across devices." 
+        noindex={true}
       />
       
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">

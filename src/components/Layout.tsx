@@ -199,8 +199,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className={`font-semibold ${isDark ? 'text-gray-200' : 'text-gray-900'} mb-4`}>Legal</h3>
               <ul className={`space-y-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                <li><Link to="/history" className="hover:text-blue-600">History</Link></li>
                 <li><Link to="/about" className="hover:text-blue-600">About Us</Link></li>
+                <li><Link to="/testing-methodology" className="hover:text-blue-600">How We Test</Link></li>
                 <li><Link to="/privacy" className="hover:text-blue-600">Privacy Policy</Link></li>
                 <li><Link to="/terms" className="hover:text-blue-600">Terms of Service</Link></li>
                 <li><Link to="/contact" className="hover:text-blue-600">Contact</Link></li>

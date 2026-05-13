@@ -10,6 +10,7 @@ interface SEOProps {
   twitterHandle?: string;
   structuredData?: object;
   keywords?: string[];
+  noindex?: boolean;
 }
 
 export default function SEO({
@@ -20,7 +21,8 @@ export default function SEO({
   ogImage = 'https://picsum.photos/seed/calculator/1200/630',
   twitterHandle = '@calculators',
   structuredData,
-  keywords = ['calculator', 'online calculator', 'free calculator tools']
+  keywords = ['calculator', 'online calculator', 'free calculator tools'],
+  noindex = false
 }: SEOProps) {
   const siteName = 'AllTypesOfCalculators';
   const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
@@ -34,6 +36,7 @@ export default function SEO({
         <meta name="keywords" content={keywords.join(', ')} />
       )}
       {canonical && <link rel="canonical" href={canonical} />}
+      {noindex && <meta name="robots" content="noindex, follow" />}
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />

@@ -36,6 +36,7 @@ export default function SearchPage() {
       <SEO 
         title={`Search results for "${query || 'Calculators'}" – AllTypesOfCalculators`}
         description={`Find the best online calculators for ${query || 'your needs'}. Browse our collection of ${calculators.length} free tools.`}
+        noindex={true}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

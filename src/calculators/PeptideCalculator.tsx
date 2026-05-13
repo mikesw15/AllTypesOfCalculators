@@ -1,8 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Syringe, Info, RefreshCw, Save, Check } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Syringe, Info, RefreshCw, Save, Check, User, Loader2 } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
 import { useHistory } from '../contexts/HistoryContext';
+import { useAuth } from '../contexts/AuthContext';
+import { db, auth, OperationType, handleFirestoreError } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const PEPTIDE_PRESETS = [
   { name: 'Custom / Not Listed', vialMg: 5, doseMcg: 250 },
@@ -30,6 +34,8 @@ const PEPTIDE_PRESETS = [
 
 export default function PeptideCalculator() {
   const { saveToHistory } = useHistory();
+  const { user } = useAuth();
+  const location = useLocation();
   const [mode, setMode] = useState<'units' | 'water' | 'dosage'>('units');
   
   // Inputs
@@ -44,6 +50,29 @@ export default function PeptideCalculator() {
   
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  
+  // Protocol Saving States
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [protocolName, setProtocolName] = useState('');
+  const [isSavingProtocol, setIsSavingProtocol] = useState(false);
+  const [protocolSaveSuccess, setProtocolSaveSuccess] = useState(false);
+
+  // Load protocol from navigation state if present
+  useEffect(() => {
+    if (location.state?.protocol) {
+      const p = location.state.protocol;
+      setMode(p.mode || 'units');
+      setSelectedPeptide(p.peptideName);
+      setPeptideAmount(p.peptideAmount);
+      setWaterAdded(p.waterAdded);
+      setDesiredDose(p.desiredDose);
+      setSyringeType(p.syringeType || 'U100-1');
+      if (p.results?.units && p.mode === 'water') {
+        setDesiredUnits(p.results.units);
+      }
+      setProtocolName(p.name);
+    }
+  }, [location.state]);
 
   // Parse syringe type
   const { maxVolume, unitsPerMl } = useMemo(() => {
@@ -87,6 +116,12 @@ export default function PeptideCalculator() {
 
   const fillPercentage = results ? Math.min(100, Math.max(0, (results.units / maxUnits) * 100)) : 0;
 
+  useEffect(() => {
+    if (results && protocolName === '') {
+      setProtocolName(`${selectedPeptide === 'Custom / Not Listed' ? 'My' : selectedPeptide} Protocol`);
+    }
+  }, [results, selectedPeptide]);
+
   const handleSave = async () => {
     if (!results) return;
     setIsSaving(true);
@@ -99,6 +134,42 @@ export default function PeptideCalculator() {
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 2000);
     setIsSaving(false);
+  };
+
+  const handleSaveProtocol = async () => {
+    if (!user || !results) return;
+    
+    setIsSavingProtocol(true);
+    try {
+      const path = `users/${user.uid}/peptide_protocols`;
+      await addDoc(collection(db, path), {
+        userId: user.uid,
+        name: protocolName || 'Unnamed Protocol',
+        peptideName: selectedPeptide,
+        peptideAmount,
+        waterAdded: results.waterRequired,
+        desiredDose,
+        syringeType,
+        mode,
+        results: {
+          units: results.units,
+          concentration: results.concentration,
+          totalDoses: results.totalDoses,
+          volume: results.volume
+        },
+        createdAt: serverTimestamp()
+      });
+      
+      setProtocolSaveSuccess(true);
+      setTimeout(() => {
+        setProtocolSaveSuccess(false);
+        setShowSaveModal(false);
+      }, 2000);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.CREATE, `users/${user.uid}/peptide_protocols`);
+    } finally {
+      setIsSavingProtocol(false);
+    }
   };
 
   const handleReset = () => {
@@ -211,28 +282,100 @@ export default function PeptideCalculator() {
           )}
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-4">
+            <button 
+              onClick={handleReset}
+              className="flex-1 py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+            >
+              <RefreshCw className="w-5 h-5" />
+              Reset
+            </button>
+            <button 
+              onClick={handleSave}
+              disabled={!results || isSaving || saveSuccess}
+              className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
+                saveSuccess 
+                  ? 'bg-green-500 text-white' 
+                  : 'bg-gray-800 text-white hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'
+              }`}
+            >
+              {saveSuccess ? <Check className="w-5 h-5" /> : <Save className="w-5 h-5" />}
+              {saveSuccess ? 'History Saved' : 'Save to History'}
+            </button>
+          </div>
+          
           <button 
-            onClick={handleReset}
-            className="flex-1 py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+            onClick={() => user ? setShowSaveModal(true) : alert('Please sign in to save protocols to your profile.')}
+            disabled={!results}
+            className="w-full py-4 px-6 bg-blue-600 text-white rounded-xl font-black text-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-200"
           >
-            <RefreshCw className="w-5 h-5" />
-            Reset
-          </button>
-          <button 
-            onClick={handleSave}
-            disabled={!results || isSaving || saveSuccess}
-            className={`flex-1 py-3 px-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
-              saveSuccess 
-                ? 'bg-green-500 text-white' 
-                : 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed'
-            }`}
-          >
-            {saveSuccess ? <Check className="w-5 h-5" /> : <Save className="w-5 h-5" />}
-            {saveSuccess ? 'Saved!' : 'Save Protocol'}
+            <User className="w-6 h-6" />
+            Save Protocol to My Profile
           </button>
         </div>
       </div>
+
+      {/* Save Modal */}
+      {showSaveModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-300">
+            <h3 className="text-2xl font-black text-gray-900 mb-2">Save Protocol</h3>
+            <p className="text-gray-500 mb-6 font-medium">Give this protocol a name so you can easily identify it in your profile.</p>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Protocol Name</label>
+                <input 
+                  type="text" 
+                  value={protocolName}
+                  onChange={(e) => setProtocolName(e.target.value)}
+                  placeholder="e.g., Morning BPC-157 cycle"
+                  className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-4 px-4 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50 transition-all font-bold text-gray-900"
+                  autoFocus
+                />
+              </div>
+
+              <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2">Summary</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-bold text-gray-700">{selectedPeptide} ({peptideAmount}mg)</p>
+                  <p className="text-sm font-medium text-gray-500">Dose: {desiredDose}mcg → {results?.units.toFixed(1)} Units</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-4 pt-4">
+                <button 
+                  onClick={() => setShowSaveModal(false)}
+                  className="flex-1 py-4 px-6 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleSaveProtocol}
+                  disabled={isSavingProtocol || protocolSaveSuccess}
+                  className={`flex-1 py-4 px-6 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
+                    protocolSaveSuccess 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50'
+                  }`}
+                >
+                  {isSavingProtocol ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : protocolSaveSuccess ? (
+                    <>
+                      <Check className="w-5 h-5" />
+                      Saved!
+                    </>
+                  ) : (
+                    'Confirm Save'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="xl:col-span-7 space-y-6">
         {mode === 'water' && results && (

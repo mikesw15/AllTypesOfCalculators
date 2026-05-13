@@ -13,6 +13,10 @@ import Favorites from './pages/Favorites';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import About from './pages/About';
+import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Terms from './pages/Terms';
+import TestingMethodology from './pages/TestingMethodology';
 import Admin from './pages/Admin';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
@@ -59,6 +63,10 @@ function AppRoutes() {
         <Route path="/categories/:category" element={<AnimatedPage><Categories /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
         <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
+        <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
+        <Route path="/privacy" element={<AnimatedPage><PrivacyPolicy /></AnimatedPage>} />
+        <Route path="/terms" element={<AnimatedPage><Terms /></AnimatedPage>} />
+        <Route path="/testing-methodology" element={<AnimatedPage><TestingMethodology /></AnimatedPage>} />
         <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
         <Route path="/blog/:slug" element={<AnimatedPage><BlogPost /></AnimatedPage>} />
         <Route path="/search" element={<AnimatedPage><SearchPage /></AnimatedPage>} />

@@ -21,6 +21,7 @@ export default function HistoryPage() {
       <SEO 
         title="Calculation History – AllTypesOfCalculators"
         description="View your recently used calculators and tools. Keep track of your calculations."
+        noindex={true}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

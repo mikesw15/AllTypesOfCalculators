@@ -69,6 +69,17 @@ const MulchCalculator = lazy(() => import('./MulchCalculator'));
 const RoofingCalculator = lazy(() => import('./RoofingCalculator'));
 const DrywallCalculator = lazy(() => import('./DrywallCalculator'));
 
+import { 
+  bmiLongContent, bmiFaqs, 
+  compoundInterestLongContent, compoundInterestFaqs,
+  salaryLongContent, salaryFaqs,
+  stampDutyLongContent, stampDutyFaqs,
+  carLoanLongContent, carLoanFaqs,
+  bmrTdeeLongContent, bmrTdeeFaqs,
+  macroLongContent, macroFaqs,
+  mortgageLongContent, mortgageFaqs
+} from './calculatorContent';
+
 export const calculators: CalculatorMeta[] = [
   {
     id: 'conception',
@@ -120,6 +131,23 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'Car',
     component: CarLoanCalculator,
+    quickDefinition: 'A car loan calculator determines the monthly payment for an auto loan based on the vehicle price, down payment, interest rate, and loan term.',
+    longContent: carLoanLongContent,
+    faq: carLoanFaqs,
+    formulaVariables: [
+      { symbol: 'P', meaning: 'Monthly payment' },
+      { symbol: 'PV', meaning: 'Present value (Loan amount)' },
+      { symbol: 'r', meaning: 'Monthly interest rate' },
+      { symbol: 'n', meaning: 'Total number of payments (months)' }
+    ],
+    tableData: {
+      headers: ['Loan Term', 'Monthly Payment ($25k Loan)', 'Total Interest Paid'],
+      rows: [
+        ['36 Months (3yr)', '$761', '$2,389'],
+        ['60 Months (5yr)', '$483', '$3,981'],
+        ['72 Months (6yr)', '$414', '$4,845']
+      ]
+    },
     seoTitle: 'Car Loan Calculator – Estimate Your Monthly Auto Loan Payments Online',
     seoDescription: 'Free car loan calculator to estimate your monthly auto loan payments, total interest paid, and the total cost of your vehicle over time.',
     relatedIds: ['mortgage', 'compound-interest', 'salary-calculator'],
@@ -134,29 +162,29 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'TrendingUp',
     component: CompoundInterestCalculator,
+    quickDefinition: 'Compound interest is the interest on a loan or deposit calculated based on both the initial principal and the accumulated interest from previous periods.',
+    longContent: compoundInterestLongContent,
+    faq: compoundInterestFaqs,
+    formulaVariables: [
+      { symbol: 'A', meaning: 'Final amount (future value)' },
+      { symbol: 'P', meaning: 'Principal amount (initial investment)' },
+      { symbol: 'r', meaning: 'Annual interest rate (decimal)' },
+      { symbol: 'n', meaning: 'Number of times interest is compounded per year' },
+      { symbol: 't', meaning: 'Time the money is invested for (years)' }
+    ],
+    tableData: {
+      headers: ['Year', 'Principal', 'Interest Earned', 'Final Balance'],
+      rows: [
+        ['Year 1', '$1,000.00', '$50.00', '$1,050.00'],
+        ['Year 2', '$1,050.00', '$52.50', '$1,102.50'],
+        ['Year 3', '$1,102.50', '$55.13', '$1,157.63']
+      ]
+    },
     seoTitle: 'Compound Interest Calculator – Predict Your Investment Growth Instantly',
     seoDescription: 'Free compound interest calculator. Discover how your investments, savings, and returns will grow over time with the power of compounding.',
     relatedIds: ['retirement-savings', 'rule-of-72', 'roi-calculator', 'budget-planner'],
     sources: [
       { title: 'SEC - Fast Answers: Compound Interest', url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/compound-interest' }
-    ],
-    faq: [
-      {
-        question: "How do you calculate compound interest manually?",
-        answer: "To calculate compound interest manually, use the formula A = P(1 + r/n)^(nt). Where A is the future value, P is the principal, r is the annual interest rate, n is the compounding frequency, and t is the time in years."
-      },
-      {
-        question: "What is the difference between daily and monthly compounding?",
-        answer: "The more frequent the compounding, the more interest you earn. Daily compounding adds interest to your balance every day, so you earn interest on that interest the very next day. Monthly compounding only does this once a month. Over many years, daily compounding results in a higher final balance."
-      },
-      {
-        question: "Why is compound interest called 'the eighth wonder of the world'?",
-        answer: "Often attributed to Albert Einstein, this quote highlights the power of compounding. Over long periods, the exponential growth of interest-on-interest can turn small, regular savings into significant wealth."
-      },
-      {
-        question: "How does the 'Rule of 72' relate to compound interest?",
-        answer: "The Rule of 72 is a quick way to estimate how long it will take for your money to double with compound interest. Simply divide 72 by your annual interest rate (e.g., 72 / 6% = 12 years)."
-      }
     ],
     variations: [
       {
@@ -234,6 +262,25 @@ export const calculators: CalculatorMeta[] = [
     category: 'Business',
     icon: 'Briefcase',
     component: SalaryCalculator,
+    quickDefinition: 'A salary calculator converts an annual salary to its equivalent values across various time periods, such as hourly, weekly, or monthly, based on standard working hours.',
+    longContent: salaryLongContent,
+    faq: salaryFaqs,
+    formulaVariables: [
+      { symbol: 'Annual', meaning: 'Total gross yearly income' },
+      { symbol: 'Hourly', meaning: 'Wage per hour worked' },
+      { symbol: 'Weekly', meaning: 'Wage per 40-hour week (standard)' },
+      { symbol: 'Monthly', meaning: 'Annual salary divided by 12' }
+    ],
+    tableData: {
+      headers: ['Period', 'Calculation', 'Value Example ($50k)'],
+      rows: [
+        ['Yearly', 'Base Amount', '$50,000'],
+        ['Monthly', 'Annual / 12', '$4,166.67'],
+        ['Weekly', 'Annual / 52', '$961.54'],
+        ['Daily', 'Weekly / 5', '$192.31'],
+        ['Hourly', 'Daily / 8', '$24.04']
+      ]
+    },
     seoTitle: 'Salary Calculator – Convert Hourly Pay to Annual Salary Online',
     seoDescription: 'Free salary calculator to seamlessly convert your wage between hourly, daily, weekly, monthly, and annual yearly income.',
     variations: [
@@ -295,6 +342,21 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'PoundSterling',
     component: StampDutyCalculator,
+    quickDefinition: 'Stamp Duty Land Tax (SDLT) is a tax paid to the UK government when you buy a property or land over a certain price threshold in England and Northern Ireland.',
+    formulaVariables: [
+      { symbol: 'SDLT', meaning: 'Stamp Duty Land Tax Total' },
+      { symbol: 'Purchase Price', meaning: 'Amount paid for the property' },
+      { symbol: 'Bracket Rate', meaning: 'Percentage tax rate for a specific price band' }
+    ],
+    tableData: {
+      headers: ['Property Price Band', 'Standard Rate', 'Additional Property Rate'],
+      rows: [
+        ['£0 – £250,000', '0%', '3%'],
+        ['£250,001 – £925,000', '5%', '8%'],
+        ['£925,001 – £1,500,000', '10%', '13%'],
+        ['Over £1,500,000', '12%', '15%']
+      ]
+    },
     seoTitle: 'UK Stamp Duty Calculator – SDLT Property Tax Estimator (2024/25)',
     seoDescription: 'Accurately calculate the Stamp Duty (SDLT) you\'ll pay on a property in England or NI. Latest 2024-2025 rates for first-time buyers, home movers, and buy-to-let.',
     variations: [
@@ -341,20 +403,8 @@ export const calculators: CalculatorMeta[] = [
         )
       }
     ],
-    faq: [
-      {
-        question: "When do I have to pay Stamp Duty?",
-        answer: "You must send an SDLT return to HMRC and pay the tax within 14 days of completing your property purchase. Usually, your solicitor handles this for you on the day of completion."
-      },
-      {
-        question: "What is the 'Higher Rate' for additional properties?",
-        answer: "If you already own a residential property and are buying another (and not replacing your main residence), you usually have to pay an extra 3% on top of the standard SDLT rates. This applies to buy-to-let investments and second homes."
-      },
-      {
-        question: "What if I'm buying in Scotland or Wales?",
-        answer: "This calculator applies to England and Northern Ireland. If you're buying in Scotland, you pay Land and Buildings Transaction Tax (LBTT). In Wales, you pay Land Transaction Tax (LTT). Rates for both differ from SDLT."
-      }
-    ],
+    faq: stampDutyFaqs,
+    relatedIds: ['mortgage', 'rent-vs-buy', 'budget-planner'],
     longContent: (
       <>
         <h2>The Ultimate Guide to UK Stamp Duty Land Tax (SDLT)</h2>
@@ -397,8 +447,7 @@ export const calculators: CalculatorMeta[] = [
         </ul>
         <p>Use our <strong>Mortgage Calculator</strong> alongside this tool to get a full picture of your monthly affordability and total upfront costs.</p>
       </>
-    ),
-    relatedIds: ['mortgage', 'rent-vs-buy', 'budget-planner']
+    )
   },
   {
     id: 'budget-planner',
@@ -512,6 +561,23 @@ export const calculators: CalculatorMeta[] = [
     category: 'Finance',
     icon: 'Home',
     component: MortgageCalculator,
+    quickDefinition: 'A mortgage calculator estimates the monthly payment for a home loan, factoring in the principal, interest, loan term, property taxes, and insurance.',
+    longContent: mortgageLongContent,
+    faq: mortgageFaqs,
+    formulaVariables: [
+      { symbol: 'M', meaning: 'Total monthly payment' },
+      { symbol: 'P', meaning: 'Principal loan amount' },
+      { symbol: 'i', meaning: 'Monthly interest rate' },
+      { symbol: 'n', meaning: 'Number of months (loan term)' }
+    ],
+    tableData: {
+      headers: ['Term Length', 'Interest Rate', 'Monthly Payment (est)'],
+      rows: [
+        ['15 Year Fixed', '5.5%', '$1,634'],
+        ['30 Year Fixed', '6.5%', '$1,264'],
+        ['5/1 ARM', '6.0%', '$1,199']
+      ]
+    },
     seoTitle: 'Mortgage Calculator UK – Estimate Monthly Payments, Taxes & PMI',
     seoDescription: 'Accurately calculate your monthly mortgage payments, including property taxes, home insurance, and PMI. Generate instant amortization schedules and see total interest.',
     relatedIds: ['car-loan', 'retirement-savings', 'compound-interest', 'salary-calculator', 'stamp-duty-uk', 'rent-vs-buy'],
@@ -571,6 +637,22 @@ export const calculators: CalculatorMeta[] = [
     category: 'Health',
     icon: 'Activity',
     component: BMICalculator,
+    quickDefinition: 'Body Mass Index (BMI) is a measure of body fat based on height and weight that applies to adult men and women.',
+    longContent: bmiLongContent,
+    formulaVariables: [
+      { symbol: 'BMI', meaning: 'Body Mass Index' },
+      { symbol: 'kg', meaning: 'Weight in kilograms' },
+      { symbol: 'm²', meaning: 'Height in meters squared' }
+    ],
+    tableData: {
+      headers: ['BMI Range', 'Category'],
+      rows: [
+        ['Below 18.5', 'Underweight'],
+        ['18.5 – 24.9', 'Healthy Weight'],
+        ['25.0 – 29.9', 'Overweight'],
+        ['30.0 or Higher', 'Obesity']
+      ]
+    },
     seoTitle: 'BMI Calculator UK – Check Your Body Mass Index Instantly',
     seoDescription: 'Free online BMI calculator. Find out your Body Mass Index and healthy weight range for adult men and women based on height and weight.',
     relatedIds: ['body-fat-calculator', 'bmr-tdee', 'macro-calculator', 'protein-calculator'],
@@ -600,20 +682,7 @@ export const calculators: CalculatorMeta[] = [
         seoDescription: 'Use our universal body mass index tool to check your BMI category and weight health instantly.'
       }
     ],
-    faq: [
-      {
-        question: "What is a healthy BMI for adults?",
-        answer: "For most adults, a healthy BMI is between 18.5 and 24.9. A BMI of 25 to 29.9 is considered overweight, and 30 or above is considered obese."
-      },
-      {
-        question: "How accurate is the BMI calculation?",
-        answer: "BMI is a reliable indicator of body fatness for most people. However, it does not measure body fat directly and can be less accurate for athletes with high muscle mass or older adults with low muscle mass."
-      },
-      {
-        question: "Is BMI the same for men and women?",
-        answer: "The formula for BMI is the same for both men and women. However, men and women tend to have different body compositions, and the interpretation can sometimes be adjusted based on clinical factors."
-      }
-    ],
+    faq: bmiFaqs,
     sources: [
       { title: 'CDC - About Adult BMI', url: 'https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html' },
       { title: 'WHO - Body Mass Index', url: 'https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/body-mass-index' }
@@ -628,6 +697,9 @@ export const calculators: CalculatorMeta[] = [
     component: BMRCalculator,
     seoTitle: 'TDEE & BMR Calculator – Calculate Your Daily Maintenance Calories',
     seoDescription: 'Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE). Discover your exact daily calorie needs for weight loss, maintenance, or muscle gain.',
+    quickDefinition: 'BMR (Basal Metabolic Rate) is the energy your body needs at rest, while TDEE (Total Daily Energy Expenditure) is the total calories you burn per day including activity.',
+    longContent: bmrTdeeLongContent,
+    faq: bmrTdeeFaqs,
     relatedIds: ['macro-calculator', 'protein-calculator', 'bmi'],
     variations: [
       {
@@ -799,6 +871,9 @@ export const calculators: CalculatorMeta[] = [
     component: MacroCalculator,
     seoTitle: 'Macro Calculator – Determine Your Ideal Macro Split for Weight Loss',
     seoDescription: 'Determine your ideal daily macronutrient split—protein, carbs, and fat—for weight loss, muscle gain, or maintenance. Free macro diet planner.',
+    quickDefinition: 'A macro calculator determines the ideal balance of proteins, carbohydrates, and fats you should consume based on your fitness goals and TDEE.',
+    longContent: macroLongContent,
+    faq: macroFaqs,
     relatedIds: ['protein-calculator', 'bmr-tdee', 'bmi'],
     sources: [
       { title: 'USDA - Dietary Guidelines for Americans', url: 'https://www.dietaryguidelines.gov/' }

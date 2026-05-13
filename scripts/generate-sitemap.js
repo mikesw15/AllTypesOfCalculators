@@ -29,12 +29,30 @@ let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <loc>${SITE_URL}/categories</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>${SITE_URL}/testing-methodology</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>`;
 
 calculatorIds.forEach(id => {
+  // Ensure we use the -calculator suffix for best SEO consistency in sitemap
+  // But avoid double suffixing if it already contains the word calculator
+  const urlPath = id.includes('calculator') ? id : `${id}-calculator`;
   sitemap += `
   <url>
-    <loc>${SITE_URL}/calculators/${id}</loc>
+    <loc>${SITE_URL}/${urlPath}</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>`;

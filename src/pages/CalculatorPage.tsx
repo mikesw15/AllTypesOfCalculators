@@ -41,9 +41,15 @@ export default function CalculatorPage() {
   const displayTitle = variation?.title || calculator.title;
   const seoTitle = variation?.seoTitle || calculator.seoTitle || calculator.title;
   const seoDescription = variation?.seoDescription || calculator.seoDescription || calculator.description;
-  const canonicalUrl = id?.endsWith('-calculator') 
-    ? `https://alltypesofcalculators.com/${id}`
-    : `https://alltypesofcalculators.com/${id}-calculator`;
+  
+  // Decide on a preferred canonical version (always include -calculator suffix if it's the standard)
+  // This prevents duplicate content issues with and without the suffix.
+  const preferredId = id?.endsWith('-calculator') ? id : `${id}-calculator`;
+  const canonicalUrl = `https://alltypesofcalculators.com/${preferredId}`;
+  
+  // If the current URL has search params, it's likely a shared result state.
+  // We want to index the clean calculator page, not every variation of shared results.
+  const hasResultParams = window.location.search.length > 0;
 
   const Component = calculator.component;
 
@@ -92,7 +98,8 @@ export default function CalculatorPage() {
         },
         "author": {
           "@type": "Organization",
-          "name": "All Types of Calculators"
+          "name": "All Types of Calculators",
+          "url": "https://alltypesofcalculators.com"
         }
       },
       {
@@ -120,6 +127,17 @@ export default function CalculatorPage() {
         ]
       }
     ];
+
+    // Add high-value AI Overview schema
+    if (calculator.quickDefinition) {
+      schemaData.push({
+        "@context": "https://schema.org",
+        "@type": "DefinedTerm",
+        "name": displayTitle,
+        "description": calculator.quickDefinition,
+        "inDefinedTermSet": "https://alltypesofcalculators.com/glossary"
+      });
+    }
 
     // Add Article schema for long content
     if (calculator.longContent) {
@@ -193,6 +211,7 @@ export default function CalculatorPage() {
         keywords={generateKeywords(displayTitle, calculator.category, seoDescription, variation?.keywords || calculator.keywords)}
         ogType="website"
         structuredData={schemaData}
+        noindex={hasResultParams}
       />
       <CalculatorLayout 
         meta={{...calculator, title: displayTitle}} 

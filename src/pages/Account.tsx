@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
-import { collection, query, getDocs, limit } from 'firebase/firestore';
+import { collection, query, getDocs, limit, deleteDoc, doc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
-import { User, Mail, Calendar as CalendarIcon, LogOut, Star, Settings, Shield, ChevronRight, Calculator, Key, Copy, History, Clock, ChevronDown, ChevronUp } from 'lucide-react';
+import { User, Mail, Calendar as CalendarIcon, LogOut, Star, Settings, Shield, ChevronRight, Calculator, Key, Copy, History, Clock, ChevronDown, ChevronUp, Syringe, Trash2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -24,10 +24,24 @@ interface HistoryItem {
   timestamp: any;
 }
 
+interface PeptideProtocol {
+  id: string;
+  name: string;
+  peptideName: string;
+  peptideAmount: number;
+  waterAdded: number;
+  desiredDose: number;
+  syringeType: string;
+  mode: string;
+  results: any;
+  createdAt: any;
+}
+
 export default function Account() {
   const [favoritesCount, setFavoritesCount] = useState(0);
   const [savedPasswords, setSavedPasswords] = useState<SavedPassword[]>([]);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [protocols, setProtocols] = useState<PeptideProtocol[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
@@ -75,6 +89,17 @@ export default function Account() {
 
         historyItems.sort((a, b) => (b.timestamp?.toMillis?.() || 0) - (a.timestamp?.toMillis?.() || 0));
         setHistory(historyItems.slice(0, 10));
+
+        // Fetch peptide protocols
+        const protocolsQ = query(collection(db, `users/${user.uid}/peptide_protocols`));
+        const protocolsSnapshot = await getDocs(protocolsQ);
+        const protocolItems: PeptideProtocol[] = [];
+        protocolsSnapshot.forEach(doc => {
+          protocolItems.push({ id: doc.id, ...doc.data() } as PeptideProtocol);
+        });
+
+        protocolItems.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+        setProtocols(protocolItems);
       } catch (error) {
         console.error("Error fetching account data:", error);
       } finally {
@@ -96,11 +121,23 @@ export default function Account() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const handleDeleteProtocol = async (id: string) => {
+    if (!user) return;
+    if (!confirm('Are you sure you want to delete this protocol?')) return;
+
+    try {
+      await deleteDoc(doc(db, `users/${user.uid}/peptide_protocols`, id));
+      setProtocols(protocols.filter(p => p.id !== id));
+    } catch (error) {
+      console.error("Error deleting protocol:", error);
+    }
+  };
+
   if (!user) return null;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <SEO title="My Account | AllTypesOfCalculators" description="Manage your account, view saved favorites, and access your generated passwords." keywords={['my account', 'saved calculators', 'account settings', 'history', 'saved passwords']} />
+      <SEO title="My Account | AllTypesOfCalculators" description="Manage your account, view saved favorites, and access your generated passwords." keywords={['my account', 'saved calculators', 'account settings', 'history', 'saved passwords']} noindex={true} />
       <h1 className="text-3xl font-bold text-gray-900 mb-8">My Account</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -189,6 +226,99 @@ export default function Account() {
               <div className="text-sm text-gray-500 mt-2">
                 Manage your settings
               </div>
+            </div>
+          </div>
+
+          {/* Saved Peptide Protocols */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-blue-50/30">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-600 rounded-lg">
+                  <Syringe className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-black text-gray-900 text-lg uppercase tracking-tight">Saved Peptide Protocols</h3>
+                  <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Custom Reconstitution Plans</p>
+                </div>
+              </div>
+              <Link to="/peptide-calculator" className="text-sm text-blue-600 hover:text-blue-700 font-bold flex items-center gap-1">
+                New Protocol
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="p-6">
+              {loading ? (
+                <div className="text-center text-gray-500 py-4">Loading protocols...</div>
+              ) : protocols.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4">
+                  {protocols.map((protocol) => (
+                    <div key={protocol.id} className="bg-gray-50 rounded-2xl border border-gray-100 p-5 hover:border-blue-200 transition-all group">
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h4 className="font-black text-gray-900 text-xl">{protocol.name}</h4>
+                          <div className="flex items-center gap-2 text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest">
+                            <Clock className="w-3 h-3" />
+                            {protocol.createdAt?.toDate ? protocol.createdAt.toDate().toLocaleDateString() : 'Just now'}
+                            <span>•</span>
+                            <span className="text-blue-600">{protocol.peptideName}</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Link 
+                            to="/peptide-calculator" 
+                            state={{ protocol }}
+                            className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-blue-600 hover:bg-blue-600 hover:text-white transition-all"
+                            title="Load Protocol"
+                          >
+                            <History className="w-5 h-5" />
+                          </Link>
+                          <button 
+                            onClick={() => handleDeleteProtocol(protocol.id)}
+                            className="p-2 bg-white rounded-lg shadow-sm border border-gray-100 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                            title="Delete Protocol"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-4 border-b border-gray-200/50">
+                        <div>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Vial size</p>
+                          <p className="font-bold text-gray-900">{protocol.peptideAmount}mg</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Dose</p>
+                          <p className="font-bold text-gray-900">{protocol.desiredDose}mcg</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Add Water</p>
+                          <p className="font-bold text-blue-600">{protocol.waterAdded.toFixed(2)}mL</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Draw Line</p>
+                          <p className="font-black text-indigo-600">{protocol.results?.units.toFixed(1)} Units</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex justify-between items-center">
+                        <p className="text-xs text-gray-400 italic">Concentration: {protocol.results?.concentration.toFixed(0)}mcg/mL</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                  <Syringe className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-500 font-bold">No saved protocols yet.</p>
+                  <p className="text-sm text-gray-400 mb-6">Create a protocol in the peptide calculator to see it here.</p>
+                  <Link 
+                    to="/peptide-calculator" 
+                    className="inline-flex items-center justify-center px-6 py-2.5 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100"
+                  >
+                    Go to Peptide Calculator
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 

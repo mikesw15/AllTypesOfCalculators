@@ -204,13 +204,71 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
             </div>
             
             <div className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
+              {meta.quickDefinition && (
+                <div className="bg-blue-50 dark:bg-blue-900/10 p-6 rounded-2xl border-l-4 border-blue-600 mb-8 italic text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                  {meta.quickDefinition}
+                </div>
+              )}
+
               {meta.formulaMarkup && (
-                <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-700 mb-6 font-mono text-sm overflow-x-auto">
+                <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-700 mb-6 font-mono text-sm overflow-x-auto text-center md:text-left">
                   {meta.formulaMarkup}
                 </div>
               )}
+
+              {meta.formulaVariables && meta.formulaVariables.length > 0 && (
+                <div className="mb-8 overflow-hidden rounded-xl border border-gray-100 dark:border-gray-700">
+                  <table className="min-w-full divide-y divide-gray-100 dark:divide-gray-700 m-0">
+                    <thead className="bg-gray-50 dark:bg-gray-900/50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Symbol</th>
+                        <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Definition</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
+                      {meta.formulaVariables.map((v, i) => (
+                        <tr key={i}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-blue-600 dark:text-blue-400">{v.symbol}</td>
+                          <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">{v.meaning}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
               {explanation}
             </div>
+
+            {meta.tableData && (
+              <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-900">
+                    <tr>
+                      {meta.tableData.headers.map((header, i) => (
+                        <th 
+                          key={i} 
+                          className="px-6 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider"
+                        >
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
+                    {meta.tableData.rows.map((row, i) => (
+                      <tr key={i} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        {row.map((cell, j) => (
+                          <td key={j} className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
             {meta.sources && meta.sources.length > 0 && (
               <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
@@ -260,7 +318,11 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
 
       {meta.longContent && (
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 p-6 md:p-8">
-          <article className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:leading-relaxed">
+          <div className="flex items-center gap-2 mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
+            <div className="w-2 h-8 bg-blue-600 rounded-full" />
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Comprehensive Guide</h2>
+          </div>
+          <article className="prose prose-blue dark:prose-invert max-w-none text-gray-1000 dark:text-gray-300 prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:leading-relaxed prose-p:text-lg">
             {meta.longContent}
           </article>
         </div>
@@ -290,17 +352,17 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
         </div>
       )}
 
-      {faq && faq.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+      {((faq && faq.length > 0) || (meta.faq && meta.faq.length > 0)) && (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-8">
           <div className="flex items-center gap-2 mb-6">
-            <HelpCircle className="w-6 h-6 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <HelpCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h2>
           </div>
           <div className="space-y-6">
-            {faq.map((item, index) => (
-              <div key={index} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{item.question}</h3>
-                <p className="text-gray-600">{item.answer}</p>
+            {(faq || meta.faq || []).map((item, index) => (
+              <div key={index} className="border-b border-gray-100 dark:border-gray-700 pb-6 last:border-0 last:pb-0">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{item.question}</h3>
+                <p className="text-gray-600 dark:text-gray-400">{item.answer}</p>
               </div>
             ))}
           </div>

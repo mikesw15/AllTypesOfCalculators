@@ -127,6 +127,16 @@ service cloud.firestore {
              data.updatedAt is timestamp;
     }
 
+    function isValidProtocol(data, userId) {
+      return hasOnlyAllowedFields(['userId', 'name', 'peptideName', 'peptideAmount', 'waterAdded', 'desiredDose', 'syringeType', 'mode', 'results', 'createdAt']) &&
+             data.userId == userId &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.peptideName is string && data.peptideName.size() > 0 &&
+             data.peptideAmount is number &&
+             data.mode is string &&
+             data.createdAt is timestamp;
+    }
+
     // ===============================================================
     // Rules
     // ===============================================================
@@ -168,6 +178,13 @@ service cloud.firestore {
         allow read: if isOwner(userId);
         allow create: if isOwner(userId) && isValidSavedPassword(request.resource.data);
         allow update: if isOwner(userId) && isValidSavedPassword(request.resource.data) && areImmutableFieldsUnchanged(['createdAt']);
+        allow delete: if isOwner(userId);
+      }
+
+      match /peptide_protocols/{protocolId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidProtocol(request.resource.data, userId);
+        allow update: if isOwner(userId) && isValidProtocol(request.resource.data, userId) && areImmutableFieldsUnchanged(['userId', 'createdAt']);
         allow delete: if isOwner(userId);
       }
     }

@@ -36,4 +36,10 @@ export interface CalculatorMeta {
   relatedIds?: string[];
   sources?: { title: string; url: string }[];
   variations?: SEOVariation[];
+  quickDefinition?: string;
+  formulaVariables?: { symbol: string; meaning: string }[];
+  tableData?: {
+    headers: string[];
+    rows: string[][];
+  };
 }
