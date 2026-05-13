@@ -46,7 +46,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (filteredCalculators.length > 0) {
-        navigate(`/calculators/${filteredCalculators[selectedIndex].id}`);
+        navigate(`/${filteredCalculators[selectedIndex].id}-calculator`);
         onClose();
       }
     }
@@ -87,7 +87,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       }`}
                       onMouseEnter={() => setSelectedIndex(index)}
                       onClick={() => {
-                        navigate(`/calculators/${calc.id}`);
+                        navigate(`/${calc.id}-calculator`);
                         onClose();
                       }}
                     >

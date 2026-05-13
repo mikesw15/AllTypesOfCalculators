@@ -27,7 +27,7 @@ export default function StampDutyCalculator() {
       // 5% on portion between £425,001 and £625,000
       if (price > 425000) {
         tax = (price - 425000) * 0.05;
-        brackets.push({ range: '£425k - £625k', rate: '5%', amount: tax });
+        brackets.push({ range: `${currency.symbol}425k - ${currency.symbol}625k`, rate: '5%', amount: tax });
       }
     } else {
       const additionalSurcharge = buyerType === 'additional' ? 0.03 : 0;

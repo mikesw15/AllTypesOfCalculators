@@ -36,24 +36,22 @@ export default function CalculatorPage() {
     ? calculators.filter(c => calculator.relatedIds?.includes(c.id))
     : [];
 
-  const generateKeywords = (title: string, category: string, description: string, customKeywords?: string[]) => {
-    const base = ['calculator', 'online calculator', 'free tool', category.toLowerCase()];
-    
-    // Extract meaningful words from title and description
-    const titleWords = title.toLowerCase().split(/[^a-z0-9]/).filter(w => w.length >= 4);
-    const descWords = description.toLowerCase().split(/[^a-z0-9]/).filter(w => w.length >= 5);
-    
-    const combined = `${title.toLowerCase()} calculator`;
-    const keywords = [...base, ...titleWords, ...descWords, combined];
-    
-    if (customKeywords && customKeywords.length > 0) {
-      keywords.push(...customKeywords);
-    }
-    
-    // Remove duplicates and common stop words (simplified)
-    const stopWords = ['this', 'that', 'with', 'from', 'your', 'help', 'calculate', 'helps', 'using', 'numbers', 'provide'];
-    return [...new Set(keywords)].filter(k => !stopWords.includes(k)).slice(0, 15);
-  };
+    const generateKeywords = (title: string, category: string, description: string, customKeywords?: string[]) => {
+      const base = ['calculator', 'online calculator', 'free tool', category.toLowerCase(), 'how to calculate'];
+      
+      const titleWords = title.toLowerCase().split(/[^a-z0-9]/).filter(w => w.length >= 3);
+      const descWords = description.toLowerCase().split(/[^a-z0-9]/).filter(w => w.length >= 4);
+      
+      const combined = [`${title.toLowerCase()} calculator`, `${title.toLowerCase()} formula`, `${title.toLowerCase()} examples`].map(s => s.trim());
+      const keywords = [...base, ...titleWords, ...descWords, ...combined];
+      
+      if (customKeywords && customKeywords.length > 0) {
+        keywords.push(...customKeywords);
+      }
+      
+      const stopWords = ['this', 'that', 'with', 'from', 'your', 'help', 'calculate', 'helps', 'using', 'numbers', 'provide', 'calculator'];
+      return [...new Set(keywords)].filter(k => k.length > 1 && !stopWords.includes(k)).slice(0, 20);
+    };
 
     const schemaData: any[] = [
       {
@@ -64,11 +62,15 @@ export default function CalculatorPage() {
         "applicationCategory": "CalculatorApplication",
         "genre": calculator.category,
         "operatingSystem": "All",
-        "url": `https://alltypesofcalculators.com/calculators/${calculator.id}`,
+        "url": `https://alltypesofcalculators.com/${calculator.id}-calculator`,
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "GBP"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "All Types of Calculators"
         }
       },
       {
@@ -85,17 +87,39 @@ export default function CalculatorPage() {
             "@type": "ListItem",
             "position": 2,
             "name": calculator.category,
-            "item": "https://alltypesofcalculators.com/categories"
+            "item": `https://alltypesofcalculators.com/categories/${calculator.category.toLowerCase().replace(/\s+/g, '-')}`
           },
           {
             "@type": "ListItem",
             "position": 3,
             "name": calculator.title,
-            "item": `https://alltypesofcalculators.com/calculators/${calculator.id}`
+            "item": `https://alltypesofcalculators.com/${calculator.id}-calculator`
           }
         ]
       }
     ];
+
+    // Add Article schema for long content
+    if (calculator.longContent) {
+      schemaData.push({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": calculator.seoTitle || calculator.title,
+        "description": calculator.seoDescription || calculator.description,
+        "author": {
+          "@type": "Organization",
+          "name": "All Types of Calculators"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "All Types of Calculators"
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://alltypesofcalculators.com/${calculator.id}-calculator`
+        }
+      });
+    }
 
     if (calculator.explanation || calculatorExplanations[calculator.id]) {
       schemaData.push({
@@ -106,11 +130,18 @@ export default function CalculatorPage() {
         "step": [
           {
             "@type": "HowToStep",
-            "text": "Enter your inputs into the calculator fields."
+            "name": "Step 1: Input Data",
+            "text": "Enter your figures and data points into the required input fields."
           },
           {
             "@type": "HowToStep",
-            "text": "Review the calculated results instantly."
+            "name": "Step 2: Instant Calculation",
+            "text": "Our engine processes your data instantly using industry-standard formulas."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Step 3: Analyze Results",
+            "text": "Review the detailed breakdown, charts, and summaries provided."
           }
         ]
       });
@@ -136,7 +167,7 @@ export default function CalculatorPage() {
       <SEO 
         title={calculator.seoTitle || calculator.title}
         description={calculator.seoDescription || calculator.description}
-        canonical={`https://alltypesofcalculators.com/calculators/${calculator.id}`}
+        canonical={`https://alltypesofcalculators.com/${calculator.id}-calculator`}
         keywords={generateKeywords(calculator.title, calculator.category, calculator.description, calculator.keywords)}
         ogType="website"
         structuredData={schemaData}

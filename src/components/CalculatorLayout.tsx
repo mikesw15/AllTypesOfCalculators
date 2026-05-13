@@ -181,49 +181,74 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
         </div>
       </div>
 
-      {(explanation || (meta.sources && meta.sources.length > 0)) && (
+      {(explanation || meta.formulaMarkup || (meta.sources && meta.sources.length > 0)) && (
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 overflow-hidden">
-          <details className="group">
-            <summary className="flex items-center justify-between gap-2 p-6 md:p-8 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-              <div className="flex items-center gap-2">
-                <Info className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">How it works: Formulas & Methodology</h2>
-              </div>
-              <span className="transition group-open:rotate-180">
-                <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24" className="text-gray-500 dark:text-gray-400"><path d="M6 9l6 6 6-6"></path></svg>
-              </span>
-            </summary>
-            <div className="p-6 md:p-8 pt-0 border-t border-gray-100 dark:border-gray-700">
-              {explanation && (
-                <div className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 mb-6">
-                  {explanation}
-                </div>
-              )}
-              {meta.sources && meta.sources.length > 0 && (
-                <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
-                    <LinkIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                    References & Sources
-                  </h3>
-                  <ul className="space-y-3 m-0 p-0 list-none">
-                    {meta.sources.map((source, index) => (
-                      <li key={index}>
-                        <a
-                          href={source.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
-                        >
-                          <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></div>
-                          {source.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+          <div className="p-6 md:p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <Info className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Formula & Methodology</h2>
             </div>
-          </details>
+            
+            <div className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
+              {meta.formulaMarkup && (
+                <div className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-100 dark:border-gray-700 mb-6 font-mono text-sm overflow-x-auto">
+                  {meta.formulaMarkup}
+                </div>
+              )}
+              {explanation}
+            </div>
+
+            {meta.sources && meta.sources.length > 0 && (
+              <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+                  <LinkIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  References & Sources
+                </h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 m-0 p-0 list-none text-sm">
+                  {meta.sources.map((source, index) => (
+                    <li key={index}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium truncate"
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></div>
+                        {source.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {meta.workedExamples && meta.workedExamples.length > 0 && (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 p-6 md:p-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center gap-2">
+            <LinkIcon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            Practical Examples
+          </h2>
+          <div className="space-y-6">
+            {meta.workedExamples.map((example, i) => (
+              <div key={i} className="bg-blue-50/50 dark:bg-blue-900/20 p-6 rounded-2xl border border-blue-100 dark:border-blue-900/30">
+                <h3 className="text-lg font-bold text-blue-900 dark:text-blue-100 mb-3">{example.title}</h3>
+                <div className="prose prose-sm prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
+                  {example.content}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {meta.longContent && (
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 p-6 md:p-8">
+          <article className="prose prose-blue dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:leading-relaxed">
+            {meta.longContent}
+          </article>
         </div>
       )}
 
@@ -254,7 +279,7 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
             {relatedCalculators.map(calc => (
               <Link 
                 key={calc.id} 
-                to={`/calculators/${calc.id}`}
+                to={`/${calc.id}-calculator`}
                 className="p-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md hover:border-blue-200 transition-all"
               >
                 <h3 className="font-bold text-gray-900 mb-1">{calc.title}</h3>

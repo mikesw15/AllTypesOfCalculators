@@ -13,6 +13,9 @@ export interface CalculatorMeta {
   seoDescription: string;
   keywords?: string[];
   explanation?: React.ReactNode;
+  longContent?: React.ReactNode; // 800-2000+ words
+  formulaMarkup?: React.ReactNode;
+  workedExamples?: { title: string; content: React.ReactNode }[];
   faq?: { question: string; answer: string }[];
   relatedIds?: string[];
   sources?: { title: string; url: string }[];

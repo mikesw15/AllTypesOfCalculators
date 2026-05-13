@@ -20,7 +20,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { HistoryProvider } from './contexts/HistoryContext';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
 import AnimatedPage from './components/AnimatedPage';
 
@@ -53,6 +53,7 @@ function AppRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
         <Route path="/categories" element={<AnimatedPage><Categories /></AnimatedPage>} />
+        <Route path="/categories/:category" element={<AnimatedPage><Categories /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
         <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
         <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
@@ -81,12 +82,23 @@ function AppRoutes() {
             </ProtectedRoute>
           } 
         />
-        <Route path="/calculators/:id" element={<AnimatedPage><CalculatorPage /></AnimatedPage>} />
+        <Route path="/:id-calculator" element={<AnimatedPage><CalculatorPage /></AnimatedPage>} />
+        <Route 
+          path="/calculators/:id" 
+          element={
+            <NavigateToNewURL />
+          } 
+        />
         {/* Fallback route */}
         <Route path="*" element={<AnimatedPage><Home /></AnimatedPage>} />
       </Routes>
     </AnimatePresence>
   );
+}
+
+function NavigateToNewURL() {
+  const { id } = useParams();
+  return <Navigate to={`/${id}-calculator`} replace />;
 }
 
 import { ThemeProvider } from './contexts/ThemeContext';

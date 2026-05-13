@@ -212,7 +212,7 @@ export default function Account() {
                         </div>
                       </div>
                       <Link 
-                        to={`/calculators/${item.calculatorId}`}
+                        to={`/${item.calculatorId}-calculator`}
                         className="text-sm font-bold text-blue-600 hover:text-blue-700"
                       >
                         Reuse
@@ -237,7 +237,7 @@ export default function Account() {
                 </div>
                 <h3 className="font-bold text-gray-900 text-lg">Saved Passwords</h3>
               </div>
-              <Link to="/calculators/password-generator" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+              <Link to="/password-generator-calculator" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
                 Generate New
               </Link>
             </div>
@@ -276,7 +276,7 @@ export default function Account() {
                 <div className="text-center py-6">
                   <p className="text-gray-500 mb-4">You haven't saved any passwords yet.</p>
                   <Link 
-                    to="/calculators/password-generator" 
+                    to="/password-generator-calculator" 
                     className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700"
                   >
                     Go to Password Generator

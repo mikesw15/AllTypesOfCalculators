@@ -21,7 +21,7 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({ calc }) => {
 
   return (
     <Link 
-      to={`/calculators/${calc.id}`}
+      to={`/${calc.id}-calculator`}
       className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:border-blue-200 dark:hover:border-blue-500 transition-all group flex flex-col h-full"
     >
       <div className="flex justify-between items-start mb-4">
