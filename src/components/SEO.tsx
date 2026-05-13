@@ -14,7 +14,7 @@ interface SEOProps {
 
 export default function SEO({
   title = 'All Types of Calculators | Fast, Accurate & Free Online Tools',
-  description = 'Free online calculators for finance, health, math, and everyday life. Get instant results with our easy-to-use tools.',
+  description = 'Your comprehensive toolkit of 50+ free online calculators for Finance, Health, Math, Home Improvement, and Everyday Life. Get instant, accurate results for Mortgage, BMI, Taxes, Loans, and much more.',
   canonical,
   ogType = 'website',
   ogImage = 'https://picsum.photos/seed/calculator/1200/630',

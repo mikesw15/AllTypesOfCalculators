@@ -28,23 +28,82 @@ export default function Home() {
     .map(id => calculators.find(c => c.id === id))
     .filter(Boolean);
 
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "All Types of Calculators",
-    "url": "https://alltypesofcalculators.com",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://alltypesofcalculators.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
+  const schemaData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "All Types of Calculators",
+      "url": "https://alltypesofcalculators.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://alltypesofcalculators.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is AllTypesOfCalculators?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AllTypesOfCalculators is a free online platform offering over 50 specialized calculators for finance, health, math, daily life, and home improvement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the calculators free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all our calculators are 100% free and do not require registration or personal data to provide accurate estimates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate are the results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our calculators use standard industry formulas and real-time data where applicable (like currency exchange rates) to provide highly accurate estimations for your specific needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data stored or shared?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. We prioritize user privacy and do not store any information you input into our calculators. All calculations are performed on-the-fly for your immediate use."
+          }
+        }
+      ]
     }
-  };
+  ];
+
+  const faqs = [
+    {
+      question: "What is AllTypesOfCalculators?",
+      answer: "AllTypesOfCalculators is a free online platform offering over 50 specialized calculators for finance, health, math, daily life, and home improvement. Our mission is to provide accurate, easy-to-use tools that help you make informed decisions."
+    },
+    {
+      question: "Are the calculators free to use?",
+      answer: "Yes, all our calculators are 100% free and do not require registration or personal data to provide accurate estimates."
+    },
+    {
+      question: "How accurate are the results?",
+      answer: "Our calculators use standard industry formulas and real-time data where applicable (like currency exchange rates) to provide highly accurate estimations. However, results should be used for informational purposes only."
+    },
+    {
+      question: "Is my data stored or shared?",
+      answer: "No. We prioritize user privacy and do not store any information you input into our calculators. All calculations are performed for your immediate use without data retention."
+    }
+  ];
 
   return (
     <div>
       <SEO 
         title="All Types of Calculators | Fast, Accurate & Free Online Tools"
-        description="Free online calculators for finance, health, math, and everyday life. Get instant results with our easy-to-use tools including Mortgage, BMI, and Currency Converter."
+        description="Free online calculators for finance, health, math, and everyday life. Get instant results for Mortgage, BMI, Currency, and more with our 50+ free online tools."
         keywords={['all types of calculators', 'free calculators', 'online calculator', 'finance calculator', 'math calculator', 'health calculator', 'tools', 'conversion']}
         canonical="https://alltypesofcalculators.com"
         structuredData={schemaData}
@@ -135,6 +194,27 @@ export default function Home() {
         </section>
       )}
 
+      {/* Categories Section */}
+      <section className="py-16 bg-white border-b border-gray-200 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">Browse by Category</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categories.map(cat => {
+              const Icon = cat.icon;
+              return (
+                <div key={cat.name} className="p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition-all cursor-pointer">
+                  <div className={`w-12 h-12 rounded-xl ${cat.bg} flex items-center justify-center mb-4 mx-auto`}>
+                    <Icon className={`w-6 h-6 ${cat.color}`} />
+                  </div>
+                  <h3 className="font-bold text-gray-900">{cat.name}</h3>
+                  <p className="text-sm text-gray-500 mt-1">Explore tools &rarr;</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Trending Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,23 +236,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-16 bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Browse by Category</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map(cat => {
-              const Icon = cat.icon;
-              return (
-                <div key={cat.name} className="p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition-all cursor-pointer">
-                  <div className={`w-12 h-12 rounded-xl ${cat.bg} flex items-center justify-center mb-4`}>
-                    <Icon className={`w-6 h-6 ${cat.color}`} />
-                  </div>
-                  <h3 className="font-bold text-gray-900">{cat.name}</h3>
-                  <p className="text-sm text-gray-500 mt-1">Explore tools &rarr;</p>
-                </div>
-              );
-            })}
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
+          <div className="space-y-8">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">{faq.question}</h3>
+                <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

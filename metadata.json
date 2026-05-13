@@ -1,5 +1,5 @@
 {
   "name": "AllTypesOfCalculators",
-  "description": "",
+  "description": "Comprehensive all-in-one platform featuring 50+ specialized calculators: FINANCE (Mortgage with PMI/Taxes, Auto Loans, Compound Interest, Retirement Nest Egg, Salary Conversion, Crypto ROI, Live Currency, Tax Liability, Rule of 72, Rent vs Buy); HEALTH (BMI, BMR/TDEE, Macro/Nutrition, Peptide Reconstitution, Protein Intake, Pregnancy Milestones, Ovulation/Fertility, Heart Rate Zones, Body Fat, Water Intake); MATH (Scientific, Unit Converter, Statistics, Probability, Date/Time Difference, Percentage, Z-Score, Fractions); EVERYDAY LIFE (GPA Planner, Fuel Cost for trips, Recipe Scaler, Tip & Bill Splitter, Secure Password Generator, Carbon Footprint, Sleep Cycles, Reading Time, Pet Age, Zodiac/Astrology); HOME IMPROVEMENT (Paint, Flooring, Concrete, HVAC/BTU Sizing, Tile/Grout, Mulch/Landscaping, Roofing, Drywall, Wallpaper). Also includes AI Image Generation and a dedicated blog section for financial and health insights.",
   "requestFramePermissions": []
 }
