@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Syringe, Info, RefreshCw, Save, Check, User, Loader2 } from 'lucide-react';
 import CalculatorInput from '../components/calculator/CalculatorInput';
 import CalculatorToggle from '../components/calculator/CalculatorToggle';
@@ -35,6 +35,7 @@ const PEPTIDE_PRESETS = [
 export default function PeptideCalculator() {
   const { saveToHistory } = useHistory();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const [mode, setMode] = useState<'units' | 'water' | 'dosage'>('units');
   
@@ -124,16 +125,27 @@ export default function PeptideCalculator() {
 
   const handleSave = async () => {
     if (!results) return;
+    
+    if (!user) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
+
     setIsSaving(true);
-    await saveToHistory(
-      'peptide-calculator', 
-      'Peptide Calculator', 
-      { mode, selectedPeptide, peptideAmount, desiredDose, syringeType, waterAdded, desiredUnits }, 
-      { units: results.units.toFixed(2), waterRequired: results.waterRequired.toFixed(2) }
-    );
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 2000);
-    setIsSaving(false);
+    try {
+      await saveToHistory(
+        'peptide-calculator', 
+        'Peptide Calculator', 
+        { mode, selectedPeptide, peptideAmount, desiredDose, syringeType, waterAdded, desiredUnits }, 
+        { units: results.units.toFixed(2), waterRequired: results.waterRequired.toFixed(2) }
+      );
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 2000);
+    } catch (error) {
+      console.error("Failed to save history:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleSaveProtocol = async () => {
@@ -306,7 +318,7 @@ export default function PeptideCalculator() {
           </div>
           
           <button 
-            onClick={() => user ? setShowSaveModal(true) : alert('Please sign in to save protocols to your profile.')}
+            onClick={() => user ? setShowSaveModal(true) : navigate('/login', { state: { from: location } })}
             disabled={!results}
             className="w-full py-4 px-6 bg-blue-600 text-white rounded-xl font-black text-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-200"
           >

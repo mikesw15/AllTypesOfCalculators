@@ -1,5 +1,6 @@
 {
   "name": "AllTypesOfCalculators",
   "description": "Free online calculators for finance, health, maths, mortgages, investments, BMI, loans and more. Fast, accurate and easy to use. Featuring 50+ specialized tools: Mortgage, Auto Loans, Compound Interest, BMR, MACROS, Protein, Peptide, GPA, Unit Converter, and Home Improvement estimators.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

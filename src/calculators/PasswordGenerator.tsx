@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Copy, RefreshCw, ShieldCheck, ShieldAlert, Shield, Save, Check } from 'lucide-react';
 import { auth, db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useHistory } from '../contexts/HistoryContext';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrors';
 
 export default function PasswordGenerator() {
   const { saveToHistory } = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [length, setLength] = useState(16);
   const [uppercase, setUppercase] = useState(true);
   const [lowercase, setLowercase] = useState(true);
@@ -134,14 +136,8 @@ export default function PasswordGenerator() {
     
     let currentUser = auth.currentUser;
     if (!currentUser) {
-      try {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        currentUser = result.user;
-      } catch (authError) {
-        console.error("Auth error:", authError);
-        return; // User cancelled or failed to log in
-      }
+      navigate('/login', { state: { from: location } });
+      return;
     }
 
     if (currentUser) {

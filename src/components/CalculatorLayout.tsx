@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CalculatorMeta } from '../types';
 import { Share2, Star, Info, HelpCircle, Link as LinkIcon, Download, Scale, Printer } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AIHelper from './AIHelper';
 import ReviewSection from './ReviewSection';
 import { db } from '../firebase';
@@ -33,6 +33,8 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const dynamicComparison = getComparisonForCalculator(meta.id);
 
@@ -64,7 +66,7 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
 
   const toggleFavorite = async () => {
     if (!user) {
-      alert("Please sign in to save favorites.");
+      navigate('/login', { state: { from: location } });
       return;
     }
 
