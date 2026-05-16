@@ -56,7 +56,7 @@ export default function Blog() {
       <div className="text-center mb-16">
         <h1 className="text-5xl font-black text-gray-900 mb-4 flex items-center justify-center gap-3">
           <BookOpen className="w-10 h-10 text-blue-600" />
-          The Log
+          Calculator Blog
         </h1>
         <p className="text-xl text-gray-500 font-medium max-w-2xl mx-auto">
           Insights, guides, and tips to help you make sense of the numbers.

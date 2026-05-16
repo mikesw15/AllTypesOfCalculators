@@ -12,6 +12,8 @@ import { handleFirestoreError, OperationType } from '../utils/firestoreErrors';
 
 import ShareModal from './ShareModal';
 import Breadcrumbs from './Breadcrumbs';
+import ComparisonSection from './ComparisonSection';
+import { getComparisonForCalculator } from '../calculators/comparisons';
 
 interface CalculatorLayoutProps {
   meta: CalculatorMeta;
@@ -31,6 +33,8 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const { user } = useAuth();
+
+  const dynamicComparison = getComparisonForCalculator(meta.id);
 
   useEffect(() => {
     const checkFavorite = async () => {
@@ -328,7 +332,9 @@ export default function CalculatorLayout({ meta, children, explanation, faq, rel
         </div>
       )}
 
-      {comparison && (
+      {dynamicComparison ? (
+        <ComparisonSection comparison={dynamicComparison} currentCalculatorId={meta.id} />
+      ) : comparison && (
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8 overflow-hidden">
           <div className="p-6 md:p-8">
             <div className="flex items-center gap-2 mb-8">

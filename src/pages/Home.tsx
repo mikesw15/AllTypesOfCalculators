@@ -323,6 +323,74 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <section className="py-24 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <h2 className="text-4xl font-black text-gray-900 mb-4 uppercase tracking-tighter">Inside the numbers</h2>
+              <p className="text-gray-600 text-lg font-medium max-w-2xl">Expert guides and deep dives into finance, health, and mathematics. Learn the logic behind the results.</p>
+            </div>
+            <Link 
+              to="/blog" 
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-2xl font-black hover:bg-blue-600 transition-all shadow-xl shadow-gray-900/10"
+            >
+              Visit Blog
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <Link to="/blog/understanding-mortgage-rates" className="group">
+              <div className="aspect-[16/9] rounded-[2.5rem] overflow-hidden bg-gray-100 mb-6 border border-gray-100 shadow-2xl shadow-gray-200/50">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Mortgage" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              </div>
+              <div className="space-y-4 px-2">
+                <span className="text-xs font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">Finance</span>
+                <h3 className="text-3xl font-black text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">The 2026 Homebuyer's Guide to Mortgage Rates & Inflation</h3>
+                <p className="text-gray-500 font-medium line-clamp-2">How today's economic climate affects your borrowing power and what you can do to secure the best deal possible.</p>
+              </div>
+            </Link>
+
+            <div className="space-y-8">
+              {[
+                {
+                  title: 'Macronutrients vs. Calories: What Actually Matters?',
+                  slug: 'macros-vs-calories',
+                  category: 'Health',
+                  date: 'May 12, 2026',
+                  image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                  title: 'Why Compound Interest is the "Eighth Wonder of the World"',
+                  slug: 'compound-interest-guide',
+                  category: 'Finance',
+                  date: 'May 10, 2026',
+                  image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                },
+                {
+                  title: 'DIY Construction: How to Order Materials Like a Pro',
+                  slug: 'construction-waste-reduction',
+                  category: 'Construction',
+                  date: 'May 08, 2026',
+                  image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                }
+              ].map(post => (
+                <Link key={post.slug} to={`/blog/${post.slug}`} className="flex gap-6 group items-center">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 rounded-3xl overflow-hidden bg-gray-100 border border-gray-100">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{post.category} • {post.date}</span>
+                    <h4 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">{post.title}</h4>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SEO Content Section */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

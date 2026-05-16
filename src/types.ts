@@ -18,6 +18,20 @@ export interface SEOVariation {
   keywords?: string[];
 }
 
+export interface ComparisonMeta {
+  id: string;
+  title: string;
+  description: string;
+  calculatorIds: string[];
+  highlights: {
+    title: string;
+    differences: {
+      label: string;
+      values: Record<string, string>;
+    }[];
+  };
+}
+
 export interface CalculatorMeta {
   id: string;
   title: string;

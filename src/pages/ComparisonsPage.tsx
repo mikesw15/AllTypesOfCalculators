@@ -1,35 +1,10 @@
 import React from 'react';
-import { ArrowRight, Scale, Info } from 'lucide-react';
+import { ArrowRight, Scale, Info, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import Breadcrumbs from '../components/Breadcrumbs';
-
-const comparisons = [
-  {
-    title: "APR vs. Interest Rate",
-    description: "Understand the true cost of borrowing. While both represent a percentage of the loan amount, they tell very different stories.",
-    link: "/apr-calculator",
-    highlights: ["Total cost of credit", "Annual percentage rate", "Nominal interest"]
-  },
-  {
-    title: "BMI vs. Body Fat Percentage",
-    description: "BMI is a quick screening tool, while Body Fat Percentage measures actual tissue composition. Which one should you track?",
-    link: "/bmi-calculator",
-    highlights: ["Muscle mass", "Health indicators", "Accuracy levels"]
-  },
-  {
-    title: "Gross Pay vs. Net Pay",
-    description: "The difference between what you earn and what actually hits your bank account. Learn about taxes, deductions, and withholdings.",
-    link: "/salary-calculator",
-    highlights: ["Income tax", "Insurance", "Take-home pay"]
-  },
-  {
-    title: "Simple vs. Compound Interest",
-    description: "See how money grows exponentially over time. Simple interest is flat; compound interest is power.",
-    link: "/compound-interest-calculator",
-    highlights: ["Exponential growth", "Investment strategy", "Time value of money"]
-  }
-];
+import { comparisons } from '../calculators/comparisons';
+import { calculators } from '../calculators';
 
 export default function ComparisonsPage() {
   return (
@@ -52,37 +27,60 @@ export default function ComparisonsPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {comparisons.map((comp, index) => (
+        <div className="space-y-12">
+          {comparisons.map((comp) => (
             <div 
-              key={index}
-              className="bg-white rounded-3xl p-8 border-2 border-gray-50 hover:border-blue-100 hover:shadow-2xl hover:shadow-blue-600/5 transition-all group"
+              key={comp.id}
+              className="bg-white rounded-[2.5rem] overflow-hidden border-2 border-gray-50 shadow-xl shadow-gray-200/20"
             >
-              <h2 className="text-2xl font-black text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                {comp.title}
-              </h2>
-              <p className="text-gray-600 mb-8 leading-relaxed font-medium">
-                {comp.description}
-              </p>
-              
-              <div className="flex flex-wrap gap-2 mb-8">
-                {comp.highlights.map((h, i) => (
-                  <span key={i} className="px-3 py-1 bg-gray-50 text-gray-500 text-[10px] font-bold uppercase tracking-widest rounded-lg">
-                    {h}
-                  </span>
-                ))}
-              </div>
+              <div className="p-8 md:p-12 border-b border-gray-100">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                  <div>
+                    <h2 className="text-3xl font-black text-gray-900 mb-2">{comp.title}</h2>
+                    <p className="text-gray-600 font-medium text-lg">{comp.description}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {comp.calculatorIds.map(id => {
+                      const calc = calculators.find(c => c.id === id);
+                      return calc ? (
+                        <Link 
+                          key={id}
+                          to={`/${id}-calculator`}
+                          className="px-4 py-2 bg-blue-50 text-blue-600 rounded-xl font-bold text-sm hover:bg-blue-600 hover:text-white transition-all flex items-center gap-2"
+                        >
+                          Use {calc.title}
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
 
-              <div className="flex items-center justify-between mt-auto">
-                <Link 
-                  to={comp.link}
-                  className="flex items-center gap-2 text-blue-600 font-bold hover:translate-x-1 transition-transform"
-                >
-                  View Calculator & Guide
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-                <div className="p-2 bg-blue-50 rounded-full group-hover:bg-blue-600 group-hover:text-white transition-all text-blue-600">
-                  <Info className="w-5 h-5" />
+                <div className="overflow-x-auto rounded-3xl border border-gray-100">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="bg-gray-50/50">
+                        <th className="px-6 py-6 text-sm font-black text-gray-400 uppercase tracking-widest">Metric</th>
+                        {comp.calculatorIds.map(id => (
+                          <th key={id} className="px-6 py-6 text-sm font-black text-blue-600 uppercase tracking-widest">
+                            {calculators.find(c => c.id === id)?.title}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {comp.highlights.differences.map((diff, idx) => (
+                        <tr key={idx} className="hover:bg-gray-50/30 transition-colors">
+                          <td className="px-6 py-6 font-bold text-gray-900 bg-gray-50/30">{diff.label}</td>
+                          {comp.calculatorIds.map(id => (
+                            <td key={id} className="px-6 py-6 text-gray-600 font-medium leading-relaxed">
+                              {diff.values[id]}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
